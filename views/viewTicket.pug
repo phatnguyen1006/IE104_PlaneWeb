@@ -1,0 +1,229 @@
+extends ./general.pug
+block content
+    .poster-search(style="background-image:url('/images/SearchFight.jpg');background-repeat: no-repeat;background-position: center;background-size: 100% 100%;height: 70vh;width: 100%;")
+    .container
+        if (notify == "Thay đổi thông tin thành công" &&(typeof notify !== "undefined"))
+            div.bg-success.mt-3.p-3(style="border-radius:7px;")
+                span.closebtn(onclick="this.parentElement.style.display='none';") &times;
+                h5.text-light #{notify}
+        if (notify == "Bạn đã chuyển vé đặt thành mua thành công" &&(typeof notify !== "undefined"))
+            div.bg-success.mt-3.p-3(style="border-radius:7px;")
+                span.closebtn(onclick="this.parentElement.style.display='none';") &times;
+                h5.text-light #{notify}
+        if (notify == "Bạn đã đặt vé thành công!!" &&(typeof notify !== "undefined"))
+            div.bg-success.mt-3.p-3(style="border-radius:7px;")
+                span.closebtn(onclick="this.parentElement.style.display='none';") &times;
+                h5.text-light #{notify}
+        if (notify == "Bạn đã mua vé thành công!!" &&(typeof notify !== "undefined"))
+            div.bg-success.mt-3.p-3(style="border-radius:7px;")
+                span.closebtn(onclick="this.parentElement.style.display='none';") &times;
+                h5.text-light #{notify}
+        
+        if (notify == "Thay đổi thông tin thất bại" && (typeof notify !== "undefined"))
+            div.bg-danger.mt-3.p-3(style="border-radius:7px;")
+                span.closebtn(onclick="this.parentElement.style.display='none';") &times;
+                h5.text-light #{notify}
+        if (notify == "Bạn đã chuyển vé đặt thành mua thất bại" && (typeof notify !== "undefined"))
+            div.bg-danger.mt-3.p-3(style="border-radius:7px;")
+                span.closebtn(onclick="this.parentElement.style.display='none';") &times;
+                h5.text-light #{notify}
+        
+         
+    if user || admin 
+        .list-ticket
+            .container
+                .list-bookedTicket
+                    if bookedTicket.length > 0  || boughtTicket.length > 0
+                        if bookedTicket && bookedTicket.length > 0
+                            h3.title-bookedTicket.border-bottom.text-right.pt-3.pr-3 Vé đã đặt
+                            for booked in bookedTicket
+                                .item-flight.pt-3.m-3.bg-light.shadow(style="border-radius:10px;cursor:pointer;")
+                                    .row.header-item.pt-3
+                                        .col-md-4.pl-5
+                                            p #{booked.ChuyenBay}  +  #{booked.MaCB}
+                                        .col-md-4.ml-auto.pr-5
+                                            p.text-right Mã vé: #{booked._id}
+                                    .row.mx-3.hidden-ticket.mt-2.pt-3    
+                                        form.col-lg-12(method="post" action="/viewTicket")
+                                            .row
+                                                .col-lg-12.col-md-12.col-sm-12
+                                                    table#table.table
+                                                        tbody
+                                                            tr
+                                                            th(scope='col') Hành khách
+                                                            td
+                                                                input.info-passenger-op.form-control.bg-light(name="name" type='text',id="info-passenger-op", value=booked.HanhKhach , readonly="readonly" )
+                                                            
+                                                            tr
+                                                            th(scope='col') CMND
+                                                            td 
+                                                                input.info-cmnd-op.form-control.bg-light(name="personalId" type='text',id="info-cmnd-op", value=booked.CMND readonly="readonly")
+                                                            
+                                                            tr
+                                                            th(scope='row') Số điện thoại
+                                                            td
+                                                                input.info-phone-op.form-control.bg-light(name="phone" type='text',id="info-phone-op", value=booked.SDT readonly="readonly")
+                                                            
+                                                            tr
+                                                            th(scope='col') Hạng vé
+                                                            td.Class-form(scope='col') #{booked.HangVe}
+
+                                                            tr
+                                                            th(scope='col') Giá Vé
+                                                            td #{booked.GiaTien}
+                                                                p.price-hide(style="display:none;") #{booked.GiaVeMua}
+                                                                p.DuocChuyen(style="display:none;") #{booked.TrangThai}
+                                                                input(type="hidden" name="_id" value=booked._id)
+                                                                input(type="hidden" name="_csrf" value=csrf)
+
+                                                            tr
+                                                            th(scope='row') Trạng thái
+                                                            td.Status.font-italic.font-weight-bold 
+                                                .col-lg-12.mt-1
+                                                    .row
+                                                        .col-lg-3
+                                                        .col-lg-6.d-flex.justify-content-center.area.mb-2
+                                                            .btn-change
+                                                                //-button.btn.abc(type="button") abc
+                                                                button.Change.btn.btn-warning.text-center.mr-2(type="button") Sửa thông tin
+                                                            .btn-save-reset
+                                                                button.Save.btn.btn-success.mr-2(type="submit" disabled) Lưu thay đổi
+                                                                button.Reset.btn.btn-danger(type="reset" disabled) Đặt lại
+
+                                                .col-lg-3
+                                        form.form-boughtTicket.mb-2(method="post" action="/viewTicket/change")
+                                            if bookedTicket.length > 0
+                                                .col-lg-12
+                                                    .row.text-center
+                                                        .col-lg-12.d-flex.justify-content-center.text-btn-area
+                                                            .text-area.px-3
+                                                                input(type="hidden" name="_id" value=booked._id)
+                                                                input(type="hidden" name="_csrf" value=csrf)
+                                                                div(style="display:none;")
+                                                                    for tiLe in HangVe
+                                                                        b.ma-hang #{tiLe.maHangVe}
+                                                                        br
+                                                                        b.tiLeTien #{tiLe.tiLeTien}
+                                                                input.Price-form.form-control.bg-light(name="price",type='hidden',id="info-price" value='')
+                                                                b Bạn có muốn mua vé luôn không? 
+                                                                    if cancel == 0
+                                                                        span.font-italic (Vé sẽ bị hủy vào ngày khởi hành)
+                                                                    else 
+                                                                        span.font-italic (Vé sẽ bị hủy trước #{cancel} ngày so với ngày khởi hành)
+                                                            .area-btn
+                                                                button.button-buy.ml-2.btn.btn-success(type="submit" ) Mua vé
+
+                                                    
+                                        
+                        else
+                            p 
+
+                        if  boughtTicket && boughtTicket.length > 0
+                            h3.title-boughtTicket.text-right.pt-3.pr-3 Vé đã mua
+                            for bought in boughtTicket
+                                .header-item.item-flight.pt-3.m-3.border-warning.bg-light.shadow(style="border-radius:10px;cursor:pointer;")
+                                    .row.pt-3
+                                        .col-md-4.col-xs-4.pl-5
+                                            p #{bought.ChuyenBay} // #{bought.MaCB}
+                                        .col-md-4.col-xs-3.ml-auto.text-right.pr-5
+                                            b Mã vé : 
+                                            span #{bought._id}
+                                    .row.mx-3.hidden-ticket.mt-2.pt-3
+                                        .col-lg-12.col-md-12.col-sm-12.pb-3
+                                            table#table.table.table-bordered
+                                                tbody
+                                                    tr
+                                                    th(scope='col') Hành khách
+                                                    td#tbcode(scope='col') #{bought.HanhKhach}
+                                                    
+                                                    tr
+                                                    th(scope='col') CMND
+                                                    td #{bought.CMND}
+                                                    
+                                                    tr
+                                                    th(scope='row') Số điện thoại
+                                                    td#tbname #{bought.SDT}
+                                                    
+                                                    tr
+                                                    th(scope='col') Hạng vé
+                                                    td(scope='col') #{bought.HangVe}
+
+                                                    tr
+                                                    th(scope='col') Giá Vé
+                                                    td(scope='col') #{bought.GiaTien}
+
+                                                    tr
+                                                    th(scope='row') Trạng thái
+                                                    td Đã mua
+                                        .col-lg-12.text-center
+                                            p.font-italic Hành khách đến trước giờ bay khoảng 1 giờ trước giờ khởi hành để làm thủ tục.! 
+                                                | Nếu có vấn đề, hãy liên hệ qua hotline: 
+                                                span.font-weight-bold 1900.100000000 
+                                                | bấm phím 0
+                        else
+                            p 
+                    else
+                        h1.m-3.text-center.text-danger Danh sách trống !!!
+    script.
+
+        const header= document.querySelectorAll(".header-item");
+        const ItemFL= document.querySelectorAll(".area");
+        const details = document.querySelectorAll(".hidden-ticket");
+        const btn_buy = document.querySelectorAll(".button-buy");
+        const hang_ve = document.querySelectorAll(".Class-form");
+        const TTrang = document.querySelectorAll(".Status");
+        const price_hide = document.querySelectorAll(".price-hide");
+        const DuocChuyen = document.querySelectorAll(".DuocChuyen");
+        const price_change = document.querySelectorAll(".Price-form");
+        const btnChange = document.querySelectorAll(".Change");
+        const save = document.querySelectorAll(".Save");
+        const reset = document.querySelectorAll(".Reset");
+        const khach = document.querySelectorAll(".info-passenger-op");
+        const CM = document.querySelectorAll(".info-cmnd-op");
+        const Phone = document.querySelectorAll(".info-phone-op");
+        const Tien = document.querySelectorAll(".tiLeTien");
+        const Hang = document.querySelectorAll(".ma-hang");
+        
+
+        header.forEach(function (item, index) {
+        item.addEventListener("click", function handle() {
+        if (details[index].classList.contains('ticket-appear')) {
+        details[index].classList.remove('ticket-appear');
+        } else {
+        details[index].classList.add('ticket-appear');
+        }
+
+        if(DuocChuyen[index].innerHTML == "1"){
+            btn_buy[index].disabled = false;
+            TTrang[index].innerHTML= "Vé đang chờ được mua";
+        }else
+        {
+            btnChange[index].disabled = true;
+            btn_buy[index].disabled = true;
+            TTrang[index].innerHTML = "Vé đã bị hủy";
+        }
+
+        });
+        }); 
+
+        btn_buy.forEach(function(pur, index) {
+        pur.addEventListener("click", function handle1() {
+            for(var i =0 ; i < Tien.length;i++){
+                if(hang_ve[index].innerHTML == Hang[i].innerHTML){   
+                    price_change[index].value = price_hide[index].innerHTML * Tien[i].innerHTML;
+                }
+            }
+            //console.log(price_change[index].value,check);
+        })
+        });
+
+        btnChange.forEach(function(btn, index) {
+        btn.addEventListener("click", function handle2() {
+            khach[index].readOnly = false;
+            CM[index].readOnly = false;
+            Phone[index].readOnly = false;
+            save[index].disabled = false;
+            reset[index].disabled = false;
+            btn.disabled = true;
+        })
+        });

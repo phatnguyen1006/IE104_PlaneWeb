@@ -1,0 +1,18 @@
+#title-flight-info{
+    height:auto;border-radius:5px;
+}
+
+/* @media (max-width: 768px) {
+    #info-passenger{
+        padding-right: 0 !important;
+        
+        
+    }
+    #info-ticket{
+        padding-left: 0 !important;
+    }
+    #info-payment{
+        padding-right: 0 !important;
+        padding-left: 0 !important;
+    }
+} */

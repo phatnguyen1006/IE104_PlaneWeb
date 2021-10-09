@@ -1,0 +1,233 @@
+doctype html
+html(lang="vi")
+head
+    meta(charset='UTF-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    title Sky Airlines | Đồng hành cùng bạn
+    link(rel='stylesheet', href='/styles/style.css')
+    link(rel='stylesheet', href='/styles/home.css')
+    link(rel='stylesheet', href='/styles/booking.css')
+    link(rel='stylesheet', href='/styles/login.css')
+    link(rel='stylesheet', href='/styles/seatManage.css')
+    link(rel='stylesheet', href='/styles/ticketInfo.css')
+    link(rel='stylesheet', href='/styles/PhuQuoc.css')
+    link(rel='icon',type='image/x-icon', href='/images/logoIcon.png',size='32x32')
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css')
+    link(rel='stylesheet', href='https://unpkg.com/swiper/swiper-bundle.min.css')
+    link(rel="preconnect", href="https://fonts.gstatic.com")
+    link(href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap", rel="stylesheet")
+    link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css", integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous")
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js')
+    script(src='https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js')
+    script(src='https://unpkg.com/swiper/swiper-bundle.min.js')
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js")
+    script(src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js")
+    
+
+body
+    nav#navbar.navbar.navbar-expand-xl.sticky-top.p-2
+        nav.container-lg
+            a.navbar-brand.js-scroll-trigger(href='/')
+                img(src='/images/logo.png' style='width:80%')
+            button.navbar-toggler.navbar-toggler-right.font-weight-bold.bg-primary.text-white.rounded(type='button', data-toggle='collapse', data-target='#navbarResponsive', aria-controls='navbarResponsive', aria-expanded='false', aria-label='Toggle navigation')
+                i.fas.fa-bars
+            #navbarResponsive.collapse.navbar-collapse
+                ul.navbar-nav
+                    li.nav-item.mx-0.mx-lg-2.px-2.dropdown(onmouseenter="hoverLi();" onmouseleave="leaveLi();")
+                        .nav-link#hover-li.py-2.px-0.px-lg-2.font-weight-bold.rounded.js-scroll-trigger(data-toggle='dropdown', aria-expanded='false' style="cursor:pointer;") Thông tin đặt vé      
+                        .dropdown-menu
+                            .row
+                                .col-md-6.col-sm-6.mb-3
+                                    a.dropdown-item(href="/booking")
+                                        i.mr-2.fas.fa-star
+                                        | Đặt vé
+                                .col-md-6.col-sm-6.mb-3
+                                    a.dropdown-item(href="/viewTicket") 
+                                        i.mr-2.fas.fa-ticket-alt 
+                                        | Lịch sử đặt vé
+                                        
+                                .col-md-6.col-sm-6.mb-3
+                                    a.dropdown-item(href="/settingQD6") 
+                                        i.mr-2.fas.fa-fw.fa-plane-departure
+                                        | Sân bay 
+                                .col-md-6.col-sm-6.mb-3
+                                    a.dropdown-item(href="/booking")
+                                        i.mr-2.fas.fa-check
+                                        | Check-in Online
+                                .col-md-6.col-sm-6.mb-3
+                                    a.dropdown-item(href="/blogs/ha-noi") 
+                                        i.mr-2.fas.fa-utensils
+                                        |Du lịch
+                    li.nav-item.mx-0.mx-lg-2.px-2.dropdown(onmouseenter="hoverLi2();" onmouseleave="leaveLi2();")
+                        .nav-link#hover-li2.py-2.px-0.px-lg-2.font-weight-bold.rounded.js-scroll-trigger(data-toggle='dropdown', aria-expanded='false' style="cursor:pointer;") Khám phá
+                        .dropdown-menu
+                            .row
+                                .col-md-6.col-sm-6.mb-3
+                                    a.dropdown-item(href="/blogs/phu-quoc")
+                                        i.mr-2.fas.fa-star
+                                        | Phú Quốc
+                                .col-md-6.col-sm-6.mb-3
+                                    a.dropdown-item(href="/blogs/da-nang") 
+                                        i.mr-2.fas.fa-ticket-alt 
+                                        | Đà Nẵng                         
+                                .col-md-6.col-sm-6.mb-3
+                                    a.dropdown-item(href="/blogs/quy-nhon") 
+                                        i.mr-2.fas.fa-fw.fa-plane-departure
+                                        | Quy Nhơn 
+                                .col-md-6.col-sm-6.mb-3
+                                    a.dropdown-item(href="/blogs/ho-chi-minh")
+                                        i.mr-2.fas.fa-check
+                                        | TP Hồ Chí Mính
+                                .col-md-6.col-sm-6.mb-3
+                                    a.dropdown-item(href="/blogs/ha-noi") 
+                                        i.mr-2.fas.fa-bell
+                                        | Hà Nội
+                    if admin 
+                        li.nav-item.mx-0.mx-lg-2.px-2.dropdown(onmouseenter="hoverLi3();" onmouseleave="leaveLi3();")
+                            .nav-link#hover-li3.py-2.px-0.px-lg-2.font-weight-bold.rounded.js-scroll-trigger(data-toggle='dropdown', aria-expanded='false' style="cursor:pointer;") Báo cáo
+                            .dropdown-menu
+                                .row
+                                    .col-md-6.col-sm-6.mb-3
+                                        a.dropdown-item(href="/revenue/monthly")
+                                            i.mr-2.fas.fa-star
+                                            | Doanh thu tháng
+                                    .col-md-6.col-sm-6.mb-3
+                                        a.dropdown-item(href="/revenue/year") 
+                                            i.mr-2.fas.fa-ticket-alt   
+                                            | Doanh thu năm 
+
+                if admin
+                    .ml-auto.pl-4
+                        #userDropdown.dropdown.dropdown-toggle(data-toggle='dropdown', aria-expanded='false' style="cursor:pointer;")
+                            span.mr-2.d-none.d-lg-inline.small #{admin.userName}
+                            img.img-thumbnail.rounded-circle(src='/images/logoIcon.png' style="width:50px;")
+                            .dropdown-menu.avt
+                                .row
+                                    .col-12
+                                        a.dropdown-item(onclick="location.href='/settingQD6'")
+                                            i.fas.fa-cogs.fa-sm.fa-fw.mr-2.text-gray-400
+                                            | Cài đặt
+                                    .col-12
+                                        a.dropdown-item(onclick="location.href='/viewTicket'")
+                                            i.fas.fa-list.fa-sm.fa-fw.mr-2.text-gray-400
+                                            | Hoạt động 
+                                    .col-12
+                                        a.dropdown-item(onclick="location.href='/signup/admin'")
+                                            i.fas.fa-user-plus.fa-sm.fa-fw.mr-2.text-gray-400
+                                            | Tạo admin mới 
+                                    .col-12.dropdown-divider
+                                    .col-12
+                                        a.dropdown-item(onclick="location.href='/login/admin/logout'", data-target='#logoutModal')
+                                            i.fas.fa-sign-out-alt.fa-sm.fa-fw.mr-2.text-gray-400
+                                            | Đăng xuất
+                else if user
+                    .ml-auto.pl-4
+                        #userDropdown.dropdown.dropdown-toggle(data-toggle='dropdown', aria-expanded='false' style="cursor:pointer;")
+                            span.mr-2.d-none.d-lg-inline.small #{user.userName}
+                            img.img-thumbnail.rounded-circle(src=user.Avatar ? user.Avatar :'/images/logoIcon.png' style="width:50px;")
+                            .dropdown-menu.avt
+                                .row
+                                    .col-12
+                                        a.dropdown-item(onclick="location.href='/profile'")
+                                            i.fas.fa-user.fa-sm.fa-fw.mr-2.text-gray-400
+                                            | Hồ sơ
+                                    .col-12
+                                        a.dropdown-item(onclick="location.href='/viewTicket'")
+                                            i.fas.fa-list.fa-sm.fa-fw.mr-2.text-gray-400
+                                            | Hoạt động 
+                                    .col-12.dropdown-divider
+                                    .col-12
+                                        a.dropdown-item(onclick="location.href='/logout/dz9O7rfG629JL82P8ury'", data-target='#logoutModal')
+                                            i.fas.fa-sign-out-alt.fa-sm.fa-fw.mr-2.text-gray-400
+                                            | Đăng xuất
+                else
+                    #dn.ml-auto.p-2.bg-dark(style="border-radius:15px;outline:none;")
+                        a#login-home.ml-auto.py-2.px-0.px-lg-2.font-weight-bold.rounded.js-scroll-trigger.text-light(href="/login") Đăng nhập
+                    #dk.p-2.bg-dark.ml-2(style="border-radius:15px;outline:none;")
+                        a#signup-home.ml-auto.py-2.px-0.px-lg-2.font-weight-bold.rounded.js-scroll-trigger.text-light(href="/signup") Đăng ký
+    div.scrollTop.position-fixed(onclick="scrollToTop();")
+
+    block content
+
+    footer.footer-bottom.text-center.footer-class
+        .container-lg
+            .row
+                //-Footer Location
+                .col-sm-4.mb-4.mb-sm-0
+                    h4.text-uppercase.mb-4(style="color:white;") vị trí
+                    p.lead.mb-0(style="color:white;")
+                        | Trường Đại học Công nghệ Thông tin TPHCM
+                        br
+                        | Khu phố 6,Phường Linh Trung, TP. Thủ Đức
+                //- Footer Social Icons
+                .col-sm-4.mb-4.mb-sm-0
+                    h4.text-uppercase.mb-4(style="color:white;") Sky Airlines | Đồng hành cùng bạn
+                    a.btn.btn-outline-light.btn-social.mx-1(href="#")
+                        i.fab.fa-fw.fa-facebook-f
+                    a.btn.btn-outline-light.btn-social.mx-1(href="#")
+                        i.fab.fa-fw.fa-twitter
+                    a.btn.btn-outline-light.btn-social.mx-1(href="#")
+                        i.fab.fa-fw.fa-linkedin-in
+                    a.btn.btn-outline-light.btn-social.mx-1(href="#")
+                        i.fab.fa-fw.fa-dribbble
+                //- Footer About Text
+                .col-sm-4
+                    h4.text-uppercase.mb-4(style="color:white;") Về chúng tôi
+                    p.lead.mb-0(style="color:white;")
+                        | Quản lý bán vé chuyến bay - SE104.L22 
+                    b.text-uppercase(style="color:white;") team 12
+            div.copyright.py-4.text-center.text-white.container-xl
+                small(style="color:white;") Copyright © My Team-Group 12 2021
+    
+
+    script.
+        var swiper = new Swiper(".swiper-container", {
+        slidesPerView: 1,
+        spaceBetween: 0,
+        loop: true,
+        autoplay: {
+        delay: 2500,
+        disableOnInteraction: false,
+        },
+        pagination: {
+        el: ".swiper-pagination",
+        clickable: true
+        }
+        });
+
+        function hoverLi(){
+        document.getElementById("hover-li").style.color= "#f4942d";
+        };
+        function leaveLi(){
+        document.getElementById("hover-li").style.color= "#1f3c7a";
+        };
+        
+        function hoverLi2(){
+        document.getElementById("hover-li2").style.color= "#f4942d";
+        };
+        function leaveLi2(){
+        document.getElementById("hover-li2").style.color= "#1f3c7a";
+        };
+        
+        function hoverLi3(){
+        document.getElementById("hover-li3").style.color= "#f4942d";
+        };
+        function leaveLi3(){
+        document.getElementById("hover-li3").style.color= "#1f3c7a";
+        };
+        
+        window.addEventListener('scroll',()=>{
+            var scroll = document.querySelector('.scrollTop');
+            scroll.classList.toggle('actived',window.scrollY > 400)
+        });
+
+        function scrollToTop(){
+            //- window.scrollTo({
+            //-     top:0,
+            //-     behavior: 'smooth'
+            //- });
+            $("html, body").animate({scrollTop: 0 },"show");
+        };
+       
+    

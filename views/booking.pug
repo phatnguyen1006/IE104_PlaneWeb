@@ -1,0 +1,152 @@
+extends ./general.pug
+block content
+    .poster
+        //- img(src="/images/BookingTicket.jpg" style="width:100%;height:70vh;")
+    .container
+        if (notify == "Không tìm thấy chuyến bay.! Vui lòng chọn chuyến bay khác!!" && (typeof notify !== "undefined"))
+            div.bg-danger.mt-3.p-3(style="border-radius:7px;")
+                span.closebtn(onclick="this.parentElement.style.display='none';") &times;
+                h5.text-light #{notify}    
+    .list.p-3.container
+        a.mr-2(href="/") Trang chủ
+        i.mr-2.fas.fa-angle-right
+        span.mr-2 Đặt vé máy bay
+    .container-lg.mt-3.mb-5.bg-light.shadow
+        h2.text-center.text-dark.p-3 Đặt vé máy bay
+        form.form-group.container-lg(method="get" action="/flight-searching")
+            .row.p-2
+                .col-lg-5.mb-2
+                    label.font-weight-bold(for='booking' id="start") Điểm đi:
+                    select.select-form.form-control(id='booking', placehodler='Điểm đến' type="text" name="departureAirport")
+                        option Chọn điểm đi
+                        each place in Airports
+                            option= place.city 
+                .col-lg-1
+                    div.shadow.btn-exchange.my-1        
+                .col-lg-5.mb-2
+                    label.font-weight-bold(for='sel1') Điểm đến:
+                    select.select-form-1.form-control(id='sel1' name="arrivalAirport" )
+                        option Chọn điểm đến
+                        each local in Airports
+                            option= local.city
+                .col-lg-0
+                    input(type="hidden" name="_csrf" value=csrf)
+            .row.p-2
+                .col-lg-5.mb-2
+                    label.font-weight-bold(for='sellist1' id="start" ) Thời gian:
+                    input.form-control(type="date", value="" ,id="example-date-input", placehodler="dd//mm/yyyy", name="date" required) 
+                .col-lg-5.mb-2
+                    label.font-weight-bold(for='sel1') Số lượng:
+                    input.form-control(type="number" min="1" value="1" name="num" readonly="readonly") 
+                #buttonFind.col-lg-2
+                    button.mt-2.p-2.font-weight-bold(type="submit",name="sub", class="btn btn-outline-success" style="border-radius:10px;" value="1") Tìm chuyến bay
+    .content.container-lg.mt-5
+        .row
+            .col-lg-5.mb-3
+                strong Làm thủ tục trực tuyến qua website
+                h3.mt-3 Check-in online
+                .para.text-justify 
+                    | Bạn đã từng phải đến sân bay trước giờ khởi hành 
+                    | vài tiếng đồng hồ vì lo lắng không kịp check in? 
+                    | Bạn thường thấy sốt ruột khi xếp hàng 
+                    | sau cả dãy dài hành khách đứng chờ trước quầy check in?
+                .para.text-justify
+                    | √ Hệ thống làm thủ tục trực tuyến áp dụng cho các chuyến bay nội địa của Sky Airlines, xuất phát từ các sân bay sau: 
+                    | Nội Bài – Hà Nội (HAN), Đà Nẵng – Đà Nẵng (DAD), Tân Sơn Nhất – thành phố Hồ Chí Minh (SGN), Cam Ranh – Nha Trang (CXR)
+                .para.text-justify
+                    | √ Thoả thích lựa chọn chỗ ngồi theo nhu cầu khi làm thủ tục trực tuyến
+                button.font-weight-bold.mt-3(type="button" class="btn btn-outline-info" style="border-radius: 10px;" onclick="location.href='/'")  
+                    | Hướng dẫn đăng kí 
+        
+            .col-lg-7
+                img(src="/images/check-in-online.jpg" style="width:100%;")
+ 
+    .content.container-lg.mt-5.mb-3
+        .row
+            .col-lg-6.mb-3
+                img(src="/images/nang-hang-ve.jpg" style="width:100%;")
+            .col-lg-6
+                strong Làm cách nào để nâng hạng vé máy bay?
+                h3 Nâng hạng vé
+                .para.text-justify 
+                    | Để quý khách sử dụng dịch vụ trên các chuyến bay của Sky Airlines 
+                    | được linh động và thuận lợi, chúng tôi áp dụng nâng hạng 
+                    | từ hạng phổ thông Sky Economy lên hạng phổ thông đặc biệt Sky Premium 
+                    | hoặc hạng thương gia Sky Business để khách hàng có cơ hội trải nghiệm các dịch vụ 
+                    | đẳng cấp trên các chuyến bay của hãng.
+                button.font-weight-bold.mt-3(type="button" class="btn btn-outline-info" style="border-radius: 10px;" onclick="location.href='/'")  
+                    | Nâng hạng vé
+    script.
+         var sel = document.querySelector('.select-form');
+        var sel_1 = document.querySelector('.select-form-1');
+        var btnexchange = document.querySelector('.btn-exchange');
+        sel.addEventListener('change',()=>{
+            for(var j = 1; j <sel.length;j++)
+            {
+                if(sel_1[j].disabled == true && sel_1[j].value == sel.value){
+                    sel_1[j].disabled = true;
+                }
+                else{
+                    sel_1[j].disabled = false;
+                }
+            }
+            var i = sel.selectedIndex;
+            sel_1[i].disabled = true;
+            
+
+            
+        });
+        sel[0].disabled = true;
+        sel_1[0].disabled = true;
+        sel_1.addEventListener('change',()=>{
+            for(var j = 1; j <sel_1.length;j++)
+            {
+                if(sel[j].disabled == true && sel[j].value == sel_1.value){
+                    sel[j].disabled = true;
+                }
+                else{
+                    sel[j].disabled = false;
+                }
+                
+            }
+            var i = sel_1.selectedIndex;
+            sel[i].disabled = true;
+
+            
+        });    
+            
+        btnexchange.addEventListener('click',()=>{
+            var check = false;
+            var temp = sel.value;
+            console.log(sel.value);
+            if(sel.value == "Chọn điểm đi" && sel_1.value == "Chọn điểm đến"){
+                check = true;
+            }else{
+
+                sel.value = sel_1.value;
+                sel_1.value = temp;
+            }
+            for(var j = 1; j <sel.length;j++)
+            {
+                if(sel_1[j].disabled == true && sel_1[j].value == sel.value){
+                    sel_1[j].disabled = true;
+                }
+                else{
+                    sel_1[j].disabled = false;
+                }
+            }
+            var k = sel.selectedIndex;
+            sel_1[k].disabled = true;
+            for(var j = 1; j <sel_1.length;j++)
+            {
+                if(sel[j].disabled == true && sel[j].value == sel_1.value){
+                    sel[j].disabled = true;
+                }
+                else{
+                    sel[j].disabled = false;
+                }
+                
+            }
+            var l = sel_1.selectedIndex;
+            sel[l].disabled = true;
+        })

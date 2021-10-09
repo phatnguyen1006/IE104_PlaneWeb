@@ -1,0 +1,100 @@
+extends ./general.pug
+block content
+    .container
+        .row.setting-area.m-5
+            .col-lg-4.left-content-setting.bg-primary.shadow
+                .title-setting.pt-3
+                    h2.font-weight-bold.text-center Cài đặt
+                .item-setting-area.mt-4.text-center(style="list-style-type: none;z-index: 1;width: 100%;cursor:pointer;")
+                    li.item-setting
+                        a.item-setting-link(href="/settingQD6") Quản lý sân bay
+                    li.item-setting.active
+                        a.item-setting-link(href="/settingQD6/defaultDay") Thông số chi tiết
+                    li.item-setting
+                        a.item-setting-link(href="/settingQD6/ticketClass") Quản lý hạng vé
+                    li.item-setting
+                        a.item-setting-link(href="/settingQD6/flightSchedule") Thêm chuyến bay
+                        
+            .col-lg-8.right-content-setting.bg-light.shadow
+                if (notify == "Thay đổi giá trị thành công" && (typeof notify !== "undefined"))
+                    div.bg-success.mt-3.p-3(style="border-radius:7px;")
+                        span.closebtn(onclick="this.parentElement.style.display='none';") &times;
+                        h5.text-light #{notify}
+                if (notify == "Khôi phục tất cả giá trị ban đầu thành công" && (typeof notify !== "undefined"))
+                    div.bg-success.mt-3.p-3(style="border-radius:7px;")
+                        span.closebtn(onclick="this.parentElement.style.display='none';") &times;
+                        h5.text-light #{notify}
+                if (notify == "Khôi phục tất cả giá trị ban đầu thất bại" && (typeof notify !== "undefined"))
+                    div.bg-danger.mt-3.p-3(style="border-radius:7px;")
+                        span.closebtn(onclick="this.parentElement.style.display='none';") &times;
+                        h5.text-light #{notify}
+                
+                .content-setting.mb-3
+                    .title-update-info 
+                        h4.mt-4.font-weight-bold.text-center Quản lý thông số
+                    .explain.font-italic.mb-4    
+                        h5.font-weight-bold Hướng dẫn
+                        h6 1. Điền 1 số có giá trị từ 1 đến 5
+                        h6 2. Điền 1 số có giá trị từ 1 đến 5
+                        h6 3. Điền 1 số có giá trị từ 1 đến 15
+                        h6 4. Điền 1 số có giá trị từ 16 đến 30
+                        h6 5. Điền 1 số có giá trị từ 1 đến 5
+                        h6 6. Điền 1 số có giá trị từ 0 đến 2
+
+                    form.button-reset.mb-2(method="post" action="/settingQD6/reset" )
+                        input(type="hidden" name="_csrf" value=csrf)
+                        .row
+                            .col-sm-9
+                                h5 Khôi phục dữ liệu ban đầu
+                            .col-sm-3
+                                button.btn.btn-warning(type="submit") Đặt lại
+                    .content-update
+                        form.form-group(method="post" action="/settingQD6/DefaultDay")
+                            .row.mb-1
+                                .col-lg-9
+                                    label.mr-2.font-weight-bold (1) 
+                                    span Số sân bay trung gian tối đa cho một chuyến bay:
+                                .col-lg-3
+                                    input.form-control(type="number" name="maxIntermediateAirport" min=1 max=5 value=QD6.maxIntermediateAirport)
+                            .row.mb-1
+                                .col-lg-9
+                                    label.mr-2.font-weight-bold (2) 
+                                    span Thời gian bay tối thiểu của một chuyến bay ( đơn vị: phút )
+                                .col-lg-3
+                                    input.form-control(type="number" name="minFlightTime" min=0 value=QD6.minFlightTime)
+                            .row.mb-1
+                                .col-lg-9
+                                    label.font-weight-bold (3)
+                                    span  Thời gian dừng tại các sân bay trung gian tối thiểu 
+                                    span.font-italic  (đơn vị: phút)
+                                .col-lg-3
+                                    input.form-control(type="number" name="minStopTime" min=1 max=15 value=QD6.minStopTime)
+                            .row.mb-1
+                                .col-sm-9    
+                                    label.font-weight-bold (4)
+                                    span  Thời gian dừng tại các sân bay trung gian tối đa
+                                    span.font-italic  (đơn vị: phút)
+                                .col-sm-3
+                                    input.form-control(type="number" name="maxStopTime" min=15 max=30  value=QD6.maxStopTime)
+                            .row.mb-1
+                                .col-sm-9
+                                    label.font-weight-bold (5)
+                                    span  Số ngày chậm nhất để đặt vé trước ngày khởi hành
+                                    span.font-italic  (đơn vị: ngày)
+                                .col-sm-3
+                                    input.form-control(type="number" name="minTimeBookedTicket" min=1 max= 5 value=QD6.minTimeBookedTicket)
+                            .row.mb-4
+                                .col-sm-9
+                                    label.font-weight-bold (6) 
+                                    span  Số ngày vé đặt sẽ bị hủy nếu không chuyển thành vé mua
+                                    span.font-italic  (đơn vị: ngày)
+                                .col-sm-3
+                                    input.form-control(type="number" name="cancelTimeBookTicket" min=0 max= 2 value=QD6.cancelTimeBookTicket)
+                            .d-flex.justify-content-center.mt-2
+                                input(type="hidden" name="_csrf" value=csrf)
+                                button.btn.btn-primary(typr="submit") Lưu thay đổi
+                
+    
+        
+
+                                    

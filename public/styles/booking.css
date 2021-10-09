@@ -1,0 +1,15 @@
+.list.p-3.container a{
+    color: #1f3c7a;
+}
+.list.p-3.container a:hover{
+    color: #f4942d;
+}
+.poster{
+    background-image:url('/images/BookingTicket.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    height: 500px;
+    width: 100%;
+    
+}

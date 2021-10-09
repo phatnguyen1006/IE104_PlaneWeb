@@ -1,0 +1,36 @@
+
+.txt-field input:focus ~ label,
+.txt-field input:valid ~ label{
+    color: #f4942d;
+    transform:translateY(-25px);
+    transition: .5s;
+}
+.login-page{
+    background-image:url(/images/poste_man-6.jpg);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: auto;
+    width: 100%;
+    padding:50px 15px;
+}
+.alert {
+    padding: 20px;
+    background-color: #dc3545;
+    color: white;
+  }
+  
+  .closebtn {
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  .closebtn:hover {
+    color: black;
+  }

@@ -1,0 +1,302 @@
+*{
+    font-family: 'Quicksand', sans-serif;
+    /* color: #1f3c7a; */
+}
+body{
+    margin: 0 !important;
+    overflow-x: hidden;
+    background-color: #e6eaed !important;
+}
+
+/* .dropdown:hover > .dropdown-menu {
+    display: block;
+} */
+.dropdown-menu{
+    min-width: 30rem !important;
+    left: 0 !important;
+    
+}
+.avt{
+    min-width: 10rem !important;
+}
+.nav-link.py-2.px-0.px-lg-2.font-weight-bold.rounded.js-scroll-trigger{
+    color:#1f3c7a;
+}
+
+nav.navbar.navbar-expand-xl
+{
+    background-color: white;
+    padding: 0;
+}
+/* li.nav-item.mx-0.mx-lg-2.dropdown:hover{
+   
+    border-radius: 15px;
+    padding:0 7px;   
+} */
+a.dropdown-item:hover {
+    color:#f4942d !important;
+}
+#login-home:hover {
+    color: red !important;
+    text-decoration: none;
+}
+#signup-home:hover {
+    color: red !important;
+    text-decoration: none;
+}
+.error404{
+    background-image:url('/images/error404.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    height: 300px;
+    width: 100%;
+}
+
+/* optionn */
+option{
+    font-weight:bold !important;
+}
+@media (max-width: 1080px){
+    #dn, #dk{
+        background-color: white !important;
+    }
+    #login-home, #signup-home{
+        color: black !important;
+    }
+    #dk{
+        margin-left: 0 !important;
+    }
+}
+/* .nav-link.py-2.px-0.px-lg-2.font-weight-bold.rounded.js-scroll-trigger:hover{
+    color: #f4942d;
+    cursor: pointer;
+} */
+
+
+@media (max-width: 700px){
+    a.navbar-brand.js-scroll-trigger{
+        width:70% !important;
+    }
+  
+    .navbar-brand {
+        display: inline-block;
+        padding-top: .3125rem;
+        padding-bottom: .3125rem;
+        margin-right: 0 !important;
+        font-size: 1.25rem;
+        line-height: inherit;
+        white-space: nowrap;
+        width: 150px !important;
+    }
+}
+
+.navbar-brand {
+    display: inline-block;
+    padding-top: .3125rem;
+    padding-bottom: .3125rem;
+    margin-right: 0 !important;
+    font-size: 1.25rem;
+    line-height: inherit;
+    white-space: nowrap;
+    /* width: 150px !important; */
+}
+
+button.navbar-toggler.navbar-toggler-right.font-weight-bold.bg-primary.text-white.rounded{
+    outline: none;
+}
+.flight-btn:hover{
+    font-weight: bold;
+}
+
+.hidden-detail-flight, .hidden-ticket{
+    margin-top: 3px;
+    height: 0;
+    opacity: 0;
+    /* transition: .5s all linear; */
+    overflow: hidden;
+    padding:0;
+}
+.h-appear{
+    height: auto;
+    opacity: 1;
+    display: block;
+}
+.info-payment{
+    display: none;
+}
+.hide-appear{
+    display: block;
+}
+.ticket-appear{
+    height: 480px;
+    opacity: 1;
+    display: block;
+}
+.imgFlight{
+    width:70%;
+}
+@media (max-width: 920px){
+    .h-appear{
+        height: auto;
+    }
+    .ticket-appear{
+        height: auto;
+    }
+    .title-flight, .title-report{
+        font-size: 20px;
+    }
+    .title-chose-flight{
+        font-size: 18px;
+    }
+    .poster-search{
+        height: 50vh !important;
+    }
+}
+@media (max-width: 421px){
+    .hide-appear{
+        height: 50px;
+    }
+}
+@media (max-width: 413px){
+    .area{
+        flex-direction:column !important;
+        display: flex !important;
+        align-items: center;
+    }
+    .btn-change{
+        margin-bottom: 5px;
+    }
+}
+
+@media (max-width: 576px){
+    .row.text-right,.row.text-left{
+        text-align: center !important;
+    }
+    .imgFlight{
+        width: 40%;
+    }
+    .logo-MaCb-price{
+        margin: 10px;
+    }
+    .dropdown-menu{
+        min-width: 10rem !important;
+    }
+    .text-btn-area{
+        flex-direction: column !important;
+        display: flex !important;
+        align-items: center;
+    }
+    
+}
+footer{
+    padding: 4rem 0 0 0;
+    background:#1d262d;
+    /* position: absolute;
+    bottom: 0;
+    width: 100%; #20232a*/
+    
+}
+.footer-class{
+    margin-top: 25vh;
+}
+/* ======================================= */
+/* setting qd6 */
+.left-content-setting{
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+    height:auto;
+    border-top-left-radius:15px;
+    border-bottom-left-radius:15px;
+}
+.right-content-setting{
+    height:auto;
+    border-top-right-radius:15px;
+    border-bottom-right-radius:15px;
+}
+
+.item-setting {
+    
+    line-height: 50px;
+}
+.item-setting a{
+    color: black;
+    text-decoration: none;
+}
+.item-setting a:hover{
+    text-decoration: none;
+    color: #f4942d;
+
+}
+.active{
+    background:#ffffff;
+    
+}
+/* -============== */
+/* btn- exchange */
+.btn-exchange{
+   width:30px;height:30px;border-radius:50%;
+    background: #fff url('/images/exchange.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 20px;
+    cursor:pointer;
+    /* transform:translateY(30px); */
+    transform:translate(15px,30px)
+}
+@media (max-width: 991px){
+    .btn-exchange{
+        transform:translate(0);
+    }
+    .left-content-setting{
+        padding-right: 0 !important;
+        padding-left: 0 !important;
+        height:auto;
+        border-top-left-radius:15px;
+        border-top-right-radius:15px;
+        border-bottom-left-radius:0;
+    }
+    .right-content-setting{
+        height:auto;
+        border-bottom-right-radius:15px;
+        border-bottom-left-radius:15px;
+        border-top-right-radius:0;
+        
+    }
+}
+/* =========================== */
+/* scroll top */
+.scrollTop{
+    bottom:800px;right:30px;width:50px;height:50px;border-radius:5px;z-index:100000;
+    background: #f4942d url('/images/arrow-up.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 40px;
+    cursor:pointer;
+    visibility: hidden;
+    opacity: 0;
+    transition: 0.5s;
+}
+.scrollTop:hover{
+    background-color:dodgerblue;
+}
+.scrollTop.actived{
+    visibility: visible;
+    bottom: 20px;
+    opacity: 1;
+}
+/* ==========table */
+.table thead th {
+    vertical-align: top !important;
+    border-bottom: 2px solid #dee2e6;
+}
+
+
+/* =======profile */
+@media (max-width: 767px){
+    .menu{
+        flex-direction: column !important;
+        align-items: center;
+        text-align: center;
+    }
+}

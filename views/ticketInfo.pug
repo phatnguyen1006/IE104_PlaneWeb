@@ -1,0 +1,195 @@
+extends ./general.pug
+block content
+    .background-area(style="background:#0770cd;height:152px;margin-bottom:-50px;")
+    .info-area.container
+        if flight
+            .row#title-flight-info.bg-warning
+                .col-12.my-3
+                    if flight
+                        h3 Chuyến bay từ #{flight.ChuyenBay}
+                        h4.text-dark.font-weight-bold #{flight.NgayGio.toLocaleDateString()} | #{hour_depart} giờ #{minute_depart} phút
+                    else 
+                        h3
+                        h6
+            form.form-ticketInfo(method="post" action="ticketInfo/payment" form="form")
+                .row.mt-4.mb-3
+                    .col-lg-7#info-passenger.mb-3
+                        h5.text-uppercase.font-weight-bold Thông tin hành khách
+                        .p-3.shadow.bg-white(style="height:auto;border-radius:5px;")
+                            .row.mt-2
+                                .col-lg-12.mb-1
+                                    label.labels Họ và tên
+                                    input.form-control( type='text',id="info-passenger-ip", placeholder='Nguyễn Văn A', required, value='', oninput="output1();")
+                                .col-lg-12.mb-1
+                                    label.labels Số điện thoại
+                                    input.form-control(type='tel',id="info-phone-ip", placeholder='0123456789', required , value='', oninput="output3();")
+                                .col-lg-12.mb-1
+                                    label.labels Địa chỉ
+                                    input.form-control(type='text', placeholder='enter address', required , value='')
+                            .row.mt-3
+                                .col-lg-6.mb-1
+                                    label.labels CMND
+                                    input.form-control(type='text', id="info-cmnd-ip", placeholder='215xxxxxxxxx', required , value='', oninput="output2();")
+                                .col-lg-6.mb-1
+                                    label.labels Ngày sinh
+                                    input.form-control(type='text', placeholder='dd/mm/yyyy', required , value='')
+                                .col-lg-6.mb-1
+                                    label.labels Gmail
+                                    input.form-control(type='text',value="", required  placeholder='gmail')
+                                .col-lg-6
+                                    label.labels Quốc gia
+                                    input.form-control(type='text', placeholder='country', required , value='')
+                
+                    .col-lg-5#info-ticket
+                        h5.text-uppercase.font-weight-bold Thông tin vé 
+                            case ticketType
+                                when "1": span mua
+                                when "0": span đặt
+                                default: span mua/đặt
+                        .p-3.shadow.bg-white(style="height:auto;border-radius:5px;")
+                            .row.mt-2
+                                input(type="hidden" name="_csrf" value=csrf)
+                                .col-lg-12.mb-1
+                                    label.labels.text-dark Chuyến bay
+                                    input.form-control.bg-light(name="flightCode" type='text' id="info-codeFlight" readonly="readonly" value=flight ? flight.MaCB : "")
+                                .col-lg-12.mb-1
+                                    label.labels Hành trình
+                                    input.form-control.bg-light(name="journey" type='text' id="info-journey" readonly value=flight ? flight.ChuyenBay: "")
+                                .col-lg-12.mb-1
+                                    label.labels Hành khách
+                                    input.form-control.bg-light(name="name" type='text',id="info-passenger-op", value='' , readonly="readonly" )
+                                .col-lg-6.mb-1
+                                    label.labels CMND
+                                    input.form-control.bg-light(name="personalId" type='text',id="info-cmnd-op", value='' readonly="readonly")
+                                .col-lg-6.mb-2
+                                    label.labels Số điện thoại
+                                    input.form-control.bg-light(name="phone" type='text',id="info-phone-op", value='' readonly="readonly")
+                                .col-lg-6.mb-1
+                                    label.lables Hạng vé
+                                    input.form-control(type="text" id="info-class-op" readonly)
+                                .col-lg-6.mb-1
+                                    label.labels Giá tiền
+                                        span#hidden_price(style="display:none;")=flight? flight.GiaVe : ""
+                                    input.form-control.bg-light(type='text',id="info-price",readonly="readonly")
+                                    input.form-control.bg-light(type='hidden',id="price",name="price", readonly="readonly")
+                                    input(type="hidden"  id="info-ticketType" name="ticketType" value=ticketType)
+                                    input.PurDate(type="hidden"  id="info-Date-Buy_Ticket" name="ticketDate" value='')
+                            .row.mt-2
+                                .col-6        
+                                    button.btn.btn-info.p-2(type='button', data-toggle='modal', data-target='#myModal') Chọn hạng vé
+                                    #myModal.modal.fade
+                                        .modal-dialog
+                                            .modal-content
+                                                .modal-header
+                                                    h4.modal-title Chọn hạng vé
+                                                    button.close(type='button', data-dismiss='modal') &times;
+                                                .modal-body
+                                                    .row
+                                                        .col-sm-12.p-2.div-error-add-ticket(style="display:none")
+                                                            h6.error-modal.text-light
+                                                    .row
+                                                        .col-12
+                                                            b Hãy chọn 1 trong các hạng vé dưới đây:
+                                                        .col-12
+                                                            if HangVe 
+                                                                each hang in HangVe
+                                                                    input.RadioClass.mr-2(name="class" value=hang.maHangVe type="radio" required) 
+                                                                    label.ten-hang-ve #{hang.tenHangVe}
+                                                                    br
+                                                .modal-footer.d-flex.justify-content-center
+                                                    button.btn.btn-secondary(type="button" data-dismiss="modal") Đóng
+                                .col-6
+                                    .info-payment
+                                        if flight
+                                        div(style="display:none;")
+                                            each fl in flight.DSHangVe
+                                                b.GTrong #{fl.SGTrong}
+                                            each tiLe in HangVe 
+                                                b.ma-hang-ve #{tiLe.maHangVe}
+                                                br
+                                                b.ti-le-tien #{tiLe.tiLeTien}
+                                                br
+                                        div
+                                            if flight
+                                                button.btn.btn-primary.profile-button.p-2(type='submit') Thanh toán
+                                            else
+                                                button.btn.btn-primary.profile-button.p-2(type='submit' disabled) Thanh toán
+
+        else    
+            div(style="background:url('/images/error404.png');backgound-size:cover;height:50vh;width:100%;background-repeat: no-repeat;background-position:center center;")
+    script.
+        // các hàm oninput
+        function output1(){
+        var text = document.getElementById("info-passenger-ip").value;
+        document.getElementById("info-passenger-op").value = text;
+        }
+        function output2(){
+        var text = document.getElementById("info-cmnd-ip").value;
+        document.getElementById("info-cmnd-op").value = text;
+        }
+
+        function output3(){
+        var text = document.getElementById("info-phone-ip").value;
+        document.getElementById("info-phone-op").value = text;
+        }
+        //set value cho 2 ô giá tiền và tiền
+        var ticket = document.getElementById("info-ticketType").value;
+        function setPr(a,b){
+            return parseInt(a * b);
+        }
+        function setPrice_t(value){
+            return value * 0.3;
+        }
+        var value_price = document.getElementById('hidden_price');
+        // set value price cho vé đặt
+        if(ticket=="1")
+        {
+        value_price.innerHTML = value_price.innerHTML;
+        }
+        else{
+        value_price.innerHTML = setPrice_t(value_price.innerHTML);
+        }
+
+        //-- Chọn hạng vé và set giá tiền
+        var code = document.querySelectorAll('.ma-hang-ve');
+        var rank = document.querySelectorAll('.ti-le-tien');
+        const Radio = document.querySelectorAll(".RadioClass");
+        const Pay = document.querySelector(".info-payment");
+        var Nameclass = document.querySelectorAll('.ten-hang-ve');
+        var Seat = document.querySelectorAll('.GTrong');
+
+        for(var i =0; i < Seat.length;i++)
+        {   
+            console.log(Seat[i].innerHTML);
+            if(Seat[i].innerHTML == "0")
+            {
+                Radio[i].disabled = true;
+                Nameclass[i].style.opacity = "0.5";
+            }
+        }
+
+
+        Radio.forEach(function (flight,index) {
+        flight.addEventListener("click", function handle() {
+            document.getElementById('info-class-op').type = "text";
+            document.getElementById('info-class-op').value = Nameclass[index].innerHTML;
+        for(var i = 0 ; i < code.length; i++ ){
+            if(flight.value == code[i].innerHTML){  
+                //console.log(rank[i].innerHTML);
+                if(ticket == "1"){ 
+                document.getElementById("info-price").value= setPr(rank[i].innerHTML,value_price.innerHTML) + " VND" ;
+                document.getElementById("price").value= setPr(rank[i].innerHTML,value_price.innerHTML) ;
+                }
+                else
+                {
+                document.getElementById("info-price").value= setPr(rank[i].innerHTML,value_price.innerHTML) + " VND";           
+                document.getElementById("price").value= setPr(rank[i].innerHTML,value_price.innerHTML) ;
+                }
+            }
+        }
+        if (Pay.classList.contains('info-payment')) {
+        Pay.classList.add('hide-appear');
+        } 
+        })
+        });
+        

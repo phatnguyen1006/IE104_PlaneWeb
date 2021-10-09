@@ -1,0 +1,223 @@
+extends ./general.pug
+    
+block content         
+    .swiper-container
+        .swiper-wrapper
+            .swiper-slide
+                img(src='/images/poster_main-4.jpg', style='width: 100%;height:40vw;')
+            .swiper-slide
+                img(src='/images/poster_main-2.jpg', style='width: 100%;height:40vw;')
+            .swiper-slide 
+                img(src='/images/poster_main-3.jpg', style='width: 100%;height:40vw;')           
+            .swiper-slide 
+                img(src='/images/poster_main-1.jpg', style='width: 100%;height:40vw;')
+            .swiper-slide 
+                img(src='/images/poster_main-5.jpg', style='width: 100%;height:40vw;')
+        .swiper-pagination
+
+    .booking-area.p-4.my-3
+        form.form-group.container-lg.shadow(action="/flight-searching", method="get")
+            .d-flex.mx-2.my-1
+                    a.mr-2.flex-fill(href="/booking" type="button", class="btn btn-md-2", style="width:20%;background:" )
+                        i.fas.fa-fw.fa-search-location
+                        |  Đặt vé 
+                    a.flex-fill(href="/viewTicket", type="button", class="btn btn-md-2", style="width:20%;") 
+                        i.fas.fa-fw.fa-plane-departure
+                        |  Lịch sử mua đặt vé
+            
+            .row.p-2
+                .col-lg-5.mb-2
+                    label.font-weight-bold(for='booking' id="start") Điểm đi:
+                    select.select-form.form-control(id='booking' type="text" name="departureAirport" required)
+                        option Chọn điểm đi
+                        each place in Airports
+                            option= place.city 
+                .col-lg-1
+                    div.shadow.btn-exchange.my-1
+                        
+                .col-lg-5.mb-2
+                    label.font-weight-bold(for='sel1') Điểm đến:
+                    select.select-form-1.form-control(id='sel1' name="arrivalAirport" required )
+                        option Chọn điểm đến
+                        each local in Airports
+                            option= local.city
+                .col-lg-0 
+                    input(type="hidden" name="_csrf" value=csrf)
+            .row.p-2
+                .col-lg-5.mb-2
+                    label.font-weight-bold(for='sellist1' id="start" ) Thời gian:
+                    input.form-control(type="date", value="" ,id="example-date-input", placehodler="dd//mm/yyyy", name="date" required) 
+                .col-lg-5.mb-2
+                    label.font-weight-bold(for='sel1') Số lượng:
+                    input.form-control(type="number" min="1" value="1" name="num" readonly="readonly") 
+                #buttonFind.col-lg-2(style="transform:translateY(-15px);")
+                    button.mt-2.p-2.font-weight-bold(type="submit",name="sub", class="btn btn-outline-success" style="border-radius:10px;" value="1") Tìm chuyến bay
+            
+    .content-container.container-lg
+        .row.p-2
+            .quick-link.col-md.mb-3
+                h4.mb-3(style="color:#f4942d") Liên kết nhanh
+                .row
+                    .col-md-6.col-sm-6.mb-3
+                        a(href="/booking")
+                            i.mr-2.fas.fa-star
+                            | Tìm chuyến bay
+                    .col-md-6.col-sm-6.mb-3
+                        a(href="/booking") 
+                            i.mr-2.fas.fa-ticket-alt
+                            |Đặt vé
+                    .col-md-6.col-sm-6.mb-3
+                        a(href="/settingQD6") 
+                            i.mr-2.fas.fa-fw.fa-plane-departure
+                            | Sân bay 
+                    .col-md-6.col-sm-6.mb-3
+                        a(href="/")
+                            i.mr-2.fas.fa-check
+                            | Check-in Online
+                    .col-md-6.col-sm-6.mb-3
+                        a(href="/") 
+                            i.mr-2.fas.fa-utensils
+                            |Du lịch
+                    .col-md-6.col-sm-6.mb-3
+                        a(href="/blogs/quy-nhon") 
+                            i.mr-2.fas.fa-question-circle
+                            | Quy Nhơn
+                    .col-md-6.col-sm-6
+                        a(href="/blogs/ha-noi") 
+                            i.mr-2.fas.fa-suitcase-rolling
+                            |Khám phá Hà Nội
+                        
+                        
+            .offer-wrapper.col-sm.mb-3
+                h4(style="color:#f4942d") Ưu đãi
+                a
+                    img(src="/images/Uudai_dichvu_1.png" style="width:100%;border-radius:5px;")
+            .destination.col-sm
+                h4(style="color:#f4942d") Điểm đến nổi bật 
+                a(href="#booking")
+                    img(src="/images/Hue_main_2.webp"  style="width:100%;border-radius:5px;")
+                    
+    
+    #parallax1.parallax
+        .bg1.parallax-bg
+        .parallax-content(style="height:100%;")
+            .container
+                .row
+                    .col-sm-10
+                        .txt1(style="font-size: 48px;font-weight: 800;color: #f4942d;") Đường bay giá siêu rẻ
+                        .txt2(style="color:white;")
+                            | Nhằm nâng cao trải nghiệm và tạo thuận lợi cho hành khách trong việc di chuyển đến 
+                            | sân bay một cách nhanh chóng và an toàn, Sky Airlines xin giới thiệu và dành tặng dịch vụ di chuyển 
+                            | không âu lo cho tất cả khách hàng đặt vé và thực hiện chuyến bay của chúng tôi. 
+                        .txt3.font-weight-bold(style="padding-top: 10px;color: #f4942d;font-size: 30px;")
+                            | Ưu đãi chỉ với 
+                            span(style="color:white;font-size:40px") 36.000đ
+                    .col-sm-2.mt-5
+                        a.btn-success.btn.mt-3.p-3(href='/blogs/phu-quoc' style="position:relative;") Khám phá ngay
+    .content-tour#features.p-4
+        .container
+            .row.mb-3
+                .col-lg-12
+                    h3.text-center.text-uppercase Thắng cảnh Việt Nam
+            .row
+                .col-lg-4.col-md-4.col-xs-4
+                    a(href="/blogs/da-nang")
+                        img.mb-2(src='/images/Danang_1.jpg' style="width:100%;height:200px;border-radius:5px;")
+                    h4.text-center Thành phố đáng sống nhất
+                    p.text-center
+                        | Là thành phố lớn nhất miền Trung, Đà Nẵng khoác lên mình sự nhộn nhịp 
+                        | và huyên náo của một trung tâm kinh tế - văn hóa lớn nhất khu vực.
+                .col-lg-4.col-md-4.col-xs-4
+                    a(href="/blogs/quy-nhon")
+                        img.mb-2(src='https://www.vietnamairlines.com/~/media/Images/Discovery/Vietnam/QUYNHON/canh%20dep/1920x1080/Quynhon_canhdep_dam_thi_nai_1920x1080.jpg' style="width:100%;height:200px;border-radius:5px;")
+                    h4.text-center Thành phố biển Quy Nhơn
+                    p.text-center
+                        | Cảnh đẹp Quy Nhơn với biển xanh, cát trắng, nắng vàng là điểm đến
+                        | thu hút đã làm xao xuyến biết bao trái tim người lữ khách. 
+                .col-lg-4.col-md-4.col-xs-4
+                    a(href="/blogs/phu-quoc")
+                        img.mb-2(src='https://www.vietnamairlines.com/~/media/Images/Discovery/Vietnam/PHUQUOC/canh%20dep/1920x1080/Phuquoc_canhdep_cau_go_1920x1080.jpg' style="width:100%;height:200px;border-radius:5px;")
+                    h4.text-center Phú Quốc - Hòn Ngọc Quý
+                    p.text-center
+                        | Đảo Phú Quốc được mệnh danh là hòn ngọc quý của Việt Nam. Vẻ đẹp thơ mộng, 
+                        | yên bình hiện hữu trong làn nước biển trong veo màu ngọc bích,
+
+    script.
+        var sel = document.querySelector('.select-form');
+        var sel_1 = document.querySelector('.select-form-1');
+        var btnexchange = document.querySelector('.btn-exchange');
+        
+        sel.addEventListener('change',()=>{
+            var check = false;
+            console.log(check);
+            for(var j = 1; j <sel.length;j++)
+            {
+                if(sel_1[j].disabled == true && sel_1[j].value == sel.value){
+                    sel_1[j].disabled = true;
+                }
+                else{
+                    sel_1[j].disabled = false;
+                }
+            }
+            var i = sel.selectedIndex;
+            sel_1[i].disabled = true;
+             
+        });
+
+        sel[0].disabled = true;
+        sel_1[0].disabled = true;
+        sel_1.addEventListener('change',()=>{
+             var check = false;
+            console.log(check);
+            for(var j = 1; j <sel_1.length;j++)
+            {
+                if(sel[j].disabled == true && sel[j].value == sel_1.value){
+                    sel[j].disabled = true;
+                }
+                else{
+                    sel[j].disabled = false;
+                }
+                
+            }
+            var i = sel_1.selectedIndex;
+            sel[i].disabled = true;
+
+            
+        });
+    
+        btnexchange.addEventListener('click',()=>{
+            var check = false;
+            var temp = sel.value;
+            console.log(sel.value);
+            if(sel.value == "Chọn điểm đi" && sel_1.value == "Chọn điểm đến"){
+                check = true;
+            }else{
+
+                sel.value = sel_1.value;
+                sel_1.value = temp;
+            }
+            for(var j = 1; j <sel.length;j++)
+            {
+                if(sel_1[j].disabled == true && sel_1[j].value == sel.value){
+                    sel_1[j].disabled = true;
+                }
+                else{
+                    sel_1[j].disabled = false;
+                }
+            }
+            var k = sel.selectedIndex;
+            sel_1[k].disabled = true;
+            for(var j = 1; j <sel_1.length;j++)
+            {
+                if(sel[j].disabled == true && sel[j].value == sel_1.value){
+                    sel[j].disabled = true;
+                }
+                else{
+                    sel[j].disabled = false;
+                }
+                
+            }
+            var l = sel_1.selectedIndex;
+            sel[l].disabled = true;
+        })
+               

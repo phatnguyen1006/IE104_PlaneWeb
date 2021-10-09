@@ -1,0 +1,276 @@
+
+.flex-container {
+  display: flex;
+  flex-wrap: wrap;
+  text-align: left;
+}
+  
+  .flex-item1{
+    background-color: #f1f1f1;
+    padding: 10px;
+    flex: 20%;
+  }
+  
+  
+  
+  a.linkurl:link {
+    color: black;
+    text-decoration:none;
+  }
+  
+  /* visited link */
+  a.linkurl:visited {
+    color: black;
+  }
+  
+  /* mouse over link */
+  a.linkurl:hover {
+    color: black;
+    text-decoration:underline;
+  }
+  
+  /* selected link */
+  a.linkurl:active {
+    color: blue;
+  }
+  
+  
+  
+  
+  
+  .imgcontainer{
+      width:33.33%;
+      padding:10px;
+      float:left;
+      background-color:white;
+      padding-top:50px;
+      padding-bottom:50px;
+      }
+  .imgtext {
+    position: absolute;
+    bottom: 16px;
+    left: 16px;
+    font-size: 16px;
+  }
+
+  .row1 {
+    display: -ms-flexbox; /* IE10 */
+    display: flex;
+    -ms-flex-wrap: wrap; /* IE10 */
+    flex-wrap: wrap;
+    padding: 0 ;
+  }
+  
+  /* Create four equal columns that sits next to each other */
+  .column {
+    -ms-flex: 50%; /* IE10 */
+    flex: 50%;
+    max-width: 50%;
+    padding: 0 4px;
+  }
+  .column1{
+      flex:50%;
+      max-width:50%;
+      
+      }
+  
+  .column img {
+    margin-top: 8px;
+    vertical-align: middle;
+    width: 100%;
+  }
+  .ab{
+      padding-left:10% !important;
+      padding-right:10% !important;
+      text-align:justify;
+      padding-bottom: 30px;
+      }
+    
+  .abc{
+      /* margin-left:100px;
+      margin-right:100px; */
+      text-align:justify;
+      }
+  .container1 {
+    position: relative;
+    padding:50px;
+    width:100%;
+    overflow: hidden;
+    padding-top: 56.25%; /* 16:9 Aspect Ratio */
+  }
+  .responsive-iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+  
+  
+  
+  
+  /* Responsive layout - makes a two column-layout instead of four columns */
+  
+  /* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
+  
+  @media screen and (max-width: 1000px) {
+    .column {
+      -ms-flex: 100%;
+      flex: 100%;
+      max-width: 100%;
+    }
+    .ab{
+    padding-left:20%;
+    padding-right:20%;
+    text-align:justify;}
+    /* .abc{
+      margin-left:100px;
+      margin-right:100px;
+      } */
+  @media screen and (max-width: 800px) {
+      
+    .column {
+      -ms-flex: 100%;
+      flex: 100%;
+      max-width: 100%;
+    }
+  
+    .flex-item1 {
+      flex: 50%;
+    }
+  
+    .flex-item1{
+        flex:50%;
+      }
+    .ab{
+    padding-left:5px;padding-right:5px;text-align:justify;}
+    .imgcontainer{
+    width:100%;
+    padding-top:20px;
+    padding-bottom:20px;
+    }
+        
+    
+  }
+  
+  p{
+          font-size:16px;
+        }
+       }
+  
+  
+  
+  
+  
+  /* The Modal (background) */
+  .modal1 {
+    display: block;
+    /* position: fixed; */
+    z-index: 1;
+    padding-top: 100px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    overflow: auto;
+    
+  }
+  
+  img.imgshow{
+    width:50px;
+  }
+  /* Modal Content */
+  .modal-content {
+    position: relative;
+    background-color: #fefefe;
+    margin: auto;
+    padding: 0;
+    width: 90%;
+    max-width: 1200px;
+  }
+  
+  /* The Close Button */
+  span.close {
+    color: red;
+    /* position: absolute; */
+    top: 10px;
+    right: 25px;
+    font-size: 35px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  .mySlides {
+    display: none;
+  }
+
+  /* Next & previous buttons */
+  .prev,
+  .next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: auto;
+    padding: 16px;
+    margin-top: -50px;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+    transition: 0.6s ease;
+    border-radius: 0 3px 3px 0;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  
+  /* Position the "next button" to the right */
+  .next {
+    right: 0;
+    border-radius: 3px 0 0 3px;
+  }
+  
+  /* On hover, add a black background color with a little bit see-through */
+  .prev:hover,
+  .next:hover {
+    background-color: white;
+    opacity:0.2;
+    text-decoration:none;
+  }
+  
+  /* Number text (1/3 etc) */
+  .numbertext {
+    color: #f2f2f2;
+    font-size: 12px;
+    padding: 8px 12px;
+    position: absolute;
+    top: 0;
+  }
+  
+  img {
+    margin-bottom: -4px;
+  }
+  
+  .caption-container {
+    text-align: center;
+    background-color: black;
+    padding: 2px 16px;
+    color: white;
+  }
+  
+  .demo {
+    opacity: 0.6;
+  }
+  
+  .active,
+  .demo:hover {
+    opacity: 1;
+  }
+  
+  img.hover-shadow {
+    transition: 0.3s;
+  }
+  
+  .hover-shadow:hover {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }

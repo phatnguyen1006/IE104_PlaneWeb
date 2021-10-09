@@ -1,0 +1,224 @@
+extends ./general.pug
+block content
+    .container
+        .row.setting-area.m-5
+            .col-lg-4.left-content-setting.bg-primary.shadow
+                .title-setting.pt-3
+                    h2.font-weight-bold.text-center Cài đặt
+                .item-setting-area.mt-4.text-center(style="list-style-type: none;z-index: 1;width: 100%;cursor:pointer;")
+                    li.item-setting
+                        a.item-setting-link(href="/settingQD6") Quản lý sân bay
+                    li.item-setting
+                        a.item-setting-link(href="/settingQD6/defaultDay") Thông số chi tiết
+                    li.item-setting.active
+                        a.item-setting-link(href="/settingQD6/ticketClass") Quản lý hạng vé
+                    li.item-setting
+                        a.item-setting-link(href="/settingQD6/flightSchedule") Thêm chuyến bay
+                        
+            .col-lg-8.right-content-setting.bg-light.shadow
+                if (notify == "Xoá hạng vé thành công" && (typeof notify !== "undefined"))
+                    div.bg-success.mt-3.p-3(style="border-radius:7px;")
+                        span.closebtn(onclick="this.parentElement.style.display='none';") &times;
+                        h5.text-light #{notify}
+                if (notify == "Thay đổi hạng vé thành công" && (typeof notify !== "undefined"))
+                    div.bg-success.mt-3.p-3(style="border-radius:7px;")
+                        span.closebtn(onclick="this.parentElement.style.display='none';") &times;
+                        h5.text-light #{notify}
+                if (notify == "Thêm hạng vé thành công" && (typeof notify !== "undefined"))
+                    div.bg-success.mt-3.p-3(style="border-radius:7px;")
+                        span.closebtn(onclick="this.parentElement.style.display='none';") &times;
+                        h5.text-light #{notify}
+                if (notify == "Xoá hạng vé thất bại. Hạng vé này đã tồn tại trong danh sách lịch chuyến bay rồi!" && (typeof notify !== "undefined"))
+                    div.bg-danger.mt-3.p-3(style="border-radius:7px;")
+                        span.closebtn(onclick="this.parentElement.style.display='none';") &times;
+                        h5.text-light #{notify} 
+
+                .content-setting.mb-3
+                    .title-ticket.mb-2
+                        h4.mt-4.font-weight-bold.text-center Quản lý hạng vé
+                        button.btn.btn-info.mb-2(type='button', data-toggle='modal', data-target='#myModal') Thêm hạng vé
+                        form#myModal.modal.fade(method="post" action="/settingQD6/addHV")
+                            .modal-dialog
+                                .modal-content
+                                    .modal-header
+                                        h4.modal-title.font-weight-bold Thêm hạng vé mới
+                                        button.close(type='button', data-dismiss='modal') &times;
+                                    .modal-body
+                                        .title.font-italic
+                                            h6 Một hạng vé gồm 3 thông tin sau đây:
+                                                ul
+                                                    li Mã hạng vé 
+                                                        h6 (nhập ít nhất 1 chữ số bất kì trở lên) 
+                                                        h6.font-weight-bold VD: 1 , 20 , 10, 4
+                                                    li Tỉ lệ giá tiền
+                                                        h6 (nhập số bất kì có giá trị từ 1 trở lên) có công sai 0.05
+                                                        h6.font-weight-bold VD: 1.25 , 1.05 , 2.5 , 2.15
+                                                    li Tên hạng vé
+                                                        h6 (nhập 1 chuỗi kí tự)
+    
+                                            h6.text-danger * : Bắt buộc  
+                                        .row
+                                            .col-sm-12.p-2.div-error-add-ticket(style="display:none")
+                                                h6.error-modal.text-light
+                                        .row
+                                            .col-sm-5
+                                                label.font-weight-bold Mã hạng vé
+                                                    span.text-danger * 
+                                                input.form-control.ma-hang-ve-input.class-ticket-one(type="number" name="maHangVe" min=1 required)
+                                            .col-sm-5 
+                                                label.font-weight-bold Tỉ lệ giá tiền
+                                                    span.text-danger * 
+                                                input.form-control#class-ticket-one(type="number" name="tiLeTien" value="1" min=1 step="0.05" required)
+                                            .col-sm-12.mt-2 
+                                                label.font-weight-bold Tên hạng vé
+                                                    span.text-danger * 
+                                                input.form-control#class-ticket-two(type="text" name="tenHangVe" placeholder="Hạng ..." required value="Hạng ")
+                                    .modal-footer.d-flex.justify-content-center
+                                        input(type="hidden" name="_csrf" value=csrf)
+                                        button.btn.btn-secondary(type="button" data-dismiss="modal") Đóng
+                                        button.btn.btn-success.btn-add-ticket(type='submit' disabled) Thêm
+                    if hangVe.length > 0     
+                        .content-update-ticket.mt-3
+                            .row
+                                .col-sm-12.mb-1 
+                                    h4.font-weight-bold Danh sách các hạng vé
+                                .col-sm-12
+                                    .table-responsive
+                                        table.table.table-hover.table-striped.text-nowrap
+                                            thead
+                                                tr
+                                                    th(scope='col').text-center Mã hạng vé
+                                                    th(scope='col').text-center Tên Hạng Vé
+                                                    th(scope='col').text-center Tỉ lệ 
+                                                    th(scope='col')  
+                                                    th(scope='col')
+                                            
+                                            for ve in hangVe
+                                                tbody
+                                                    tr
+                                                        th(scope='row').ma-hang-ve-table.text-center #{ve.maHangVe}
+                                                        td.text-center #{ve.tenHangVe}
+                                                        td.text-center #{ve.tiLeTien}
+                                                            .TrangThai(style="display:none;") #{ve.TrangThai}
+                                                        td.text-center
+                                                            button.btn.btn-outline-primary.btn-update-ticket(type='button', data-toggle='modal', data-target='#Update-ticket', data-id=ve._id,data-name=ve.tenHangVe,data-columns=Number(ve.tiLeTien),data-type=ve.maHangVe) Sửa
+                                                        td
+                                                            button.btn.btn-outline-danger.btn-delete-ticket(type='button', data-toggle='modal', data-target='#Delete-ticket', data-id=ve.maHangVe, data-name=ve.tenHangVe) Xóa
+                        //-Modal of updateTicketType form                        
+                        form#Update-ticket.modal.fade(method="post" action="/settingQD6/changeHV")
+                            .modal-dialog
+                                .modal-content
+                                    .modal-header
+                                        h4.modal-title.font-weight-bold Chỉnh sửa thông tin hạng vé
+                                        button.close(type='button', data-dismiss='modal') &times;
+                                    .modal-body
+
+                                        .row
+                                            .col-sm-5
+                                                label.font-weight-bold Mã hạng vé (số)
+                                                input.form-control.code-ticket(type="number" name="maHangVe" value="" min=0 readonly)
+                                            .col-sm-5 
+                                                label.font-weight-bold Tỉ lệ giá tiền
+                                                input.form-control.percent-ticket(type="number" name="tiLeTien" min=1 step="0.05" value="" required)
+                                            .col-sm-12.mt-2 
+                                                label.font-weight-bold Tên hạng vé
+                                                input.form-control.name-ticket(type="text" name="tenHangVe" value="" required)
+                                    .modal-footer.d-flex.justify-content-center
+                                        input(type="hidden" name="_csrf" value=csrf)
+                                        button.btn.btn-secondary(type="button" data-dismiss="modal") Đóng
+                                        button.btn.btn-outline-primary.btn-update(type='submit' name="idHV") Lưu chỉnh sửa
+
+                        //-Modal of deleteTicketType form                         
+                        form#Delete-ticket.modal.fade(method="post" action="/settingQD6/deleteHV")
+                            .modal-dialog
+                                .modal-content
+                                    .modal-header
+                                        h4.modal-title.font-weight-bold Xóa hạng vé
+                                        button.close(type='button', data-dismiss='modal') &times;
+                                    .modal-body
+                                        p Bạn chắc chắn muốn xóa vé 
+                                            span.Ten-hang-ve.font-weight-bold  
+                                            span  này không?
+                                    .modal-footer.d-flex.justify-content-center
+                                        input(type="hidden" name="_csrf" value=csrf)
+                                        button.btn.btn-secondary(type="button" data-dismiss="modal") Đóng
+                                        button.btn.btn-danger.btn-delete(type='submit' name="maHangVe" title="Xóa hạng vé") Xóa            
+
+    script.
+        var btn_del = document.querySelectorAll('.btn-delete-ticket');
+        var btn_update = document.querySelectorAll('.btn-update-ticket');
+        var codeClassIP = document.querySelector('.ma-hang-ve-input');
+        var btn_add_ticket = document.querySelector('.btn-add-ticket');
+        var error_modal_add_ticket = document.querySelector('.error-modal');
+        var divErr_modal_add_ticket = document.querySelector('.div-error-add-ticket');
+        var codeClassTB = document.querySelectorAll('.ma-hang-ve-table');
+        var stt = document.querySelectorAll('.TrangThai');
+
+        document.addEventListener('DOMContentLoaded', ()=>{
+        for(var k = 0;k < codeClassTB.length;k++){
+            if(stt[k].innerHTML == "0"){
+                btn_del[k].disabled = true;
+                btn_update[k].disabled = true;
+            }else{
+                btn_del[k].style.display = "inline";
+                btn_update[k].style.display = "inline";
+            }
+        }
+        });
+
+        //- Hàm để kiểm tra nhập mã hạng vé trùng với mã đã có => thông báo error
+        document.addEventListener('DOMContentLoaded', ()=>{
+        codeClassIP.addEventListener('input',function Action(){
+            for(var i = 0;i < codeClassTB.length;i++){
+                if(codeClassIP.value == codeClassTB[i].innerHTML){
+                    console.log(codeClassTB[i].innerHTML);
+                    error_modal_add_ticket.innerHTML="Mã hạng vé đã tồn tại";
+                    divErr_modal_add_ticket.style.display= "block";
+                    divErr_modal_add_ticket.style.background= "#e43d43";
+                    btn_add_ticket.disabled = true;
+                    return;
+                }
+                else if(codeClassIP.value == ""){
+                    divErr_modal_add_ticket.style.display= "none";
+                    btn_add_ticket.disabled = false;
+                }
+                else{
+                    divErr_modal_add_ticket.style.background= "#75d061";
+                    error_modal_add_ticket.innerHTML="Nhập mã hạng vé thành công";
+                    btn_add_ticket.disabled = false;
+                }
+            }
+        });
+        });
+
+        
+        btn_del.forEach((e,index) => {
+            e.addEventListener('click',function (){
+                //const btn = event.target
+                const id = e.dataset.id
+                const name = e.dataset.name
+                //console.log(id);
+                //console.log(name);
+                document.querySelector('.Ten-hang-ve').innerHTML = name;
+                document.querySelector('.btn-delete').value = id;
+            })
+        });
+    
+        btn_update.forEach((e,index) => {
+            e.addEventListener('click',function (){
+                //const btn = event.target
+                const id = e.dataset.id
+                const name = e.dataset.name
+                const per = e.dataset.columns
+                const code = e.dataset.type
+                document.querySelector('.name-ticket').value = name;
+                document.querySelector('.btn-update').value = id;
+                document.querySelector('.percent-ticket').value = per;
+                document.querySelector('.code-ticket').value = code;
+            })
+        });
+
+
+        
+
+                                    

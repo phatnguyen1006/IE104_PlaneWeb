@@ -1,0 +1,429 @@
+extends ./general.pug
+block content
+    .container
+        .row.setting-area.m-5
+            .col-lg-4.left-content-setting.bg-primary.shadow
+                .title-setting.pt-3
+                    h2.font-weight-bold.text-center Cài đặt
+                .item-setting-area.mt-4.text-center(style="list-style-type: none;z-index: 1;width: 100%;cursor:pointer;")
+                    li.item-setting
+                        a.item-setting-link(href="/settingQD6") Quản lý sân bay
+                    li.item-setting
+                        a.item-setting-link(href="/settingQD6/defaultDay") Thông số chi tiết
+                    li.item-setting
+                        a.item-setting-link(href="/settingQD6/ticketClass") Quản lý hạng vé
+                    li.item-setting.active
+                        a.item-setting-link(href="/settingQD6/flightSchedule") Thêm chuyến bay
+                        
+            .col-lg-8.right-content-setting.bg-light.shadow
+                if errors 
+                    div.bg-danger.m-2.p-3(style="border-radius:7px;")
+                        span.closebtn(onclick="this.parentElement.style.display='none';") &times;
+                        each err in  errors
+                            p.text-light  #{err}
+                if (notify == "Thêm lịch chuyến bay thành công" && (typeof notify !== "undefined"))
+                    div.bg-success.mt-3.p-3(style="border-radius:7px;")
+                        span.closebtn(onclick="this.parentElement.style.display='none';") &times;
+                        h5.text-light #{notify}
+                if newFlight
+                    .detail-flight.p-1.border-top.m-2.shadow
+                        h4.text-center Thông tin chuyến bay mới 
+                        .num-sanbaytg(style="display:none;") #{newFlight.SanBayTG.length}  
+                        
+                        .table-responsive.text-nowrap
+                            table#table.table
+                                tbody
+                                    tr
+                                    th(scope='row') Ngày bay
+                                    td
+                                        h6  #{myDate.toLocaleDateString()}
+                                    tr
+                                    th(scope='col') Sân bay đi/ TG khởi hành
+                                    td
+                                        h6 #{newFlight.SanBayDi} , #{myDate.toLocaleDateString()}
+                                        h6.dl-GioKH  #{hour_depart} giờ #{minute_depart} phút
+                                            
+                                    
+                                    tr
+                                    th(scope='col') Sân bay đến/ TG đến dự kiến
+                                    td 
+                                        h6 #{newFlight.SanBayDen} , #{myDate_1.toLocaleDateString()}
+                                        h6.dl-Gio-Den #{hour_arrival} giờ #{minute_arrival} phút
+                                    
+                                    tr
+                                    th(scope='col') Mã sân bay
+                                    td
+                                        #valueOfcode.font-weight-bold #{newFlight.MaCB}
+
+                                    tr
+                                    th(scope='col') Giá tiền
+                                    td
+                                        .font-weight-bold #{newFlight.GiaVe} VNĐ 
+
+                                    each Ve in newFlight.DSHangVe
+                                        tr
+                                        th SL ghế hạng #{Ve.maHangVe}:
+                                        td 
+                                            .font-weight-bold  #{Ve.SLG}
+                        .border-top.pt-3.m-2
+                            .table-responsive.text-nowrap
+                                table.table
+                                    thead
+                                        tr.table-secondary
+                                            th.th-sm.text-center(scope="col") STT
+                                            th.th-sm.text-center(scope="col") Sân bay trung gian
+                                            th.th-sm.text-center(scope="col") Thời gian dừng
+                                            th.th-sm.text-center(scope="col") Ghi chú
+                                    tbody    
+                                        for temp,index in newFlight.SanBayTG
+                                            tr
+                                                td.text-center= index+1
+                                                td.text-center= temp.TenSB   
+                                                td.text-center.TG-dung= temp.TGDung
+                                                    span  phút 
+                                                td.text-center
+                if (notify == "Thêm lịch chuyến bay thất bại" && (typeof notify !== "undefined"))
+                    div.bg-danger.mt-3.p-3(style="border-radius:7px;")
+                        span.closebtn(onclick="this.parentElement.style.display='none';") &times;
+                        h5.text-light #{notify} 
+                        
+                form.content-setting.mb-3(id="form-ex" method="post" action="/settingQD6/flightSchedule")
+                    .title-add-flight
+                        h4.mt-4.font-weight-bold.text-center Thêm chuyến bay
+                    .title-hd.font-italic    
+                        h6 Hướng dẫn:
+                            ul
+                                li Chọn Điểm đi, Điểm đến có sẵn trong bảng( không được trùng nhau)  
+                                li Mã sân bay
+                                    span  (gồm 5 kí tự bắt đầu bằng "VN" kèm 3 chữ số)
+                                li Giờ đi là các số từ 0 đến 23.9 công sai 0.1
+                                li Giờ đến là các số từ 0 đến 24 công sai 0.1
+                                b VD: 3.2 nghĩa là 3 giờ 12 phút, 23.8 nghĩa là 23 giờ 48 phút
+
+                        h6.text-danger * : Bắt buộc  
+                    .content-flight
+                        .row
+                            .col-lg-5.mb-2
+                                label.font-weight-bold(for='booking' id="start") Điểm đi:
+                                select.select_SBD.form-control(id='booking', placehodler='Điểm đến' type="text" name="departureCity" form="form-ex" required)
+                                    option Chọn điểm đi
+                                    each place in QD6.Airports
+                                        option= place.city      
+                            .col-lg-4.mb-2
+                                label.font-weight-bold(for='sel1') Điểm đến:
+                                select.select_SBDen.form-control(id='sel1' name="arrivalCity" form="form-ex" required)
+                                    option Chọn điểm đến
+                                    each local in QD6.Airports
+                                        option.location= local.city
+                            .col-lg-3.mb-2
+                                label.font-weight-bold Mã CB:
+                                input.form-control(type="text" pattern="VN[0-9]{3}" required name="MaCB" value="VN")
+                        div.input-TenSB(style="display:none;")
+                            for sanbay in QD6.Airports
+                                p.Name-SBD #{sanbay.airportName}
+                                p.Name-SBDen #{sanbay.airportName}
+                            input.SBD(type="text" name="SanBayDi")
+                            input.SBDen(type="text" name="SanBayDen")
+                    .content-SanBayTG
+                        button.btn.btn-info.mb-2(type='button', data-toggle='modal', data-target='#addAirportModal' title="Thêm sân bay trung gian") Thêm SBTG
+                        #addAirportModal.modal.fade
+                            .modal-dialog.modal-dialog-scrollable
+                                .modal-content
+                                    .modal-header
+                                        h4.modal-title.font-weight-bold Thêm sân bay trung gian
+                                        button.close(type='button', data-dismiss='modal') &times;
+                                    .modal-body
+                                        p.font-italic Có thể thêm hoặc không thêm tùy ý các sân bay trung gian dưới đây, sau khi nhập thông tin xong thì click nút 
+                                            span.font-weight-bold Thêm SBTG
+                                            span.font-italic  để xác nhận thông tin
+                                        div.bg-danger#Notification.mb-2.p-2(style="display:none;")
+                                            span.closebtn(onclick="this.parentElement.style.display='none';") &times;
+                                            h6.text-light#text-Notification
+                                        - var count = 0;
+                                        while count < QD6.maxIntermediateAirport
+                                            div.element
+                                                b= "Sân bay trung gian " + ++count
+                                                .row.mb-2
+                                                    .col-sm-5
+                                                        h6 Sân bay TG
+                                                        select.TenSBTG.form-control(name="SBTG" form="form-ex")
+                                                            option Chọn sân bay trung gian
+                                                            each sanbayTG in QD6.Airports
+                                                                option= sanbayTG.airportName
+                                                    .col-sm-4
+                                                        h6 TG dừng
+                                                        input.TGDung.form-control(type="number", min=Number(QD6.minStopTime) ,max=Number(QD6.maxStopTime))
+                                                    .col-sm-3
+                                                        h6 Ghi chú
+                                                        input.GhiChu.form-control(type="text")      
+                                                .row.mb-2  
+                                                    .col-sm-4
+                                                        input.btn.ThemSBTG.btn-info.form-control(type="button" disabled value="Thêm SBTG "+count)     
+                                    .modal-footer.d-flex.justify-content-center               
+                                        button.btn.btn-secondary.btn-add-airportTG(type='button', data-dismiss='modal') Đóng
+                     
+                                    
+                    .content-flight
+                        .row
+                            .col-sm-6
+                                label Nhập ngày bay
+                                input#Number-SanBayTG.form-control.mb-2(type="date" min=1 max=5 form="form-ex" name="NgayGio" required)
+                            .col-sm-4
+                                label Giá Vé
+                                input#GiaTien.form-control.mb-2(type="number" min=0 form="form-ex" name="GiaVe" required)
+
+
+                        .row
+                            .col-sm-6.mb-1
+                                label Giờ Khởi hành
+                                input.GioKhoiHanh.form-control(type="number" min=0 max=23.9 step=0.1 name="GioKhoiHanh" required)
+                            .col-sm-6.mb-1
+                                label Giờ Đến
+                                input.GioDen.form-control(type="number" min=0 name="GioDen" step=0.1 max=24 required  disabled)
+                                input.ThoiGianBay.form-control(type="hidden" name="ThoiGianBay" value=QD6.minFlightTime)
+                                input.TSLG.form-control(type="hidden" name="TSLG")
+                                
+
+                        button.btn.btn-info.mb-2(type='button', data-toggle='modal', data-target='#addTicketClassModal') Thêm hạng vé
+                        #addTicketClassModal.modal.fade
+                            .modal-dialog.modal-dialog-scrollable
+                                .modal-content
+                                    .modal-header
+                                        h4.modal-title.font-weight-bold Thêm số lượng từng hạng vé
+                                        button.close(type='button', data-dismiss='modal') &times;
+                                    .modal-body
+                                        h6.font-italic Có thể thêm ít nhất một trong các hạng vé dưới đây, sau khi nhập thông tin xong thì click nút 
+                                            span.font-weight-bold Thêm 
+                                            span.font-italic  để xác nhận thông tin
+                                        b.mb-3 Số lượng ghế từ 5 trở lên
+                                        div.bg-danger#Notification1.p-2(style="display:none;")
+                                            span.closebtn(onclick="this.parentElement.style.display='none';") &times;
+                                            h6.text-light#text-Notification1
+                                            input.Check.form-control(type="hidden" value="" name="check")
+                                        for classTicket in hangVe
+                                            div.element1
+                                                .row.mb-2.mt-3
+                                                    .col-sm-6
+                                                        span Số lượng ghế    
+                                                        span.font-weight-bold  #{classTicket.tenHangVe}
+                                                
+                                                .row.mb-2
+                                                    .col-lg-6.mb-2
+                                                        input.Sum-seat.form-control(type="number" min=5 ) 
+                                                    .col-lg-3
+                                                        input.Addi.btn.btn-info.form-control(type="button" value="Thêm"  disabled)
+                                                    .col-lg-0
+                                                        input.SGDaMua.form-control(type="hidden" value="0")
+                                                    .col-lg-0
+                                                        input.SGDat.form-control(type="hidden" value="0" )
+                                                    .col-lg-0
+                                                        input.Seat-none.form-control(type="hidden" value="0" )
+                                                        
+                                                    .col-lg-0
+                                                        input.Code-class.form-control(type="hidden" value=classTicket.maHangVe )
+                                    .modal-footer.d-flex.justify-content-center
+                                        button.btn.btn-secondary.btn-add-ticketClass(type="button" data-dismiss='modal') Đóng       
+
+                    
+                    .btn-submit.d-flex.justify-content-center
+                        input(type="hidden" name="_csrf" value=csrf form="form-ex")
+                        button.btn.btn-outline-primary.btnSub(type="submit" disabled form="form-ex") Thêm chuyến bay
+                        input#DSHangVe(type="hidden" name="DSHangVe" fomr="form-ex")
+                        input#arraySBTG(type="hidden" name="SanBayTG" fomr="form-ex" value="")
+                
+    script.
+        var select_SBD =  document.querySelector(".select_SBD");
+        var select_SBDen =  document.querySelector(".select_SBDen");
+        var chose_SBD =  document.querySelector('.SBD');
+        var chose_SBDen =  document.querySelector('.SBDen');
+        var GioDen =  document.querySelector('.GioDen');
+        var GioDi =  document.querySelector('.GioKhoiHanh');
+        var ThoiGianBay =  document.querySelector('.ThoiGianBay');
+        var Name_SBD =  document.querySelectorAll('.Name-SBD');
+        var Name_SBDen =  document.querySelectorAll('.Name-SBDen');
+        var btn_add = document.querySelectorAll(".Addi");
+        var a = document.querySelectorAll(".Sum-seat");
+        var b = document.querySelectorAll(".SGDaMua");
+        var c = document.querySelectorAll(".SGDat");
+        var d = document.querySelectorAll(".Seat-none");
+        var TenSB = document.querySelectorAll(".TenSBTG");
+        var TGDung = document.querySelectorAll(".TGDung");
+        var GhiChu = document.querySelectorAll(".GhiChu");
+        var btn_add_SBTG = document.querySelectorAll(".ThemSBTG");
+        var e = document.querySelectorAll(".Code-class");
+        var btn_sub = document.querySelector(".btnSub");
+    
+        // lấy giá trị tên sân bay khi chọn city
+        document.addEventListener('DOMContentLoaded', ()=>{
+        select_SBD.addEventListener('change',function Action(){
+            select_SBD[0].disabled = true;
+            var i = select_SBD.selectedIndex;
+            chose_SBD.value = Name_SBD[i-1].innerHTML;
+         
+        });
+        });
+
+        // lấy giá trị tên sân bay khi chọn city
+        document.addEventListener('DOMContentLoaded', ()=>{
+        select_SBDen.addEventListener('change',function Action(){
+            select_SBDen[0].disabled = true;
+            var i = select_SBDen.selectedIndex;
+            chose_SBDen.value = Name_SBDen[i-1].innerHTML;
+           
+        });
+        });
+
+        var flights = [];
+        var TG = [];
+        var num_ve = 0;
+        var TSLG= parseInt(0);   
+        var num_sb = 0;
+
+        //gán string thành mảng object cho sân bay trung gian
+        btn_add_SBTG.forEach((b,index) => {
+            b.addEventListener('click',function addi(ev){
+            ev.preventDefault();  
+            btn_add_SBTG[index].disabled = true;
+            document.querySelectorAll(".element")[index].style.display = "none";
+            num_sb++;
+            if(num_sb >= 0 && num_sb+num_ve <= btn_add_SBTG.length + btn_add.length && num_ve >= 1){
+                btn_sub.disabled = false;
+            }
+            
+            var FlightTG = {
+                TenSB: TenSB[index].value,
+                TGDung: TGDung[index].value,
+                GhiChu: GhiChu[index].value
+            }
+            TG.push(FlightTG);
+            document.getElementById('arraySBTG').value = JSON.stringify(TG);
+            });
+        });
+
+        //gán string thành mảng object cho ds hạng vé
+        btn_add.forEach((btn,index) => {
+            btn.addEventListener('click',function add(ev){
+            ev.preventDefault();  
+            btn_add[index].disabled = true;
+            document.querySelectorAll(".element1")[index].style.display = "none";
+            num_ve++;
+            if(num_sb >= 0 && num_sb+num_ve <= btn_add_SBTG.length + btn_add.length && num_ve >= 1){
+                btn_sub.disabled = false;
+            }
+            TSLG = parseInt(TSLG) + parseInt(a[index].value);
+            var flight = {
+                maHangVe: e[index].value,
+                SLG: a[index].value,
+                SGDaMua: b[index].value,
+                SGDat: c[index].value,
+                SGTrong: a[index].value
+            }
+
+            flights.push(flight);
+
+            document.getElementById('DSHangVe').value = JSON.stringify(flights);
+            document.querySelector('.TSLG').value = TSLG;
+            });
+        });
+        //xử lý giờ đi giờ đến
+        var themNgay = false;
+        var save_tgbay = parseFloat(ThoiGianBay.value/60);
+        GioDi.addEventListener('input',function change(){
+            console.log(typeof save_tgbay)
+            //console.log(parseFloat(ThoiGianBay.value/60));
+            console.log(parseFloat(GioDi.value));
+            if(themNgay == false){
+                GioDen.min = parseFloat(GioDi.value) + save_tgbay ;
+            }
+            else{
+                GioDen.min = 0
+            }
+            
+            GioDen.disabled = false;
+            console.log(ThoiGianBay.value);
+        });
+        GioDen.addEventListener('input',function change(){
+            console.log(GioDen.min);
+            if(parseFloat(GioDen) == 24){
+                GioDen.value = 0;
+            }
+            if(parseFloat(GioDen.value) <= parseFloat(GioDi.value)){
+                themNgay = true;
+                document.querySelector('.Check').value = themNgay;
+            }
+            else{
+                themNgay =false;
+                document.querySelector('.Check').value = themNgay;
+                GioDen.min = 0;
+            }
+            console.log(themNgay);
+            console.log(GioDen.min);
+            if(themNgay == true){    
+            ThoiGianBay.value= (parseFloat(GioDen.value) + 24 )- parseFloat(GioDi.value);
+            }
+            else{
+            ThoiGianBay.value= parseFloat(GioDen.value)  - parseFloat(GioDi.value);
+            }
+            ThoiGianBay.value = parseFloat(ThoiGianBay.value).toFixed(2);
+            console.log(ThoiGianBay.value);
+
+        });
+
+        var check = [];
+        TenSB.forEach((sel,index)=>{
+            sel.addEventListener('change',(e)=>{
+                sel[0].disabled = true;
+                if(sel.selectedIndex != 0){
+                    check.push("true");
+                }
+
+                if(check[0] == "true" && TGDung[index].value >= parseInt(TGDung[index].min) && TGDung[index].value <= parseInt(TGDung[index].max)){
+                    btn_add_SBTG[index].disabled = false;
+                }
+            });
+        });
+        TGDung.forEach((i,index)=>{
+            i.addEventListener('input',function change(ev){
+                ev.preventDefault();
+                if(check[0] == "true" && i.value >= parseInt(i.min) && i.value <= parseInt(i.max)){
+                    btn_add_SBTG[index].disabled = false;
+                }
+                if(i.value < parseInt(i.min) || i.value > parseInt(i.max)){
+                    document.getElementById('Notification').style.display = "block";
+                    document.getElementById('text-Notification').innerHTML = "Giá trị thời gian dừng trong khoảng [ " + i.min +", " + i.max + " ]"; 
+                    btn_add_SBTG[index].disabled = true;
+                } 
+                
+                if(i.value >= parseInt(i.min) && i.value <= parseInt(i.max)){
+                    document.getElementById('Notification').style.display = "none";  
+                }
+
+
+        });
+        });
+
+        a.forEach((i,index)=>{
+            i.addEventListener('input',function change(ev){
+                ev.preventDefault();
+                if(i.value >= parseInt(i.min)){
+                    btn_add[index].disabled = false;
+                }
+                if(i.value < parseInt(i.min)){
+                    document.getElementById('Notification1').style.display = "block";
+                    document.getElementById('text-Notification1').innerHTML = "Giá trị vừa nhập phải lớn lớn hoặc bằng " + i.min;  
+                    btn_add[index].disabled = true;
+                } 
+    
+                if(i.value >= parseInt(i.min)){
+                    document.getElementById('Notification1').style.display = "none";  
+                }
+        });
+        });
+
+        
+        
+
+       
+    
+
+                                    

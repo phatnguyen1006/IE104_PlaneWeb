@@ -1,0 +1,38 @@
+.seat-manage-1{
+    background-image: url(/images/login_banner.jpg);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: auto;
+    width: 100%;
+    padding:50px 15px;
+}
+
+.row#manage-area{
+    transform:translateY(20%)
+}
+.seat-manage-2{
+    background-color: #edf3f7;
+    background-size: cover;
+    margin-top: 25px;
+    height: auto;
+    width: 100%;
+    padding:50px 15px;
+}
+ul.benefits{
+    margin-block-end: 0 !important;
+}
+
+table{
+    margin-bottom: 0 !important;
+}
+#hidden{
+    background: radial-gradient(circle, rgba(199,251,63,0.8071603641456583) 0%, rgba(70,187,252,0.9051995798319328) 100%);
+    display:none;
+}
+@media(max-width:768px){
+    h1#titleSeat{
+        font-size:50px !important;
+        
+    }
+}

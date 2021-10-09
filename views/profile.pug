@@ -1,0 +1,68 @@
+extends ./general.pug
+block content
+    if user
+        .wrapper.my-sm-5.container
+            div.title-profile.bg-info(style="border-top-left-radius:15px;border-top-right-radius:15px;")
+                h3.py-4.text-center(style="padding-left:0 !important;padding-right:0 !important;") Hồ sơ tài khoản   
+            form.border.bg-white.p-3(method="post", action="/profile", enctype="multipart/form-data")
+                input(type="hidden" name="_csrf" value=csrf)
+                .form-group
+                    .menu.d-flex.justify-content-center.py-3
+                        img.img-thumbnail.rounded-circle.mb-2(src=user.Avatar? user.Avatar :'/images/logoIcon.png', alt='' style="width:150px;hieght:150px")
+                        #img-section.pl-sm-4.pl-2
+                            b(style="font-size: 20px;") #{user.userName}
+                            p.font-italic #{user.Gmail}
+                            input.file.form-control-file(name="avatar" type="file" accept="/image/*")
+                .d-flex.justify-content-center            
+                    button.btn.btn-outline-success.mr-3.save-img(type="submit" style="display:none;") Lưu ảnh
+            form.border.bg-white.p-3(method="post", action="/profile/updateProfile")
+                if (notify == "Cập nhật thông tin thành công" &&(typeof notify !== "undefined"))
+                    div.bg-success.mt-3.p-3(style="border-radius:7px;")
+                        span.closebtn(onclick="this.parentElement.style.display='none';") &times;
+                        h5.text-light #{notify} 
+                if (notify == "Cập nhật thông tin thất bại" && (typeof notify !== "undefined"))
+                    div.bg-danger.mt-3.p-3(style="border-radius:7px;")
+                        span.closebtn(onclick="this.parentElement.style.display='none';") &times;
+                        h5.text-light #{notify} 
+                .row.py-2
+                    .col-md-6
+                        label(for='firstname') Họ và tên
+                        input.bg-light.form-control(type='text', placeholder='Nguyễn Văn A' name="fullname" value=user.Name required)
+                    .col-md-6.pt-md-0.pt-3
+                        label(for='lastname') Chứng minh nhân dân
+                        input.bg-light.form-control(type='tel', placeholder='cmnd 9 số/cccd 12 số' pattern="[0-9]{9,12}" name="cmnd" value=user.CMND required)
+                .row.py-2
+                    .col-md-6
+                        label(for='email') Tuổi
+                        input.bg-light.form-control(type='number', min=18 max = 100 name="age" value=user.Age required)
+                    .col-md-6.pt-md-0.pt-3
+                        label(for='phone') Số điện thoại
+                        input.bg-light.form-control(type='tel', placeholder='0xxxxxxxxxx', name="phone" pattern="[0-9]{10}" value=user.SDT required)
+                .row.py-2
+                    .col-md-6
+                        label(for='') Giới tính
+                        br
+                        input.RadioClass.mr-2(name="gt" type="radio" value="Nam" required)   
+                        label.mr-3 Nam                                                         
+                        input.RadioClass.mr-2(name="gt" type="radio" value="Nữ" required)                    
+                        label.mr-3 Nữ                                       
+                        input.RadioClass.mr-2(name="gt" type="radio" value="Khác" required)                
+                        label Khác                                           
+                           
+                    .col-md-6.pt-md-0.pt-3
+                        label(for='language') Quốc Gia
+                        input.bg-light.form-control(type='text', placeholder='Vietnam' value=user.QuocGia name="country")
+                        input(type="hidden" name="_csrf" value=csrf)
+            
+                .py-3.pb-4
+                    button.btn.btn-outline-success.mr-3(type="submit") Cập nhật
+                    button.btn.btn-outline-danger(type="reset") Làm lại
+    else
+        p.text-center.p-5 Bạn không có quyền truy cập vào trang này.!
+
+    script.
+        document.querySelector('.file').addEventListener('change',()=>{
+            document.querySelector(".save-img").style.display= "inline";
+        })
+    
+                

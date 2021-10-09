@@ -1,0 +1,78 @@
+extends ./general.pug
+block content
+    //- script(src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js")
+    //- .container.mt-5
+    //-     .d-flex.justify-content-center
+    //-         canvas#myChart(style='width:100%;max-width:600px')
+    //- hr
+    .container.mb-5.mt-3
+        h3.title-report.text-center.text-danger Doanh Thu Năm
+        form(method="POST", action='/revenue/year')
+            input(type="hidden" name="_csrf" value=csrf)
+            .row-cols-5.d-flex.justify-content-center.mb-2
+                .flex-column
+                    .d-flex.justify-content-center
+                        label.mt-2.mb-1 Năm:
+                    select.form-control.mr-2.mb-1(id='sel1' name="year")
+                                if !values
+                                    each local in [(new Date).getYear()+1900, ...years]
+                                        option=local
+                                else
+                                    each local in [values.year, ...years]
+                                        option=local
+            .d-flex.justify-content-center
+                button.mt-2.mb-4.btn.btn-info(type="submit") Kết toán
+        if reports    
+            .table-responsive
+                table.table.table-hover.table-striped
+                    thead
+                        tr.table-secondary
+                            th.text-center STT
+                            th.text-center Tháng
+                            th.text-center Số Chuyến Bay
+                            th.text-center Doanh Thu
+                            th.text-center Tỉ lệ
+                    tbody
+                        each report,index in reports
+                            tr
+                                td.text-center= index+1
+                                td.text-center= report.Thang
+                                td.text-center= report.SoCB
+                                td.text-center.table-success= report.DoanhThu
+                                td.text-center= Number.parseFloat(report.TiLe*100).toFixed(3) + "%"
+                    tfoot
+                        tr
+                        td
+                        td
+                        th.text-center Tổng:
+                        td.table-info= total
+                        td
+
+            .container.mr-2.mt-3
+                .d-flex.justify-content-end
+                    button.btn.btn-outline-success(onclick="window.print()")
+                        i.fas.fa-print
+                        | &nbsp In báo cáo
+    script.
+        var xValues = [1,2,3,4,5,6,7,8,9,10,11,12];
+        var yValues = [7,8,8,9,9,9,10,11,14,14,15];
+
+        new Chart("myChart", {
+        type: "line",
+        data: {
+        labels: xValues,
+        datasets: [{
+        fill: false,
+        lineTension: 0,
+        backgroundColor: "red",
+        borderColor: "blue",
+        data: yValues
+        }]
+        },
+        options: {
+        legend: {display: false},
+        scales: {
+        yAxes: [{ticks: {min: 6, max:16}}],
+        }
+        }
+        });

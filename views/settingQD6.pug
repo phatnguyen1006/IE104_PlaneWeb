@@ -1,0 +1,286 @@
+extends ./general.pug
+block content
+    .container
+        .row.setting-area.m-5
+            .col-lg-4.left-content-setting.bg-primary.shadow
+                .title-setting.pt-3
+                    h2.font-weight-bold.text-center Cài đặt
+                .item-setting-area.mt-4.text-center(style="list-style-type: none;z-index: 1;width: 100%;cursor:pointer;")
+                    li.item-setting.active
+                        a.item-setting-link(href="/settingQD6") Quản lý sân bay
+                    li.item-setting
+                        a.item-setting-link(href="/settingQD6/defaultDay") Thông số chi tiết
+                    li.item-setting
+                        a.item-setting-link(href="/settingQD6/ticketClass") Quản lý hạng vé
+                    li.item-setting
+                        a.item-setting-link(href="/settingQD6/flightSchedule") Thêm chuyến bay
+                        
+            .col-lg-8.right-content-setting.bg-light.shadow
+                if (notify == "Xoá sân bay thành công" && (typeof notify !== "undefined"))
+                    div.bg-success.mt-3.p-3(style="border-radius:7px;")
+                        span.closebtn(onclick="this.parentElement.style.display='none';") &times;
+                        h5.text-light #{notify}
+                if (notify == "Cập nhật sân bay thành công" && (typeof notify !== "undefined"))
+                    div.bg-success.mt-3.p-3(style="border-radius:7px;")
+                        span.closebtn(onclick="this.parentElement.style.display='none';") &times;
+                        h5.text-light #{notify}
+                if (notify == "Thêm sân bay thành công" && (typeof notify !== "undefined"))
+                    div.bg-success.mt-3.p-3(style="border-radius:7px;")
+                        span.closebtn(onclick="this.parentElement.style.display='none';") &times;
+                        h5.text-light #{notify}
+                if (notify == "Xoá sân bay thất bại. Sân bay này đã tồn tại trong danh sách chuyến bay rồi!" && (typeof notify !== "undefined"))
+                    div.bg-danger.mt-3.p-3(style="border-radius:7px;")
+                        span.closebtn(onclick="this.parentElement.style.display='none';") &times;
+                        h5.text-light #{notify} 
+                if (notify == "Cập nhật sân bay thất bại" && (typeof notify !== "undefined"))
+                    div.bg-danger.mt-3.p-3(style="border-radius:7px;")
+                        span.closebtn(onclick="this.parentElement.style.display='none';") &times;
+                        h5.text-light #{notify} 
+                    
+                .content-setting.mb-3
+                    .title-add-airport 
+                        h4.mt-4.font-weight-bold.text-center Quản lý sân bay
+                        
+                    .content-airport
+                        button.btn.btn-info.mb-2(type='button', data-toggle='modal', data-target='#addAirportModal') Thêm sân bay
+                        form#addAirportModal.modal.fade(method="post" action="/settingQD6")
+                            .modal-dialog.modal-dialog-centered.modal-dialog-scrollable
+                                .modal-content
+                                    .modal-header
+                                        h4.modal-title.font-weight-bold Thêm sân bay mới
+                                        button.close(type='button', data-dismiss='modal') &times;
+                                    .modal-body
+                                        .title.font-italic
+                                            h6 Một sân bay gồm 4 thông tin sau đây:
+                                                ul
+                                                    li Mã sân bay 
+                                                        h6 (gồm 4 chữ cái in hoa + "/" + 3 chữ cái in hoa) 
+                                                        h6.font-weight-bold VD: ABCD/XYZ
+                                                    li Tên sân bay
+                                                    li Thành phố/ Tỉnh
+                                                    li Quốc gia
+                                            h6.text-danger * : Bắt buộc  
+                                        .row
+                                            .col-sm-12.error-setting(style="display:none")
+                                                h6.p-2.text-error-setting.text-light
+                                        .row
+                                            .col-sm-12.error-setting1(style="display:none")
+                                                h6.p-2.text-error-setting1.text-light
+                                        .row
+                                            .col-sm-12
+                                                label Mã sân bay
+                                                    span.text-danger * 
+                                                input.form-control.AirportCode(type="text" name="airportCode" placeholder="VVVN/HAN" pattern="[A-Z]{4}/[A-Z]{3}" maxlength=20 required)
+                                                label Tên sân bay
+                                                    span.text-danger * 
+                                                input.form-control.AirportTen(type="text" name="airportName" placeholder="Quy Nhơn" required)
+                                                label TP/Tỉnh
+                                                    span.text-danger * 
+                                                input.form-control(type="text" name="city" placeholder="Bình Định" required)
+                                                label Quốc gia
+                                                    span.text-danger * 
+                                                input.form-control(type="text" name="country" placeholder="Việt Nam" required)
+
+                                    .modal-footer.d-flex.justify-content-center
+                                        input(type="hidden" name="_csrf" value=csrf)
+                                        button.btn.btn-secondary(type="button" data-dismiss="modal") Đóng
+                                        button.btn.btn-success.btn-add-airport(type='submit' disabled) Thêm sân bay
+                        
+                    if QD6.Airports.length > 0
+                        .content-delete-airport.mt-3
+                            .row
+                                .col-sm-12
+                                    h3.font-weight-bold Danh sách các sân bay
+                                .col-sm-12
+                                    .table-responsive
+                                        table.table.text-nowrap
+                                            thead
+                                                tr
+                                                    th(scope='col').text-center Mã Sân Bay
+                                                    th(scope='col').text-center Tên Sân Bay
+                                                    th(scope='col').text-center TP/Tỉnh  
+                                                    th(scope='col').text-center Quốc Gia
+                                                    th(scope='col').text-center 
+                                                    th(scope='col').text-center 
+                                                    
+                                            
+                                            for SB in QD6.Airports
+                                                tbody
+                                                    tr.table-striped
+                                                        th(scope='row').text-center.ma-san-bay #{SB.airportCode}
+                                                        td.text-center.ten-AP #{SB.airportName}
+                                                        td.text-center.city #{SB.city}
+                                                            span.TrangThai(style="display:none;") #{SB.TrangThai}
+                                                        td.text-center.coutry #{SB.country}
+                                                        td.text-center
+                                                            button.btn.btn-outline-primary.btn-update-airport(type='button', data-toggle='modal', data-target='#Update-ticket', data-id=SB._id,data-name=SB.airportName,data-code= SB.airportCode,data-columns=SB.city,data-type = SB.country) Sửa
+                                                        td
+                                                            button.btn.btn-outline-danger.btn-delete-airport(type='button', data-toggle='modal', data-target='#delete-airport', data-name=SB.airportName) Xóa
+                        //-Modal of updateAirport form  
+                        form#Update-ticket.modal.fade(method="post" action="/settingQD6/updateAirport")
+                            .modal-dialog
+                                .modal-content
+                                    .modal-header
+                                        h4.modal-title.font-weight-bold Chỉnh sửa thông tin sân bay
+                                        button.close(type='button', data-dismiss='modal') &times;
+                                    .modal-body
+                                        .title.font-italic
+                                            h6 Một sân bay gồm 4 thông tin sau đây:
+                                                ul
+                                                    li Mã sân bay 
+                                                        h6 (gồm 4 chữ cái in hoa + "/" + 3 chữ cái in hoa) 
+                                                        h6.font-weight-bold VD: ABCD/XYZ
+                                                    li Tên sân bay
+                                                    li TP/Tỉnh
+                                                    li Quốc gia
+                                        .row
+                                            .col-sm-12
+                                                label.font-weight-bold Mã sân bay
+                                                input.form-control.code-airport(type="text" name="airportCode" value=""  readonly)
+                                            .col-sm-12.mt-2 
+                                                label.font-weight-bold Tên sân bay
+                                                input.form-control.name-airport(type="text" name="airportName" value="" required)
+                                            .col-sm-12
+                                                label.font-weight-bold Thành phố/Tỉnh
+                                                input.form-control.location(type="text" name="city"  value="" required)
+                                            .col-sm-12
+                                                label.font-weight-bold Quốc Gia
+                                                input.form-control.QG(type="text" name="country"  value="" required)
+                                    .modal-footer.d-flex.justify-content-center
+                                        input(type="hidden" name="_csrf" value=csrf)
+                                        button.btn.btn-secondary(type="button" data-dismiss="modal") Đóng
+                                        button.btn.btn-outline-primary.btn-update(type='submit' name="_id") Lưu chỉnh sửa
+
+                        //-Modal of deleteAirport form                        
+                        form#delete-airport.modal.fade(method="post" action="/settingQD6/deleteAirport")
+                            .modal-dialog
+                                .modal-content
+                                    .modal-header
+                                        h4.modal-title.font-weight-bold Xóa Sân Bay
+                                        button.close(type='button', data-dismiss='modal') &times;
+                                    .modal-body
+                                        p Bạn chắc chắn muốn xóa vé 
+                                            span.Ten-san-bay.font-weight-bold  
+                                            span  này không?
+                                        
+                                    .modal-footer.d-flex.justify-content-center
+                                        input(type="hidden" name="_csrf" value=csrf)
+                                        button.btn.btn-secondary(type="button" data-dismiss="modal") Đóng
+                                        button.btn.btn-danger.confirm-delete-airport(type='submit' name="airportName") Xóa sân bay
+
+    script.
+        var a_btn =  document.querySelectorAll(".item-setting-link");
+        var li_btn =  document.querySelectorAll(".item-setting");
+        var content =  document.querySelectorAll(".content-setting");
+        var code =  document.querySelectorAll(".ma-san-bay");
+        var APName =  document.querySelectorAll(".ten-AP");
+        //var chose_MaCB =  document.querySelector(".item-MaCB");
+        var chose_MaSB =  document.querySelector(".AirportCode");
+        var chose_TenSB =  document.querySelector(".AirportTen");
+        var btn_del_airport = document.querySelectorAll('.btn-delete-airport');
+        var btn_update = document.querySelectorAll('.btn-update-airport');
+        var text = document.querySelector('.text-error-setting');
+        var text1 = document.querySelector('.text-error-setting1');
+        var stt = document.querySelectorAll('.TrangThai');
+
+        document.addEventListener('DOMContentLoaded', ()=>{
+        for(var k = 0;k < code.length;k++){
+            if(stt[k].innerHTML == "0"){
+                btn_del_airport[k].disabled = true;
+                btn_update[k].disabled = true;
+            }else{
+                btn_del_airport[k].style.display = "inline";
+                btn_update[k].style.display = "inline";
+            }
+        }
+        });
+
+        
+        //- a_btn.forEach((e,index) => {
+        //-     e.addEventListener('click',function handle(){
+        //-         li_btn.forEach(btn => btn.classList.remove('active'));
+        //-         li_btn[index].classList.add('active');
+        //-         content.forEach(item=> item.classList.remove('disappear'));
+        //-         content[index].classList.add('disappear');
+        //-     });
+        //- });
+
+        btn_del_airport.forEach((e,index) => {
+            e.addEventListener('click',function (){
+                const name = e.dataset.name;
+                document.querySelector('.Ten-san-bay').innerHTML = "Sân bay " + name;
+                document.querySelector('.confirm-delete-airport').value = name;
+            })
+        });
+
+        btn_update.forEach((e,index) => {
+            e.addEventListener('click',function (){
+                const code = e.dataset.code
+                const id = e.dataset.id
+                const name = e.dataset.name
+                const city = e.dataset.columns
+                const country = e.dataset.type
+                document.querySelector('.btn-update').value = id;
+                document.querySelector('.code-airport').value = code;
+                document.querySelector('.name-airport').value = name;
+                document.querySelector('.location').value = city;
+                document.querySelector('.QG').value = country;
+            })
+        });
+
+        document.addEventListener('DOMContentLoaded', ()=>{
+        chose_MaSB.addEventListener('input',function Action(){
+            
+            for(var i = 0;i < code.length;i++){
+                if(chose_MaSB.value == code[i].innerHTML){
+                    document.querySelector('.text-error-setting').innerHTML="Mã sân bay đã tồn tại";
+                    document.querySelector('.error-setting').style.display= "block";
+                    document.querySelector('.error-setting').style.background= "#e43d43";
+                    //document.querySelector('.btn-add-airport').disabled = true;
+                    return;
+                }
+                else if(chose_MaSB.value == ""){
+                    document.querySelector('.error-setting').style.display= "none";
+                    //document.querySelector('.btn-add-airport').disabled = false;
+                }
+                else{
+                    document.querySelector('.error-setting').style.background= "#75d061";
+                    document.querySelector('.text-error-setting').innerHTML="Nhập mã sân bay thành công";
+                    //document.querySelector('.btn-add-airport').disabled = false;
+                }
+            }
+            if(text.innerHTML=="Nhập mã sân bay thành công" && text1.innerHTML=="Nhập tên sân bay thành công"){
+                document.querySelector('.btn-add-airport').disabled = false;
+            }
+        });
+        });
+        
+        document.addEventListener('DOMContentLoaded', ()=>{
+        chose_TenSB.addEventListener('input',function Action(){
+            for(var i = 0;i < APName.length;i++){
+                if(chose_TenSB.value == APName[i].innerHTML){
+                    
+                    document.querySelector('.text-error-setting1').innerHTML="Tên sân bay đã tồn tại";
+                    document.querySelector('.error-setting1').style.display= "block";
+                    document.querySelector('.error-setting1').style.background= "#e43d43";
+                    //document.querySelector('.btn-add-airport').disabled = true;
+                    return;
+                }
+                else if(chose_TenSB.value == ""){
+                    document.querySelector('.error-setting1').style.display= "none";
+                    //document.querySelector('.btn-add-airport').disabled = false;
+                }
+                else{
+                    document.querySelector('.error-setting1').style.background= "#75d061";
+                    document.querySelector('.text-error-setting1').innerHTML="Nhập tên sân bay thành công";
+                    //document.querySelector('.btn-add-airport').disabled = false;
+                }
+            }
+            if(text.innerHTML =="Nhập mã sân bay thành công" && text1.innerHTML=="Nhập tên sân bay thành công"){
+                document.querySelector('.btn-add-airport').disabled = false;
+            }
+        });
+        });
+        
+
+                                    
