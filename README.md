@@ -1,5 +1,4 @@
 # PlaneTicket_Web.
-DA SE104
 
 ## Aplication Structure:
 ```bash
