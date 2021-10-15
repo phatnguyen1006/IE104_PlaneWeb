@@ -52,7 +52,7 @@ module.exports.updateInfo = async (req, res) => {
         GT: req.body.gt,
         QuocGia: req.body.country
     }
-    
+
     if (req.signedCookies.userId) {
         id = req.signedCookies.userId;
         

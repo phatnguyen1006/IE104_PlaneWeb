@@ -7,37 +7,37 @@ module.exports.postTicket = (req, res, next) => {
 
     // check full name 
     if (!req.body.name) {
-        errors.push("Full name is required");
+        errors.push("Tên khách hàng không được để trống");
     };
 
     //check date of birth 
     if (!req.body.dob) {
-        errors.push("Date of birth is required");
+        errors.push("Ngày sinh không được để trống");
     };
 
     //check personal id 
     if (!req.body.id) {
-        errors.push("Personal id is required");
+        errors.push("CMND không được để trống");
     };
 
     //check nationality
     if (!req.body.nation) {
-        errors.push("Nationality is required");
+        errors.push("Quốc gia không được để trống");
     };
 
     //check email 
     if (!req.body.email) {
-        errors.push("Email is required");
+        errors.push("Email không được để trống");
     };
 
     //check phone number
     if (!req.body.phone) {
-        errors.push("Phone number is required");
+        errors.push("Số điện thoại không được để trống");
     };
 
     //check address 
     if (!req.body.address) {
-        errors.push("Address is required");
+        errors.push("Địa chỉ không được để trống");
     };
 
     if (erros.length > 0) {

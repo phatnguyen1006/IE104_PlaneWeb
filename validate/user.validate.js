@@ -74,3 +74,29 @@ module.exports.loginValidate= (req, res, next) => {
   next(); // move to next middleware(function
 }
 
+module.exports.updateInfoValidate = (req, res, next) => {
+  var errors = [];
+
+  var regName = /^[a-zA-Z]+ [a-zA-Z]+$/;
+  var name = req.body.fullname;
+  var country = req.body.country;
+
+  if(!regName.test(name)){
+      errors.push("Họ và tên không hợp lệ");
+  }
+
+  if(!regName.test(country) || country.charAt(0) == country.charAt(0).toUpperCase()){
+    errors.push("Quốc gia không hợp lệ");
+  }
+
+  if (errors.length > 0) {
+    res.render('profile', {
+      errors: errors
+    });
+
+    return;
+  }
+
+    next();
+}
+
