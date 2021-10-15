@@ -92,7 +92,7 @@ module.exports.updateInfoValidate = (req, res, next) => {
   if (errors.length > 0) {
     res.render('profile', {
       errors: errors
-    });
+  });
 
     return;
   }
