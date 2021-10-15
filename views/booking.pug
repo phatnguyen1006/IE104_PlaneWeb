@@ -10,9 +10,9 @@ block content
     .list.p-3.container
         a.mr-2(href="/") Trang chủ
         i.mr-2.fas.fa-angle-right
-        span.mr-2 Đặt vé máy bay
+        span.mr-2 Tìm chuyến bay
     .container-lg.mt-3.mb-5.bg-light.shadow
-        h2.text-center.text-dark.p-3 Đặt vé máy bay
+        h2.text-center.text-dark.p-3 Tìm chuyến bay
         form.form-group.container-lg(method="get" action="/flight-searching")
             .row.p-2
                 .col-lg-5.mb-2
@@ -21,8 +21,6 @@ block content
                         option Chọn điểm đi
                         each place in Airports
                             option= place.city 
-                .col-lg-1
-                    div.shadow.btn-exchange.my-1        
                 .col-lg-5.mb-2
                     label.font-weight-bold(for='sel1') Điểm đến:
                     select.select-form-1.form-control(id='sel1' name="arrivalAirport" )
@@ -31,6 +29,8 @@ block content
                             option= local.city
                 .col-lg-0
                     input(type="hidden" name="_csrf" value=csrf)
+                .col-lg-2.d-flex.justify-content-center
+                    div.shadow.btn-exchange.my-1
             .row.p-2
                 .col-lg-5.mb-2
                     label.font-weight-bold(for='sellist1' id="start" ) Thời gian:
@@ -38,8 +38,8 @@ block content
                 .col-lg-5.mb-2
                     label.font-weight-bold(for='sel1') Số lượng:
                     input.form-control(type="number" min="1" value="1" name="num" readonly="readonly") 
-                #buttonFind.col-lg-2
-                    button.mt-2.p-2.font-weight-bold(type="submit",name="sub", class="btn btn-outline-success" style="border-radius:10px;" value="1") Tìm chuyến bay
+                #buttonFind.col-lg-2.py-2.d-flex.justify-content-center
+                    button.mt-2.p-auto.font-weight-bold(type="submit",name="sub", class="btn btn-outline-success" style="border-radius:10px;" value="1") Tìm chuyến bay
     .content.container-lg.mt-5
         .row
             .col-lg-5.mb-3

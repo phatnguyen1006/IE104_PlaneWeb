@@ -42,11 +42,11 @@ block content
                     .col-md-6
                         label(for='') Giới tính
                         br
-                        input.RadioClass.mr-2(name="gt" type="radio" value="Nam" required)   
+                        input.RadioClass.mr-2(name="gt" type="radio" value="Nam" checked=user.gt=="Nam"?true:false required)
                         label.mr-3 Nam                                                         
-                        input.RadioClass.mr-2(name="gt" type="radio" value="Nữ" required)                    
+                        input.RadioClass.mr-2(name="gt" type="radio" value="Nữ" checked=user.gt=="Nữ"?true:false required)
                         label.mr-3 Nữ                                       
-                        input.RadioClass.mr-2(name="gt" type="radio" value="Khác" required)                
+                        input.RadioClass.mr-2(name="gt" type="radio" value="Khác" checked=user.gt=="Khác"?true:false required)
                         label Khác                                           
                            
                     .col-md-6.pt-md-0.pt-3
