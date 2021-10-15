@@ -14,13 +14,22 @@ require('dotenv').config(); // to use .env file
 const port = process.env.PORT || 4000;
 const favicon  = require('serve-favicon');
 const path = require('path');
+// requireRoute
+const revenueRoute = require('./routes/revenue.route');
+const bookingManagementRoute = require('./routes/bookingManagement.route');
+const searchFLightRoute = require('./routes/searchFlight.route');
+const signupRoute = require('./routes/signup.route');
+const bookingRoute = require('./routes/booking.route');
+const ticketInfoRoute = require('./routes/ticketInfo.route');
+const viewTicketRoute = require('./routes/viewTicket.route');
+const profileRoute = require('./routes/profile.route');
+const settingQD6Route = require('./routes/admin.route/QD6.route');
 
 // blogs
 const blogsRoute = require('./routes/blogs/blogs.route');
 
 // auth
 const loginRoute = require('./routes/authentication.route/login.route');
-const signupRoute = require('./routes/signup.route');
 const logoutRoute = require('./routes/authentication.route/logout.route');
 
 // Middleware
@@ -51,9 +60,17 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
 app.use('/login', loginRoute);
-app.use('/signup', signupRoute);
 app.use('/logout', logoutRoute);
 
+app.use('/revenue', revenueRoute);
+app.use('/booking-management', bookingManagementRoute);
+app.use('/flight-searching', searchFLightRoute);
+app.use('/signup', signupRoute);
+app.use('/booking', bookingRoute);
+app.use('/ticketInfo', ticketInfoRoute);
+app.use('/viewTicket', authMiddleware.requireUser, viewTicketRoute);
+app.use('/profile', authMiddleware.requireUser, profileRoute);
+app.use('/settingQD6', authMiddleware.requireAdmin, settingQD6Route);
 // Blogs
 app.use('/blogs', blogsRoute);
 
@@ -70,8 +87,12 @@ app.get('*', function(req, res){
     res.render('404')
 });
 
+app.get(function(req, res){
+    //res.status(404).send('SORRY!! SOMETHING WRONG!!THIS PAGE WAS NOT FOUND!!!');
+    res.render('404')
+});
+
 app.listen(port, () => {
     // check if the website is runnig
     console.log(`The app is listening at port ${port}`);
 });
-
