@@ -103,10 +103,10 @@ module.exports.postDefaultDay = async (req,res) => {
 //Last modified day: 4/6/2021
 module.exports.postAddAirport = async (req, res) => {
     var airport = {
-    airportCode: req.body.airportCode,
-    airportName: req.body.airportName,
-    city: req.body.city,
-    country: req.body.country
+        airportCode: req.body.airportCode,
+        airportName: capitalizeFirstLetter(req.body.airportName),
+        city: req.body.city,
+        country: req.body.country
     }
     req.session.airport = airport;
     
@@ -149,7 +149,7 @@ module.exports.postUpdateAirport = async (req, res) => {
     var id = req.body._id;
     var data = {
         airportCode: req.body.airportCode,
-        airportName: req.body.airportName,
+        airportName: capitalizeFirstLetter(req.body.airportName),
         city: req.body.city,
         country: req.body.country
     }
@@ -443,4 +443,19 @@ module.exports.postReset = async (req, res) => {
     }
 
     res.redirect('/settingQD6/defaultDay');
+}
+
+
+function capitalizeFirstLetter(city) {
+    const arrWords = city.toLowerCase().trim().split(' ');
+
+    for (var i = 0; i < arrWords.length; i++) {
+        arrWords[i] = arrWords[i].charAt(0).toUpperCase() + arrWords[i].slice(1);
+        if(arrWords[i] == "Tế" && i == 1) {
+            arrWords[i] = arrWords[i].toLowerCase();
+        }
+    }
+
+    const result = arrWords.join(' ');
+    return result;
 }
