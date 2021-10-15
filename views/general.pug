@@ -13,6 +13,7 @@ head
     link(rel='stylesheet', href='/styles/PhuQuoc.css')
     link(rel='icon',type='image/x-icon', href='/images/logoIcon.png',size='32x32')
     link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css')
+    //- link(href='https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css', rel='stylesheet', integrity='sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC', crossorigin='anonymous')
     link(rel='stylesheet', href='https://unpkg.com/swiper/swiper-bundle.min.css')
     link(rel="preconnect", href="https://fonts.gstatic.com")
     link(href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap", rel="stylesheet")
@@ -35,8 +36,8 @@ body
             #navbarResponsive.collapse.navbar-collapse
                 ul.navbar-nav
                     li.nav-item.mx-0.mx-lg-2.px-2.dropdown(onmouseenter="hoverLi();" onmouseleave="leaveLi();")
-                        .nav-link#hover-li.py-2.px-0.px-lg-2.font-weight-bold.rounded.js-scroll-trigger(data-toggle='dropdown', aria-expanded='false' style="cursor:pointer;") Thông tin đặt vé      
-                        .dropdown-menu
+                        button.nav-link#hover-li.py-2.px-0.px-lg-2.font-weight-bold.rounded.js-scroll-trigger(aria-expanded='false' style="cursor:pointer;", type="button") Thông tin đặt vé
+                        .dropdown-menu(aria-labelledby="hover-li")
                             .row
                                 .col-md-6.col-sm-6.mb-3
                                     a.dropdown-item(href="/booking")
