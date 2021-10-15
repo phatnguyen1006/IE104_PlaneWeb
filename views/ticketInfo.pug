@@ -7,7 +7,8 @@ block content
                 .col-12.my-3
                     if flight
                         h3 Chuyến bay từ #{flight.ChuyenBay}
-                        h4.text-dark.font-weight-bold #{flight.NgayGio.toLocaleDateString()} | #{hour_depart} giờ #{minute_depart} phút
+                        div.d-flex.justify-content-end
+                            h4.text-dark.font-weight-bold.text-end #{flight.NgayGio.getDate()}/#{flight.NgayGio.getMonth() + 1}/#{flight.NgayGio.getFullYear()}
                     else 
                         h3
                         h6

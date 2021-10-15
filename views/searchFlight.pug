@@ -24,7 +24,7 @@ block content
                                     tbody  
                                         tr
                                             td.text-center(scope="row")
-                                                p #{flight.NgayGio.toLocaleDateString()}
+                                                p #{flight.NgayGio.getDate()}/#{flight.NgayGio.getMonth() + 1}/#{flight.NgayGio.getFullYear()}
                                             td.text-center    
                                                 .Gio-Khoi-Hanh.col-12 #{hour_depart[index]} giờ #{minute_depart[index]} phút
                                                 p.font-weight-bold #{flight.SanBayDi}
@@ -66,7 +66,7 @@ block content
                                                 p.font-weight-bold  #{Sanbaydi}
                                             .col-12 
                                                 b.dl-GioKH #{hour_depart[index]} giờ #{minute_depart[index]} phút
-                                                span , #{myDate[index].toLocaleDateString()}
+                                                span , #{myDate[index].getDate()}/#{myDate[index].getMonth() + 1}/#{myDate[index].getFullYear()}
                                             .col-12
                                                 p #{flight.SanBayDi}
                                     .col-sm-2
@@ -82,7 +82,7 @@ block content
                                                 p.font-weight-bold #{Sanbayden}
                                             .col-12 
                                                 b.dl-Gio-Den #{hour_arrival[index]} giờ #{minute_arrival[index]} phút
-                                                span , #{myDate_1[index].toLocaleDateString()}
+                                                span , #{myDate_1[index].getDate()}/#{myDate_1[index].getMonth() + 1}/#{myDate_1[index].getFullYear()}
                                             .col-12 #{flight.SanBayDen}
                                     .col-sm-4.logo-MaCb-price
                                         .row.text-left
@@ -204,5 +204,9 @@ block content
             
 
         });
+
+        function formatDate(myDate_1) {
+            return `${myDate_1.getDate()}/${myDate_1.getMonth() + 1}/${myDate_1.getFullYear()}`;
+        }
     
         
