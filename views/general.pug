@@ -36,7 +36,7 @@ body
             #navbarResponsive.collapse.navbar-collapse
                 ul.navbar-nav
                     li.nav-item.mx-0.mx-lg-2.px-2.dropdown(onmouseenter="hoverLi();" onmouseleave="leaveLi();")
-                        button.nav-link#hover-li.py-2.px-0.px-lg-2.font-weight-bold.rounded.js-scroll-trigger(aria-expanded='false' style="cursor:pointer;", type="button") Thông tin đặt vé
+                        .nav-link#hover-li.py-2.px-0.px-lg-2.font-weight-bold.rounded.js-scroll-trigger(data-toggle='dropdown', aria-expanded='false' style="cursor:pointer;", type="button") Thông tin đặt vé
                         .dropdown-menu(aria-labelledby="hover-li")
                             .row
                                 .col-md-6.col-sm-6.mb-3
@@ -163,7 +163,8 @@ body
                         | Khu phố 6,Phường Linh Trung, TP. Thủ Đức
                 //- Footer Social Icons
                 .col-sm-4.mb-4.mb-sm-0
-                    h4.text-uppercase.mb-4(style="color:white;") Sky Airlines | Đồng hành cùng bạn
+                    h4.text-uppercase.mb-4(style="color:white;") Sky Airlines 
+                    h4.text-uppercase.mb-4(style="color:white;") Đồng hành cùng bạn
                     a.btn.btn-outline-light.btn-social.mx-1(href="#")
                         i.fab.fa-fw.fa-facebook-f
                     a.btn.btn-outline-light.btn-social.mx-1(href="#")
@@ -196,6 +197,11 @@ body
         clickable: true
         }
         });
+
+        function formatNumber(n) {
+        // format number 1000000 to 1,234,567
+        return n.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+        }
 
         function hoverLi(){
         document.getElementById("hover-li").style.color= "#f4942d";
