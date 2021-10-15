@@ -15,7 +15,7 @@ block content
                 img(src='/images/poster_main-5.jpg', style='width: 100%;height:40vw;')
         .swiper-pagination
 
-    .booking-area.p-4.my-3
+    .booking-area.p-4.my-3.d-flex.justify-content-center
         form.form-group.container-lg.shadow(action="/flight-searching", method="get")
             .d-flex.mx-2.my-1
                     a.mr-2.flex-fill(href="/booking" type="button", class="btn btn-md-2", style="width:20%;background:" )
@@ -25,15 +25,15 @@ block content
                         i.fas.fa-fw.fa-plane-departure
                         |  Lịch sử mua đặt vé
             
-            .row.p-2
+            .row.p-2.d-flex.justify-content-center
                 .col-lg-5.mb-2
                     label.font-weight-bold(for='booking' id="start") Điểm đi:
                     select.select-form.form-control(id='booking' type="text" name="departureAirport" required)
                         option Chọn điểm đi
                         each place in Airports
                             option= place.city 
-                .col-lg-1
-                    div.shadow.btn-exchange.my-1
+                //- .col-lg-1
+                //-     div.shadow.btn-exchange.my-1
                         
                 .col-lg-5.mb-2
                     label.font-weight-bold(for='sel1') Điểm đến:
@@ -43,15 +43,22 @@ block content
                             option= local.city
                 .col-lg-0 
                     input(type="hidden" name="_csrf" value=csrf)
-            .row.p-2
+                .col-lg-2.d-flex.justify-content-center
+                    div.shadow.btn-exchange.my-1
+
+            .row.p-2.d-flex.justify-content-center
                 .col-lg-5.mb-2
                     label.font-weight-bold(for='sellist1' id="start" ) Thời gian:
-                    input.form-control(type="date", value="" ,id="example-date-input", placehodler="dd//mm/yyyy", name="date" required) 
+                    input.form-control(type="date", value="" ,id="example-date-input", placehodler="dd//mm/yyyy", name="date" required)
+
+                //- .col-lg-1
+                //-     div
                 .col-lg-5.mb-2
                     label.font-weight-bold(for='sel1') Số lượng:
                     input.form-control(type="number" min="1" value="1" name="num" readonly="readonly") 
-                #buttonFind.col-lg-2(style="transform:translateY(-15px);")
-                    button.mt-2.p-2.font-weight-bold(type="submit",name="sub", class="btn btn-outline-success" style="border-radius:10px;" value="1") Tìm chuyến bay
+                //- #buttonFind.col-lg-2(style="transform:translateY(-15px);")
+                #buttonFind.col-lg-2.py-2.d-flex.justify-content-center
+                    button.mt-2.p-auto.font-weight-bold(type="submit",name="sub", class="btn btn-outline-success" style="border-radius:10px;" value="1") Tìm chuyến bay
             
     .content-container.container-lg
         .row.p-2
