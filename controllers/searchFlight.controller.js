@@ -139,10 +139,8 @@ module.exports.postTicket = async (req, res) => {
         }
 
     
-    console.log("in ra date1", arrayDate1); 
-
-    arrayDate[0] = formatDate(arrayDate[0]);
-    console.log("in ra date", arrayDate[0]);
+    // console.log("in ra date1", arrayDate1); 
+    // console.log("in ra date", arrayDate);
 
     res.render('searchFlight', {
         flights: flights,
@@ -166,13 +164,15 @@ module.exports.postTicket = async (req, res) => {
 
 };
 
-function formatDate(date) {
-    var year = date.getFullYear();
-    var month = date.getMonth();
-    var day = date.getDate();
 
-    console.log(`${month+1}/${day}/${year}`);
-    var newDate = `${month+1}/${day + 1}/${year}`;
 
-    return new Date(newDate);
-}
+// function formatDate(date) {
+//     var year = date.getFullYear();
+//     var month = date.getMonth();
+//     var day = date.getDate();
+
+//     console.log(`${month+1}/${day}/${year}`);
+//     var newDate = `${month+1}/${day + 1}/${year}`;
+
+//     return new Date(newDate);
+// }
