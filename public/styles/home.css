@@ -7,13 +7,10 @@ a.flex-fill:hover {
   background-color: #1f3c7a;
   color: #f4942d;
 }
-a.mr-2.flex-fill i.fas.fa-fw.fa-search-location:hover,
-a.flex-fill i.fas.fa-fw.fa-plane-departure:hover {
-  background-color: white;
-}
+
 /* 1c2c54 */
 .col-md-6.col-sm-6 a {
-  background-color: #1f3c7a;
+  color: #1f3c7a;
 }
 
 /* active */
