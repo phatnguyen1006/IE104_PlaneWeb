@@ -1,10 +1,10 @@
 extends ./general.pug
 block content
-    //- script(src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js")
-    //- .container.mt-5
-    //-     .d-flex.justify-content-center
-    //-         canvas#myChart(style='width:100%;max-width:600px')
-    //- hr
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js")
+    .container.mt-5
+        .d-flex.justify-content-center
+            canvas#myChart(style='width:100%;max-width:600px')
+    hr
     .container.mb-5.mt-3
         h3.title-report.text-center.text-danger Doanh Thu Năm
         form(method="POST", action='/revenue/year')
@@ -45,7 +45,7 @@ block content
                         td
                         td
                         th.text-center Tổng:
-                        td.table-info= total
+                        td.text-center.table-info= total
                         td
 
             .container.mr-2.mt-3

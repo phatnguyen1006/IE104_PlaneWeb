@@ -1,59 +1,93 @@
+a.mr-2.flex-fill,
+a.flex-fill {
+  border: 1px solid #1f3c7a;
+}
+a.mr-2.flex-fill:hover,
+a.flex-fill:hover {
+  background-color: #1f3c7a;
+  color: #f4942d;
+}
 
-a.mr-2.flex-fill, a.flex-fill{
-    border:1px solid #1f3c7a;
-}
-a.mr-2.flex-fill:hover , a.flex-fill:hover {
-    background-color: #1f3c7a;
-    color:#f4942d;
-}
-a.mr-2.flex-fill i.fas.fa-fw.fa-search-location:hover,a.flex-fill  i.fas.fa-fw.fa-plane-departure:hover{
-    background-color:white;
-}
 /* 1c2c54 */
-.col-md-6.col-sm-6 a{
-    color: #1f3c7a;
+.col-md-6.col-sm-6 a {
+  color: #1f3c7a;
+}
+
+/* active */
+.isReturn {
+  background-color: #1f3c7a;
+  color: #f4942d;
 }
 
 /* booking-area */
-.booking-area{
-    background-color: white;
-    background-size: cover;
+.booking-area {
+  background-color: white;
+  background-size: cover;
 }
-.form-group{
-    margin-bottom: 0 !important;
+.form-group {
+  margin-bottom: 0 !important;
 }
 
-@media (max-width: 991px){
-    #buttonFind{
-        transform: translateY(0px) !important;
-}
+@media (max-width: 991px) {
+  #buttonFind {
+    transform: translateY(0px) !important;
+  }
 }
 /* parallax */
 
 #parallax1 {
-    padding-top: 80px;
-    padding-bottom: 80px;
-    color: #ffffff;
-    margin: 20px 0;
+  padding-top: 80px;
+  padding-bottom: 80px;
+  color: #ffffff;
+  margin: 20px 0;
 }
-.parallax{
-    height: 100%;
-    width: 100%;
-    position: relative;
-    overflow: hidden;
-    background: none;
+.parallax {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  background: none;
 }
-
-
 
 .parallax-bg {
-    background-image: url(/images/parallax.jpg);
-    background-size: cover;
-     background-attachment: fixed;
-    width: 100%;
-    height: 100%;
-    left: 0;
-    top: 0;
-    margin: 0 auto;
-    position: absolute;
+  background-image: url(/images/parallax.jpg);
+  background-size: cover;
+  background-attachment: fixed;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  margin: 0 auto;
+  position: absolute;
+}
+
+.swiper {
+  width: 100%;
+  height: 100%;
+}
+
+.swiper-slide {
+  text-align: center;
+  font-size: 18px;
+  background: #fff;
+
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+}
+
+.swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }

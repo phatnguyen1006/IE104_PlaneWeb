@@ -11,33 +11,48 @@ block content
         a.mr-2(href="/") Trang chủ
         i.mr-2.fas.fa-angle-right
         span.mr-2 Tìm chuyến bay
-    .container-lg.mt-3.mb-5.bg-light.shadow
-        h2.text-center.text-dark.p-3 Tìm chuyến bay
-        form.form-group.container-lg(method="get" action="/flight-searching")
-            .row.p-2
+    .booking-area.p-4.my-3.d-flex.justify-content-center
+        form.form-group.container-lg.shadow(action="/flight-searching", method="get")
+            .d-flex.mx-2.my-1
+                    a#one-way-btn.mr-2.flex-fill(type="button", class="isReturn btn btn-md-2", style="width:20%; background-color: #1f3c7a; color: #f4942d" , onclick='{switchWay(false)}')
+                        i.fas.fa-fw.fa-search-location
+                        |  Một chiều
+                    a#return-btn.flex-fill(type="button", class="btn btn-md-2", style="width:20%;  background-color: white; color: #1f3c7a", onclick='{switchWay(true)}')
+                        i.fas.fa-fw.fa-plane-departure
+                        |  Khứ hồi
+            
+            .row.p-2.d-flex.justify-content-center
                 .col-lg-5.mb-2
                     label.font-weight-bold(for='booking' id="start") Điểm đi:
-                    select.select-form.form-control(id='booking', placehodler='Điểm đến' type="text" name="departureAirport")
+                    select.select-form.form-control(id='booking' type="text" name="departureAirport" required)
                         option Chọn điểm đi
                         each place in Airports
-                            option= place.city 
+                            option= place.city
+                //- .col-lg-1
+                //-     div.shadow.btn-exchange.my-1
+                        
                 .col-lg-5.mb-2
                     label.font-weight-bold(for='sel1') Điểm đến:
-                    select.select-form-1.form-control(id='sel1' name="arrivalAirport" )
+                    select.select-form-1.form-control(id='sel1' name="arrivalAirport" required )
                         option Chọn điểm đến
                         each local in Airports
                             option= local.city
-                .col-lg-0
+                .col-lg-0 
                     input(type="hidden" name="_csrf" value=csrf)
                 .col-lg-2.d-flex.justify-content-center
                     div.shadow.btn-exchange.my-1
-            .row.p-2
+
+            .row.p-2.d-flex.justify-content-center
                 .col-lg-5.mb-2
-                    label.font-weight-bold(for='sellist1' id="start" ) Thời gian:
-                    input.form-control(type="date", value="" ,id="example-date-input", placehodler="dd//mm/yyyy", name="date" required) 
+                    label.font-weight-bold(for='sellist1' id="start" ) Ngày đi:
+                    input.form-control(type="date", value="" ,id="example-date-input", placehodler="dd//mm/yyyy", name="date" required)
+
+                //- .col-lg-1
+                //-     div
                 .col-lg-5.mb-2
-                    label.font-weight-bold(for='sel1') Số lượng:
-                    input.form-control(type="number" min="1" value="1" name="num" readonly="readonly") 
+                    label.font-weight-bold(for='sellist2', style='display:none;', id="example-date-input-back1") Ngày về:
+                    input.form-control(type="date", value="" ,id="example-date-input-back", placehodler="dd//mm/yyyy", name="dateReturn", style='display:none;')
+                //- #buttonFind.col-lg-2(style="transform:translateY(-15px);")
                 #buttonFind.col-lg-2.py-2.d-flex.justify-content-center
                     button.mt-2.p-auto.font-weight-bold(type="submit",name="sub", class="btn btn-outline-success" style="border-radius:10px;" value="1") Tìm chuyến bay
     .content.container-lg.mt-5
@@ -77,9 +92,40 @@ block content
                 button.font-weight-bold.mt-3(type="button" class="btn btn-outline-info" style="border-radius: 10px;" onclick="location.href='/'")  
                     | Nâng hạng vé
     script.
-         var sel = document.querySelector('.select-form');
+        var sel = document.querySelector('.select-form');
         var sel_1 = document.querySelector('.select-form-1');
         var btnexchange = document.querySelector('.btn-exchange');
+
+        const returnBtn = document.getElementById('return-btn');
+        const oneWayBtn = document.getElementById('one-way-btn');
+
+        function switchWay(bool) {
+            if(bool) {
+                oneWayBtn.style.backgroundColor = "white";
+                oneWayBtn.style.color = "#1f3c7a";
+                returnBtn.style.backgroundColor = "#1f3c7a";
+                returnBtn.style.color = "#f4942d";
+
+                document.getElementById('example-date-input-back').classList.add("animated");
+                document.getElementById('example-date-input-back').classList.add("animatedFadeIn");
+                document.getElementById('example-date-input-back').classList.add("fadeInUp");
+                document.getElementById('example-date-input-back1').classList.add("animated");
+                document.getElementById('example-date-input-back1').classList.add("animatedFadeIn");
+                document.getElementById('example-date-input-back1').classList.add("fadeInUp");
+
+                document.getElementById('example-date-input-back').style.display = 'block';
+                document.getElementById('example-date-input-back1').style.display = 'block';
+            } else {
+                returnBtn.style.backgroundColor = "white";
+                returnBtn.style.color = "#1f3c7a";
+                oneWayBtn.style.backgroundColor = "#1f3c7a";
+                oneWayBtn.style.color = "#f4942d";
+
+                document.getElementById('example-date-input-back').style.display = 'none';
+                document.getElementById('example-date-input-back1').style.display = 'none';
+            }
+        }
+
         sel.addEventListener('change',()=>{
             for(var j = 1; j <sel.length;j++)
             {

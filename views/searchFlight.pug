@@ -66,7 +66,8 @@ block content
                                                 p.font-weight-bold  #{Sanbaydi}
                                             .col-12 
                                                 b.dl-GioKH #{hour_depart[index]} giờ #{minute_depart[index]} phút
-                                                span , #{myDate[index].getDate()}/#{myDate[index].getMonth() + 1}/#{myDate[index].getFullYear()}
+                                                //- span , #{myDate[index].getDate()}/#{myDate[index].getMonth() + 1}/#{myDate[index].getFullYear()}
+                                                span , #{myDate[index]}
                                             .col-12
                                                 p #{flight.SanBayDi}
                                     .col-sm-2
@@ -93,8 +94,13 @@ block content
                                                     .col-12.font-weight-bold.text-uppercase.mb-2 Sky Airlines
                                                     .col-12 Mã chuyến bay: 
                                                         span#valueOfcode.font-weight-bold #{flight.MaCB}
-                                                    .col-12 Giá tiền: 
-                                                        span.font-weight-bold #{flight.GiaVe} VNĐ 
+                                                    - var formatMoney = function(price){  
+                                                    -   return dollarUSLocale.format(price);
+                                                    - }
+
+                                                    - var dollarUSLocale = Intl.NumberFormat('en-US');
+                                                    .col-12 Giá tiền:
+                                                        span.font-weight-bold !{formatMoney(flight.GiaVe)} VNĐ 
                                 .row.mt-1
                                     .col-lg-3
                                     .col-lg-6
@@ -135,6 +141,12 @@ block content
                                         
                 
     script(type="text/javascript").
+
+        let dollarUSLocale = Intl.NumberFormat('en-US');
+
+        function moneyFormat(price) {
+            return dollarUSLocale.format(price);
+        }
            
         const flights = document.querySelectorAll(".flight-btn");
         const details = document.querySelectorAll(".hidden-detail-flight");
