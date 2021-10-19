@@ -57,20 +57,27 @@ block content
                         | &nbsp In báo cáo
     script.
         var revenue = JSON.parse(document.getElementById('arrayRevenue').value);
-        console.log(revenue);
+        //- console.log(revenue);
 
-        function parseArray() {
-            var arr = [];
+        function monthArray() {
+            var arrmonth = [];
             revenue.forEach((month, index) => {
-                arr.push(parseInt(month.DoanhThu.$numberDecimal));
+                arrmonth.push(parseInt(month.Thang));
             });
 
-            return arr;
+            return arrmonth;
         }
 
-        console.log(parseArray());
+        function parseArray() {
+            var arrValue = [];
+            revenue.forEach((month, index) => {
+                arrValue.push(parseInt(month.DoanhThu.$numberDecimal));
+            });
 
-        var xValues = [1,2,3,4,5,6,7,8,9,10,11,12];
+            return arrValue;
+        }
+
+        var xValues = monthArray();
         var yValues = parseArray();
 
         new Chart("myChart", {
