@@ -67,10 +67,15 @@ block content
                                                             tr
                                                             th(scope='col') Hạng vé
                                                             td.Class-form(scope='col') #{booked.HangVe}
+                                                            
+                                                            - var formatMoney = function(price){  
+                                                            -   return dollarUSLocale.format(price);
+                                                            - }
 
+                                                            - var dollarUSLocale = Intl.NumberFormat('en-US');
                                                             tr
                                                             th(scope='col') Giá Vé
-                                                            td #{booked.GiaTien}
+                                                            td !{formatMoney(booked.GiaTien)}
                                                                 p.price-hide(style="display:none;") #{booked.GiaVeMua}
                                                                 p.DuocChuyen(style="display:none;") #{booked.TrangThai}
                                                                 input(type="hidden" name="_id" value=booked._id)
@@ -148,9 +153,14 @@ block content
                                                     th(scope='col') Hạng vé
                                                     td(scope='col') #{bought.HangVe}
 
+                                                    - var formatMoney = function(price){  
+                                                    -   return dollarUSLocale.format(price);
+                                                    - }
+
+                                                    - var dollarUSLocale = Intl.NumberFormat('en-US');
                                                     tr
                                                     th(scope='col') Giá Vé
-                                                    td(scope='col') #{bought.GiaTien}
+                                                    td(scope='col') !{formatMoney(bought.GiaTien)}
 
                                                     tr
                                                     th(scope='row') Trạng thái
