@@ -32,7 +32,7 @@ module.exports.postTicket = async (req, res) => {
     // Vé khứ hồi
     if (req.body.dateReturn) {
         var journeyReturn = req.query.arrivalAirport + "-" + req.query.departureAirport;
-
+        console.log("Vé khứ hồi");
         const flightReturn = { 
             NgayGio : req.query.dateReturn,
             ChuyenBay : journeyReturn
