@@ -1,7 +1,7 @@
 extends ./general.pug
     
 block content         
-    .swiper-container
+    .swiper.swiper-container
         .swiper-wrapper
             .swiper-slide
                 img(src='/images/poster_main-4.jpg', style='width: 100%;height:40vw;')
@@ -18,10 +18,10 @@ block content
     .booking-area.p-4.my-3.d-flex.justify-content-center
         form.form-group.container-lg.shadow(action="/flight-searching", method="get")
             .d-flex.mx-2.my-1
-                    a.mr-2.flex-fill(type="button", class="btn btn-md-2", style="width:20%;background:" , onclick='{switchWay(false)}')
+                    a#one-way-btn.mr-2.flex-fill(type="button", class="btn btn-md-2 isReturn", style="width:20%;" , onclick='{switchWay(false)}')
                         i.fas.fa-fw.fa-search-location
                         |  Một chiều
-                    a.flex-fill(type="button", class="btn btn-md-2", style="width:20%;", onclick='{switchWay(true)}') 
+                    a#return-btn.flex-fill(type="button", class="btn btn-md-2", style="width:20%;", onclick='{switchWay(true)}')
                         i.fas.fa-fw.fa-plane-departure
                         |  Khứ hồi
             
@@ -31,7 +31,7 @@ block content
                     select.select-form.form-control(id='booking' type="text" name="departureAirport" required)
                         option Chọn điểm đi
                         each place in Airports
-                            option= place.city 
+                            option= place.city
                 //- .col-lg-1
                 //-     div.shadow.btn-exchange.my-1
                         
@@ -54,8 +54,8 @@ block content
                 //- .col-lg-1
                 //-     div
                 .col-lg-5.mb-2
-                    label.font-weight-bold.animated.animatedFadeInUp.fadeInUp(for='sel1', style='display:none;', id="example-date-input-back1") Ngày về:
-                    input.form-control.animated.animatedFadeInUp.fadeInUp(type="date", value="" ,id="example-date-input-back", placehodler="dd//mm/yyyy", name="date" required, style='display:none;') 
+                    label.font-weight-bold(for='sellist2', style='display:none;', id="example-date-input-back1") Ngày về:
+                    input.form-control(type="date", value="" ,id="example-date-input-back", placehodler="dd//mm/yyyy", name="dateReturn", style='display:none;')
                 //- #buttonFind.col-lg-2(style="transform:translateY(-15px);")
                 #buttonFind.col-lg-2.py-2.d-flex.justify-content-center
                     button.mt-2.p-auto.font-weight-bold(type="submit",name="sub", class="btn btn-outline-success" style="border-radius:10px;" value="1") Tìm chuyến bay
@@ -149,14 +149,30 @@ block content
         var sel = document.querySelector('.select-form');
         var sel_1 = document.querySelector('.select-form-1');
         var btnexchange = document.querySelector('.btn-exchange');
+        var returnBtn = document.getElementById('#return-btn');
+        var oneWayBtn = document.getElementById('#one-way-btn');
 
         function switchWay(bool) {
             if(bool) {
+                document.getElementById('example-date-input-back').classList.add("animated");
+                document.getElementById('example-date-input-back').classList.add("animatedFadeIn");
+                document.getElementById('example-date-input-back').classList.add("fadeInUp");
+                document.getElementById('example-date-input-back1').classList.add("animated");
+                document.getElementById('example-date-input-back1').classList.add("animatedFadeIn");
+                document.getElementById('example-date-input-back1').classList.add("fadeInUp");
+
+                oneWayBtn.classList.remove("isReturn");
+                returnBtn.classList.add("fadeInUp");
+
                 document.getElementById('example-date-input-back').style.display = 'block';
                 document.getElementById('example-date-input-back1').style.display = 'block';
+                //- document.getElementById('example-date-input-back1').classList.add("animated animatedFadeInUp fadeInUp");
             } else {
                 document.getElementById('example-date-input-back').style.display = 'none';
                 document.getElementById('example-date-input-back1').style.display = 'none';
+
+                returnBtn.classList.remove("isReturn");
+                oneWayBtn.classList.add("fadeInUp");
             }
         }
         
