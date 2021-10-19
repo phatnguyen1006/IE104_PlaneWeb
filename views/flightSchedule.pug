@@ -56,6 +56,11 @@ block content
                                         #valueOfcode.font-weight-bold #{newFlight.MaCB}
 
                                     tr
+                                    - var formatMoney = function(price){  
+                                    -   return dollarUSLocale.format(price);
+                                    - }
+
+                                    - var dollarUSLocale = Intl.NumberFormat('en-US');
                                     th(scope='col') Giá tiền
                                     td
                                         .font-weight-bold #{newFlight.GiaVe} VNĐ 
