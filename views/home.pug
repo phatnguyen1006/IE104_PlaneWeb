@@ -18,12 +18,12 @@ block content
     .booking-area.p-4.my-3.d-flex.justify-content-center
         form.form-group.container-lg.shadow(action="/flight-searching", method="get")
             .d-flex.mx-2.my-1
-                    a.mr-2.flex-fill(href="/booking" type="button", class="btn btn-md-2", style="width:20%;background:" )
+                    a.mr-2.flex-fill(type="button", class="btn btn-md-2", style="width:20%;background:" , onclick='{switchWay(false)}')
                         i.fas.fa-fw.fa-search-location
-                        |  Đặt vé 
-                    a.flex-fill(href="/viewTicket", type="button", class="btn btn-md-2", style="width:20%;") 
+                        |  Một chiều
+                    a.flex-fill(type="button", class="btn btn-md-2", style="width:20%;", onclick='{switchWay(true)}') 
                         i.fas.fa-fw.fa-plane-departure
-                        |  Lịch sử mua đặt vé
+                        |  Khứ hồi
             
             .row.p-2.d-flex.justify-content-center
                 .col-lg-5.mb-2
@@ -48,14 +48,14 @@ block content
 
             .row.p-2.d-flex.justify-content-center
                 .col-lg-5.mb-2
-                    label.font-weight-bold(for='sellist1' id="start" ) Thời gian:
-                    input.form-control(type="date", value="" ,id="example-date-input", placehodler="dd/mm/yyyy", name="date", required)
+                    label.font-weight-bold(for='sellist1' id="start" ) Ngày đi:
+                    input.form-control(type="date", value="" ,id="example-date-input", placehodler="dd//mm/yyyy", name="date" required)
 
                 //- .col-lg-1
                 //-     div
                 .col-lg-5.mb-2
-                    label.font-weight-bold(for='sel1') Số lượng:
-                    input.form-control(type="number" min="1" value="1" name="num" readonly="readonly") 
+                    label.font-weight-bold.animated.animatedFadeInUp.fadeInUp(for='sel1', style='display:none;', id="example-date-input-back1") Ngày về:
+                    input.form-control.animated.animatedFadeInUp.fadeInUp(type="date", value="" ,id="example-date-input-back", placehodler="dd//mm/yyyy", name="date" required, style='display:none;') 
                 //- #buttonFind.col-lg-2(style="transform:translateY(-15px);")
                 #buttonFind.col-lg-2.py-2.d-flex.justify-content-center
                     button.mt-2.p-auto.font-weight-bold(type="submit",name="sub", class="btn btn-outline-success" style="border-radius:10px;" value="1") Tìm chuyến bay
@@ -149,6 +149,16 @@ block content
         var sel = document.querySelector('.select-form');
         var sel_1 = document.querySelector('.select-form-1');
         var btnexchange = document.querySelector('.btn-exchange');
+
+        function switchWay(bool) {
+            if(bool) {
+                document.getElementById('example-date-input-back').style.display = 'block';
+                document.getElementById('example-date-input-back1').style.display = 'block';
+            } else {
+                document.getElementById('example-date-input-back').style.display = 'none';
+                document.getElementById('example-date-input-back1').style.display = 'none';
+            }
+        }
         
         sel.addEventListener('change',()=>{
             var check = false;
