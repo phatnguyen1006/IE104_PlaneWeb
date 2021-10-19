@@ -439,14 +439,6 @@ module.exports.postTicket = async (req, res) => {
     }  
 };
 
-function formatDate(date) {
-    var year = date.getFullYear();
-    var month = date.getMonth();
-    var day = date.getDate();
 
-    console.log(`${month+1}/${day}/${year}`);
-    var newDate = `${month+1}/${day}/${year}`;
 
-    return new Date(newDate);
-}
 

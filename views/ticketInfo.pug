@@ -69,11 +69,16 @@ block content
                                     label.lables Hạng vé
                                     input.form-control(type="text" id="info-class-op" readonly)
                                 .col-lg-6.mb-1
+                                - var formatMoney = function(price){  
+                                -   return dollarUSLocale.format(price);
+                                - }
+
+                                - var dollarUSLocale = Intl.NumberFormat('en-US');
                                     label.labels Giá tiền
                                         span#hidden_price(style="display:none;")=flight? flight.GiaVe : ""
                                     input.form-control.bg-light(type='text',id="info-price",readonly="readonly")
                                     input.form-control.bg-light(type='hidden',id="price",name="price", readonly="readonly")
-                                    input(type="hidden"  id="info-ticketType" name="ticketType" value=ticketType)
+                                    input(type="hidden"  id="info-ticketType" name="ticketType" value=flight.GiaVe)
                                     input.PurDate(type="hidden"  id="info-Date-Buy_Ticket" name="ticketDate" value='')
                             .row.mt-2
                                 .col-6        

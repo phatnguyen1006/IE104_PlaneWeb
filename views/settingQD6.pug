@@ -1,10 +1,10 @@
 extends ./general.pug
 block content
-    .container
+    .container-fluid
         .row.setting-area.m-5
-            .col-lg-4.left-content-setting.bg-primary.shadow
+            .col-lg-4.left-content-setting.bg-primary
                 .title-setting.pt-3
-                    h2.font-weight-bold.text-center Cài đặt
+                    h1.font-weight-bold.text-center Cài đặt
                 .item-setting-area.mt-4.text-center(style="list-style-type: none;z-index: 1;width: 100%;cursor:pointer;")
                     li.item-setting.active
                         a.item-setting-link(href="/settingQD6") Quản lý sân bay
@@ -15,7 +15,7 @@ block content
                     li.item-setting
                         a.item-setting-link(href="/settingQD6/flightSchedule") Thêm chuyến bay
                         
-            .col-lg-8.right-content-setting.bg-light.shadow
+            .col-lg-8.right-content-setting.bg-light
                 if (notify == "Xoá sân bay thành công" && (typeof notify !== "undefined"))
                     div.bg-success.mt-3.p-3(style="border-radius:7px;")
                         span.closebtn(onclick="this.parentElement.style.display='none';") &times;
@@ -42,7 +42,7 @@ block content
                         h4.mt-4.font-weight-bold.text-center Quản lý sân bay
                         
                     .content-airport
-                        button.btn.btn-info.mb-2(type='button', data-toggle='modal', data-target='#addAirportModal') Thêm sân bay
+                        //- button.btn.btn-info.mb-2(type='button', data-toggle='modal', data-target='#addAirportModal') Thêm sân bay
                         form#addAirportModal.modal.fade(method="post" action="/settingQD6")
                             .modal-dialog.modal-dialog-centered.modal-dialog-scrollable
                                 .modal-content
@@ -86,36 +86,42 @@ block content
                                         button.btn.btn-secondary(type="button" data-dismiss="modal") Đóng
                                         button.btn.btn-success.btn-add-airport(type='submit' disabled) Thêm sân bay
                         
-                    if QD6.Airports.length > 0
-                        .content-delete-airport.mt-3
-                            .row
-                                .col-sm-12
-                                    h3.font-weight-bold Danh sách các sân bay
-                                .col-sm-12
-                                    .table-responsive
-                                        table.table.text-nowrap
-                                            thead
-                                                tr
-                                                    th(scope='col').text-center Mã Sân Bay
-                                                    th(scope='col').text-center Tên Sân Bay
-                                                    th(scope='col').text-center TP/Tỉnh  
-                                                    th(scope='col').text-center Quốc Gia
-                                                    th(scope='col').text-center 
-                                                    th(scope='col').text-center 
-                                                    
-                                            
-                                            for SB in QD6.Airports
-                                                tbody
-                                                    tr.table-striped
-                                                        th(scope='row').text-center.ma-san-bay #{SB.airportCode}
-                                                        td.text-center.ten-AP #{SB.airportName}
-                                                        td.text-center.city #{SB.city}
-                                                            span.TrangThai(style="display:none;") #{SB.TrangThai}
-                                                        td.text-center.coutry #{SB.country}
-                                                        td.text-center
-                                                            button.btn.btn-outline-primary.btn-update-airport(type='button', data-toggle='modal', data-target='#Update-ticket', data-id=SB._id,data-name=SB.airportName,data-code= SB.airportCode,data-columns=SB.city,data-type = SB.country) Sửa
-                                                        td
-                                                            button.btn.btn-outline-danger.btn-delete-airport(type='button', data-toggle='modal', data-target='#delete-airport', data-name=SB.airportName) Xóa
+                    
+                        .content-delete-airport.mt-5
+                            .row 
+                                if QD6.Airports.length > 0
+                                    .col-sm-8
+                                        h3.font-weight-bold Danh sách các sân bay
+                                .col-sm-4.text-center
+                                    button.btn.btn-info.mb-2(type='button', data-toggle='modal', data-target='#addAirportModal') Thêm sân bay
+                            if QD6.Airports.length > 0
+                                .row
+                                    
+                                    .col-sm-12
+                                        .table-responsive
+                                            table.table.text-nowrap
+                                                thead
+                                                    tr
+                                                        th(scope='col').text-center Mã Sân Bay
+                                                        th(scope='col').text-center Tên Sân Bay
+                                                        th(scope='col').text-center TP/Tỉnh  
+                                                        th(scope='col').text-center Quốc Gia
+                                                        th(scope='col').text-center 
+                                                        th(scope='col').text-center 
+                                                        
+                                                
+                                                for SB in QD6.Airports
+                                                    tbody
+                                                        tr.table-striped
+                                                            th(scope='row').text-center.ma-san-bay #{SB.airportCode}
+                                                            td.text-center.ten-AP #{SB.airportName}
+                                                            td.text-center.city #{SB.city}
+                                                                span.TrangThai(style="display:none;") #{SB.TrangThai}
+                                                            td.text-center.coutry #{SB.country}
+                                                            td.text-center
+                                                                button.btn.btn-outline-primary.btn-update-airport(type='button', data-toggle='modal', data-target='#Update-ticket', data-id=SB._id,data-name=SB.airportName,data-code= SB.airportCode,data-columns=SB.city,data-type = SB.country) Sửa
+                                                            td
+                                                                button.btn.btn-outline-danger.btn-delete-airport(type='button', data-toggle='modal', data-target='#delete-airport', data-name=SB.airportName) Xóa
                         //-Modal of updateAirport form  
                         form#Update-ticket.modal.fade(method="post" action="/settingQD6/updateAirport")
                             .modal-dialog
