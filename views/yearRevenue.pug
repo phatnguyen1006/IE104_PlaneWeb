@@ -1,10 +1,11 @@
 extends ./general.pug
 block content
-    script(src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js")
-    .container.mt-5
-        .d-flex.justify-content-center
-            canvas#myChart(style='width:100%;max-width:600px')
-    hr
+    if reports
+        script(src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js")
+        .container.mt-5
+            .d-flex.justify-content-center
+                canvas#myChart(style='width:100%;max-width:600px')
+        hr
     .container.mb-5.mt-3
         h3.title-report.text-center.text-danger Doanh Thu Năm
         form(method="POST", action='/revenue/year')
@@ -22,6 +23,7 @@ block content
                                         option=local
             .d-flex.justify-content-center
                 button.mt-2.mb-4.btn.btn-info(type="submit") Kết toán
+            input#arrayRevenue(type="hidden", value=reports)
         if reports    
             .table-responsive
                 table.table.table-hover.table-striped
@@ -54,8 +56,22 @@ block content
                         i.fas.fa-print
                         | &nbsp In báo cáo
     script.
+        var revenue = JSON.parse(document.getElementById('arrayRevenue').value);
+        console.log(revenue);
+
+        function parseArray() {
+            var arr = [];
+            revenue.forEach((month, index) => {
+                arr.push(parseInt(month.DoanhThu.$numberDecimal));
+            });
+
+            return arr;
+        }
+
+        console.log(parseArray());
+
         var xValues = [1,2,3,4,5,6,7,8,9,10,11,12];
-        var yValues = [7,8,8,9,9,9,10,11,14,14,15];
+        var yValues = parseArray();
 
         new Chart("myChart", {
         type: "line",
@@ -72,7 +88,7 @@ block content
         options: {
         legend: {display: false},
         scales: {
-        yAxes: [{ticks: {min: 6, max:16}}],
+        yAxes: [{ticks: {min: 1000000, max: 90000000}}],
         }
         }
         });
