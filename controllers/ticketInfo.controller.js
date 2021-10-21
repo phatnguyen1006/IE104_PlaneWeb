@@ -119,29 +119,68 @@ module.exports.postTicket = async (req, res) => {
 module.exports.postInfo = async (req, res) => {
     const flightCode = req.body.flightCode;
     const flightCodeReturn = req.body.flightCodeReturn;
-    const ticketType = req.body.ticketType;
 
     //get flight's schedule by flight code  
     const flight = await getFlightSchedule.getOneScheduleFlightByMaCB(flightCode);
     //console.log(flight);
 
+    //Chuyến bay đi 
+    const ticketType = req.body.ticketType;
     var data = flight.DSHangVe;
     var HangVe = await HangVeService.findTypeTicket(data);
     var hour_depart = flight.GioKhoiHanh;
     var minute_depart = parseInt((hour_depart - parseInt(hour_depart))*60);
     hour_depart = parseInt(flight.GioKhoiHanh);
-    if(flightCode && ticketType) {
-    res.render('ticketInfo',{
-        flight: flight,
-        ticketType: ticketType,
-        HangVe: HangVe,
-        hour_depart: hour_depart,
-        minute_depart: minute_depart,
-        csrf: req.csrfToken()
-    });
-    }
-    else {
-        res.redirect('/flight-searching');
+
+    if (flightCodeReturn) {
+        const flightReturn = await getFlightSchedule.getOneScheduleFlightByMaCB(flightCodeReturn);
+
+        //Chuyến bay về 
+        const ticketTypeReturn = req.body.ticketTypeReturn;
+        var dataReturn = flightReturn.DSHangVe;
+        var HangVeReturn = await HangVeService.findTypeTicket(dataReturn);
+        var hour_departReturn = flightReturn.GioKhoiHanh;
+        var minute_departReturn = parseInt((hour_departReturn - parseInt(hour_departReturn))*60);
+        hour_departReturn = parseInt(flightReturn.GioKhoiHanh);
+
+        if(flightCode && ticketType) {
+            res.render('ticketInfo',{
+            // Chuyến bay đi
+            flight: flight,
+            ticketType: ticketType,
+            HangVe: HangVe,
+            hour_depart: hour_depart,
+            minute_depart: minute_depart,
+
+            // Chuyến bay về
+            flightReturn: flightReturn,
+            ticketTypeReturn: ticketTypeReturn,
+            HangVeReturn: HangVeReturn,
+            hour_departReturn: hour_departReturn,
+            minute_departReturn: minute_departReturn,
+            
+            csrf: req.csrfToken()
+        });
+        }
+        else {
+            res.redirect('/flight-searching');
+        }
+    
+    // Chuyến bay một chiều
+    } else {
+        if(flightCode && ticketType) {
+        res.render('ticketInfo',{
+            flight: flight,
+            ticketType: ticketType,
+            HangVe: HangVe,
+            hour_depart: hour_depart,
+            minute_depart: minute_depart,
+            csrf: req.csrfToken()
+        });
+        }
+        else {
+            res.redirect('/flight-searching');
+        }
     }
 
 }
