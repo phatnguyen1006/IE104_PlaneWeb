@@ -118,6 +118,7 @@ module.exports.postTicket = async (req, res) => {
 //Last modified day: 13/4/2021
 module.exports.postInfo = async (req, res) => {
     const flightCode = req.body.flightCode;
+    const flightCodeReturn = req.body.flightCodeReturn;
     const ticketType = req.body.ticketType;
 
     //get flight's schedule by flight code  
