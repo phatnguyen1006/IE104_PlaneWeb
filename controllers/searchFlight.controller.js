@@ -273,6 +273,7 @@ module.exports.postTicket = async (req, res) => {
         arrayDate1Return.push(myDate_1Return);
       }
     }
+    // console.log(flightsReturn);
 
     res.render("searchFlight", {
       flights: flights,
@@ -290,6 +291,7 @@ module.exports.postTicket = async (req, res) => {
       minute_TGB: arrayMinute_TGB,
 
       // Chuyến bay về
+      flightsReturn: flightsReturn,
       hour_departReturn: arrayHour_departReturn,
       hour_arrivalReturn: arrayHour_arrivalReturn,
       minute_arrivalReturn: arrayMinute_arrivalReturn,

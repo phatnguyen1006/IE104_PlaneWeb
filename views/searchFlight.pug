@@ -135,12 +135,12 @@ block content
     if myDateReturn
         .searching-area
             .container-lg
-                if flights && flights.length > 0
+                if flightsReturn && flightsReturn.length > 0
                     section.my-3.text-center
                         h3.title-chose-flight.font-weight-bold.text-warning Lựa chọn chuyến bay
                         h2.title-flight(style="border-bottom: 2px dashed black;width:75%;transform:translateX(15%)") Từ #{Sanbayden} đến #{Sanbaydi}
                     .list-fight-area.text-center
-                        for flight,index in flights
+                        for flight,index in flightsReturn
                             .num-dshangve(style="display:none;") #{flight.DSHangVe.length}
                             .show-list.bg-light.shadow.pt-3.m-5(style="border-radius:10px;")
                                 .table-responsive-lg
