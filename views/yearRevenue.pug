@@ -34,20 +34,25 @@ block content
                             th.text-center Số Chuyến Bay
                             th.text-center Doanh Thu
                             th.text-center Tỉ lệ
+                    - var formatMoney = function(price){  
+                    -   return dollarUSLocale.format(price);
+                    - }
+
+                    - var dollarUSLocale = Intl.NumberFormat('en-US');
                     tbody
                         each report,index in reports
                             tr
                                 td.text-center= index+1
                                 td.text-center= report.Thang
                                 td.text-center= report.SoCB
-                                td.text-center.table-success= report.DoanhThu
+                                td.text-center.table-success= formatMoney(report.DoanhThu)
                                 td.text-center= Number.parseFloat(report.TiLe*100).toFixed(3) + "%"
                     tfoot
                         tr
                         td
                         td
                         th.text-center Tổng:
-                        td.text-center.table-info= total
+                        td.text-center.table-info= formatMoney(total)
                         td
 
             .container.mr-2.mt-3
