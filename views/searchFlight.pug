@@ -317,9 +317,9 @@ block content
         const selectFlight = document.querySelectorAll(".select-fl-btn");
         selectFlight.forEach(function (box, index) {
             box.addEventListener("click", function handle() {
-                selectReturn.forEach(function (boxNew, indexNot) {
+                selectFlight.forEach(function (boxNew, indexNot) {
                     if (indexNot != index) {
-                        selectReturn[indexNot].checked = false;
+                        selectFlight[indexNot].checked = false;
                     }
                 });
             });
