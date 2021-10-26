@@ -122,7 +122,7 @@ module.exports.postInfo = async (req, res) => {
 
     //get flight's schedule by flight code  
     const flight = await getFlightSchedule.getOneScheduleFlightByMaCB(flightCode);
-    //console.log(flight);
+    console.log(flight);
 
     //Chuyến bay đi 
     const ticketType = req.body.ticketType;

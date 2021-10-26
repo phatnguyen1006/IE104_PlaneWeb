@@ -42,7 +42,7 @@ body
                             .row
                                 .col-md-6.col-sm-6.mb-3
                                     a.dropdown-item(href="/booking")
-                                        i.mr-2.fas.fa-star
+                                        i.mr-2.fas.fa-credit-card
                                         | Đặt vé
                                 .col-md-6.col-sm-6.mb-3
                                     a.dropdown-item(href="/viewTicket") 
@@ -67,23 +67,23 @@ body
                             .row
                                 .col-md-6.col-sm-6.mb-3
                                     a.dropdown-item(href="/blogs/phu-quoc")
-                                        i.mr-2.fas.fa-star
+                                        i.mr-2.fas.fa-ship
                                         | Phú Quốc
                                 .col-md-6.col-sm-6.mb-3
                                     a.dropdown-item(href="/blogs/da-nang") 
-                                        i.mr-2.fas.fa-ticket-alt 
+                                        i.mr-2.fas.fa-suitcase 
                                         | Đà Nẵng                         
                                 .col-md-6.col-sm-6.mb-3
                                     a.dropdown-item(href="/blogs/quy-nhon") 
-                                        i.mr-2.fas.fa-fw.fa-plane-departure
+                                        i.mr-2.fas.fa-fw.fa-map-pin
                                         | Quy Nhơn 
                                 .col-md-6.col-sm-6.mb-3
                                     a.dropdown-item(href="/blogs/ho-chi-minh")
-                                        i.mr-2.fas.fa-check
+                                        i.mr-2.fas.fa-building
                                         | TP Hồ Chí Mính
                                 .col-md-6.col-sm-6.mb-3
                                     a.dropdown-item(href="/blogs/ha-noi") 
-                                        i.mr-2.fas.fa-bell
+                                        i.mr-2.fas.fa-map
                                         | Hà Nội
                     if admin 
                         li.nav-item.mx-0.mx-lg-2.px-2.dropdown(onmouseenter="hoverLi3();" onmouseleave="leaveLi3();")
@@ -92,11 +92,11 @@ body
                                 .row
                                     .col-md-6.col-sm-6.mb-3
                                         a.dropdown-item(href="/revenue/monthly")
-                                            i.mr-2.fas.fa-star
+                                            i.mr-2.fas.fa-calendar
                                             | Doanh thu tháng
                                     .col-md-6.col-sm-6.mb-3
                                         a.dropdown-item(href="/revenue/year") 
-                                            i.mr-2.fas.fa-ticket-alt   
+                                            i.mr-2.fas.fa-table
                                             | Doanh thu năm 
 
                 if admin
@@ -112,7 +112,7 @@ body
                                             | Cài đặt
                                     .col-12
                                         a.dropdown-item(onclick="location.href='/viewTicket'")
-                                            i.fas.fa-list.fa-sm.fa-fw.mr-2.text-gray-400
+                                            i.fas.fa-sticky-note.fa-sm.fa-fw.mr-2.text-gray-400
                                             | Hoạt động 
                                     .col-12
                                         a.dropdown-item(onclick="location.href='/signup/admin'")

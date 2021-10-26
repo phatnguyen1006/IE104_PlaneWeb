@@ -19,10 +19,10 @@ block content
         form.form-group.container-lg.shadow(action="/flight-searching", method="get")
             .d-flex.mx-2.my-1
                     a#one-way-btn.mr-2.flex-fill(type="button", class="isReturn btn btn-md-2", style="width:20%; background-color: #1f3c7a; color: #f4942d" , onclick='{switchWay(false)}')
-                        i.fas.fa-fw.fa-search-location
+                        i.fas.fa-fw.fa-arrow-right
                         |  Một chiều
                     a#return-btn.flex-fill(type="button", class="btn btn-md-2", style="width:20%;  background-color: white; color: #1f3c7a", onclick='{switchWay(true)}')
-                        i.fas.fa-fw.fa-plane-departure
+                        i.fas.fa-fw.fa-undo
                         |  Khứ hồi
             
             .row.p-2.d-flex.justify-content-center
@@ -67,7 +67,7 @@ block content
                 .row                    
                     .col-md-6.col-sm-6.mb-3
                         a(href="/booking")
-                            i.mr-2.fas.fa-star
+                            i.mr-2.fas.fa-search
                             | Tìm chuyến bay
                     .col-md-6.col-sm-6.mb-3
                         a(href="/booking") 
@@ -87,7 +87,7 @@ block content
                             |Du lịch
                     .col-md-6.col-sm-6.mb-3
                         a(href="/blogs/quy-nhon") 
-                            i.mr-2.fas.fa-question-circle
+                            i.mr-2.fas.fa-thumbs-up
                             | Ưu đãi
                         
                         
