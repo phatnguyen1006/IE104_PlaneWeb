@@ -419,7 +419,7 @@ module.exports.postTicket = async (req, res) => {
             
             //console.log("in ra date1", arrayDate1); 
             
-            arrayDate[0] = formatDate(arrayDate[0]); 
+            //arrayDate[0] = formatDate(arrayDate[0]); 
             //console.log("in ra date", arrayDate[0]);
 
             res.render('searchFlight', {
