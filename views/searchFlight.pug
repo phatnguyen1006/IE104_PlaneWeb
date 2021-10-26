@@ -238,7 +238,7 @@ block content
                                                     .row
                                                         .col-12.font-weight-bold.text-uppercase.mb-2 Sky Airlines
                                                         .col-12 Mã chuyến bay: 
-                                                            span#valueOfcode.font-weight-bold #{flight.MaCB}
+                                                            span#valueOfcodeReturn.font-weight-bold #{flight.MaCB}
                                                         - var formatMoney = function(price){  
                                                         -   return dollarUSLocale.format(price);
                                                         - }
@@ -279,12 +279,12 @@ block content
                                                                 td.text-center.p-3 Chuyến bay không quá cảnh tại Sân bay trung gian
         
         .d-flex.justify-content-center.w-100
-            form.mt-2.w-50(method="post" action="/ticketInfo")
+            form.mt-2.w-50(method="POST" action="/ticketInfo")
                 .row.d-flex.justify-content-center
                     input(type="hidden" name="_csrf" value=csrf)
+                    input.FlightCodeGo(type="hidden" name="flightCode")
+                    input.FlightCodeReturn(type="hidden" name="flightCodeReturn")
                     .mb-1.w-25.d-flex.justify-content-center
-                        input.FlightCode(type="hidden" name="flightCode" value="")
-                        input.FlightName(type="hidden" name="journey" value="")
                         button.btn-dat.btn.btn-success(type="submit" name="ticketType" value="0") Đặt vé
                     .mb-1.w-25.d-flex.justify-content-center
                         button.btn-mua.btn.btn-warning(type="submit" name="ticketType" value="1") Mua vé
@@ -315,8 +315,11 @@ block content
         //set inner cho ghế trống và ghế đặt và thời gian bay
 
         const selectFlight = document.querySelectorAll(".select-fl-btn");
+        const FlightCodeGo = document.querySelectorAll(".FlightCodeGo");
+        const flightCodeGoValue = document.querySelectorAll("#valueOfcode");
         selectFlight.forEach(function (box, index) {
             box.addEventListener("click", function handle() {
+                FlightCodeGo[0].value = flightCodeGoValue[index].textContent;
                 selectFlight.forEach(function (boxNew, indexNot) {
                     if (indexNot != index) {
                         selectFlight[indexNot].checked = false;
@@ -324,9 +327,13 @@ block content
                 });
             });
         });
+        
         const selectReturn = document.querySelectorAll(".select-flreturn-btn");
+        const FlightCodeReturn = document.querySelectorAll(".FlightCodeReturn");
+        const flightCodeReturnValue = document.querySelectorAll("#valueOfcodeReturn");
         selectReturn.forEach(function (box, index) {
             box.addEventListener("click", function handle() {
+                FlightCodeReturn[0].value = flightCodeReturnValue[index].textContent;
                 selectReturn.forEach(function (boxNew, indexNot) {
                     if (indexNot != index) {
                         selectReturn[indexNot].checked = false;
