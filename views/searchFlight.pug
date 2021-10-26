@@ -1,5 +1,7 @@
 extends ./general.pug
 block content
+    - var fl = ""
+    - var flReturn = ""
     .poster-search(style="background-image:url('/images/SearchFight.jpg');background-repeat: no-repeat;background-position: center;background-size: 100% 100%;height: 70vh;width: 100%;")
     .searching-area
         .container-lg
@@ -15,13 +17,13 @@ block content
                                 table.table.table-borderless.text-nowrap
                                     thead
                                         tr
-                                            th.th-sm.text-center(scope="col") Ngày bay     
+                                            th.th-sm.text-center(scope="col") Ngày bay
                                             th.th-sm.text-center(scope="col") TG khởi hành/SB đi
                                             th.th-sm.text-center(scope="col") TG đến dự kiến/SB đến
                                             th.th-sm.text-center(scope="col") Ghế trống
                                             th.th-sm.text-center(scope="col") Ghế đã đặt
                                             th.th-sm.text-center(scope="col") Ghế đã mua
-                                    tbody  
+                                    tbody
                                         tr
                                             td.text-center(scope="row")
                                                 p #{flight.NgayGio.getDate()}/#{flight.NgayGio.getMonth() + 1}/#{flight.NgayGio.getFullYear()}
@@ -52,12 +54,19 @@ block content
                                                 p.SGDat= hangVe.SGDat
                                                 p.SGTrong= hangVe.SGTrong
                                         input.FlightCode(type="hidden" name="flightCode" value=flight.MaCB)
-                                        input.FlightName(type="hidden" name="journey" value=flight.ChuyenBay)
-                                        button.btn-dat.btn.btn-success(type="submit" name="ticketType" value="0") Đặt vé
-                                    .col-md-3.col-xs-12.mb-1
-                                        button.btn-mua.btn.btn-warning(type="submit" name="ticketType" value="1") Mua vé
+                                        input.FlightName(type="hidden" name="journey" value=flight.ChuyenBay)                                        
+                                        if !myDateReturn
+                                            button.btn-dat.btn.btn-success(type="submit" name="ticketType" value="0") Đặt vé
+                                    if !myDateReturn
+                                        .col-md-3.col-xs-12.mb-1
+                                            button.btn-mua.btn.btn-warning(type="submit" name="ticketType" value="1") Mua vé
                                     .col-md-6
                                         button.btn.flight-btn.btn-outline-danger(type="button" title="Click để xem chi tiết chuyến bay" style="outline:none;border:none;") Chi tiết chuyến bay
+                                    if myDateReturn
+                                        .col-md-3.d-flex.justify-content-end.pr-4
+                                            label(class="checkbox")
+                                                input.select-fl-btn(type="checkbox")
+                                                span
                             .hidden-detail-flight.p-1.border-top
                                 .row.pt-3
                                     .col-sm-3
@@ -132,11 +141,153 @@ block content
                                                                 td.text-center
                                                         else
                                                             td.text-center.p-3 Chuyến bay không quá cảnh tại Sân bay trung gian
+    if myDateReturn
+        .searching-area
+            .container-lg
+                if flightsReturn && flightsReturn.length > 0
+                    section.my-3.text-center
+                        h3.title-chose-flight.font-weight-bold.text-warning Lựa chọn chuyến bay
+                        h2.title-flight(style="border-bottom: 2px dashed black;width:75%;transform:translateX(15%)") Từ #{Sanbayden} đến #{Sanbaydi}
+                    .list-fight-area.text-center
+                        for flight,index in flightsReturn
+                            .num-dshangve(style="display:none;") #{flight.DSHangVe.length}
+                            .show-list.bg-light.shadow.pt-3.m-5(style="border-radius:10px;")
+                                .table-responsive-lg
+                                    table.table.table-borderless.text-nowrap
+                                        thead
+                                            tr
+                                                th.th-sm.text-center(scope="col") Ngày bay     
+                                                th.th-sm.text-center(scope="col") TG khởi hành/SB đi
+                                                th.th-sm.text-center(scope="col") TG đến dự kiến/SB đến
+                                                th.th-sm.text-center(scope="col") Ghế trống
+                                                th.th-sm.text-center(scope="col") Ghế đã đặt
+                                                th.th-sm.text-center(scope="col") Ghế đã mua
+                                        tbody  
+                                            tr
+                                                td.text-center(scope="row")
+                                                    p #{flight.NgayGio.getDate()}/#{flight.NgayGio.getMonth() + 1}/#{flight.NgayGio.getFullYear()}
+                                                td.text-center    
+                                                    .Gio-Khoi-Hanh.col-12 #{hour_departReturn[index]} giờ #{minute_departReturn[index]} phút
+                                                    p.font-weight-bold #{flight.SanBayDi}
+                                                td.text-center   
+                                                    .Gio-Den.col-12 #{hour_arrivalReturn[index]} giờ #{minute_arrivalReturn[index]} phút
+                                                    p.font-weight-bold #{flight.SanBayDen}
+                                                td.text-center   
+                                                    .Ghe-trong
+                                                td.text-center       
+                                                    .Ghe-dat
+                                                td.text-center   
+                                                    .Ghe-mua
+                                                        
+                                form.mt-2(method="post" action="/ticketInfo")
+                                    .row
+                                        input(type="hidden" name="_csrf" value=csrf)
+                                        .col-md-3.col-xs-12.mb-1
+                                            div(style="display:none;")
+                                            
+                                                p.num-thBay #{flight.ThoiGianBay}      
+                                                p.num-DuocMua #{flight.DuocMua}
+                                                each hangVe in flight.DSHangVe
+                                                    p.slg= hangVe.SLG
+                                                    p.SGDaMua= hangVe.SGDaMua
+                                                    p.SGDat= hangVe.SGDat
+                                                    p.SGTrong= hangVe.SGTrong
+                                            input.FlightCode(type="hidden" name="flightCode" value=flight.MaCB)
+                                            input.FlightName(type="hidden" name="journey" value=flight.ChuyenBay)
+                                        //-     button.btn-dat.btn.btn-success(type="submit" name="ticketType" value="0") Đặt vé
+                                        //- .col-md-3.col-xs-12.mb-1
+                                        //-     button.btn-mua.btn.btn-warning(type="submit" name="ticketType" value="1") Mua vé
+                                        .col-md-6
+                                            button.btn.flight-btn.btn-outline-danger(type="button" title="Click để xem chi tiết chuyến bay" style="outline:none;border:none;") Chi tiết chuyến bay
+                                        .col-md-3.d-flex.justify-content-end.pr-4
+                                            label(class="checkbox")
+                                                input.select-flreturn-btn(type="checkbox")
+                                                span
+                                .hidden-detail-flight.p-1.border-top
+                                    .row.pt-3
+                                        .col-sm-3
+                                            .row.text-right
+                                                .col-12
+                                                    p.font-weight-bold  #{Sanbayden}
+                                                .col-12 
+                                                    b.dl-GioKH #{hour_departReturn[index]} giờ #{minute_departReturn[index]} phút
+                                                    //- span , #{myDate[index].getDate()}/#{myDate[index].getMonth() + 1}/#{myDate[index].getFullYear()}
+                                                    span , #{myDateReturn[index]}
+                                                .col-12
+                                                    p #{flight.SanBayDi}
+                                        .col-sm-2
+                                            .row
+                                                .col-12     
+                                                    p.Tg-bay(style="margin-bottom:0 !important;") #{TGBReturn[index]} giờ #{minute_TGBReturn[index]} phút
+                                                    img.imgFlight(src="/images/detail-fight.png")
+                                                    p Airbus-10
+                                                        span #{index}
+                                        .col-sm-3
+                                            .row.text-left
+                                                .col-12
+                                                    p.font-weight-bold #{Sanbaydi}
+                                                .col-12 
+                                                    b.dl-Gio-Den #{hour_arrivalReturn[index]} giờ #{minute_arrivalReturn[index]} phút
+                                                    span , #{myDate_1Return[index].getDate()}/#{myDate_1Return[index].getMonth() + 1}/#{myDate_1Return[index].getFullYear()}
+                                                .col-12 #{flight.SanBayDen}
+                                        .col-sm-4.logo-MaCb-price
+                                            .row.text-left
+                                                .col-4 
+                                                    img(src="/images/logoIcon.png" style="width:70%;")
+                                                .col-8
+                                                    .row
+                                                        .col-12.font-weight-bold.text-uppercase.mb-2 Sky Airlines
+                                                        .col-12 Mã chuyến bay: 
+                                                            span#valueOfcodeReturn.font-weight-bold #{flight.MaCB}
+                                                        - var formatMoney = function(price){  
+                                                        -   return dollarUSLocale.format(price);
+                                                        - }
 
-                                        
-                                        
-    
-                                                
+                                                        - var dollarUSLocale = Intl.NumberFormat('en-US');
+                                                        .col-12 Giá tiền:
+                                                            span.font-weight-bold !{formatMoney(flight.GiaVe)} VNĐ
+                                    .row.mt-1
+                                        .col-lg-3
+                                        .col-lg-6
+                                            .row
+                                                each Ve in flight.DSHangVe
+                                                    .col-6 SL ghế hạng #{Ve.maHangVe} còn trống:
+                                                        span.font-weight-bold  #{Ve.SGTrong}
+                                            .num-sanbaytg(style="display:none;") #{flight.SanBayTG.length}
+                                            
+                                        .col-lg-3
+                                    .border-top.pt-3.m-2
+                                        .table-responsive.text-nowrap
+                                            table.table
+                                                thead
+                                                    tr.table-secondary
+                                                        th.th-sm.text-center(scope="col") STT
+                                                        th.th-sm.text-center(scope="col") Sân bay trung gian
+                                                        th.th-sm.text-center(scope="col") Thời gian dừng
+                                                        th.th-sm.text-center(scope="col") Ghi chú
+                                                tbody    
+                                                    if flight.SanBayTG.length > 0
+                                                        for temp,index in flight.SanBayTG
+                                                            if temp.TenSB !== NULL
+                                                                tr
+                                                                    td.text-center= index+1
+                                                                    td.text-center= temp.TenSB   
+                                                                    td.text-center.TG-dung= temp.TGDung
+                                                                        span  phút 
+                                                                    td.text-center
+                                                            else
+                                                                td.text-center.p-3 Chuyến bay không quá cảnh tại Sân bay trung gian
+        
+        .d-flex.justify-content-center.w-100
+            form.mt-2.w-50(method="POST" action="/ticketInfo")
+                .row.d-flex.justify-content-center
+                    input(type="hidden" name="_csrf" value=csrf)
+                    input.FlightCodeGo(type="hidden" name="flightCode")
+                    input.FlightCodeReturn(type="hidden" name="flightCodeReturn")
+                    .mb-1.w-25.d-flex.justify-content-center
+                        button.btn-dat.btn.btn-success(type="submit" name="ticketType" value="0") Đặt vé
+                    .mb-1.w-25.d-flex.justify-content-center
+                        button.btn-mua.btn.btn-warning(type="submit" name="ticketType" value="1") Mua vé
 
                                         
                 
@@ -162,6 +313,34 @@ block content
         });
         }); 
         //set inner cho ghế trống và ghế đặt và thời gian bay
+
+        const selectFlight = document.querySelectorAll(".select-fl-btn");
+        const FlightCodeGo = document.querySelectorAll(".FlightCodeGo");
+        const flightCodeGoValue = document.querySelectorAll("#valueOfcode");
+        selectFlight.forEach(function (box, index) {
+            box.addEventListener("click", function handle() {
+                FlightCodeGo[0].value = flightCodeGoValue[index].textContent;
+                selectFlight.forEach(function (boxNew, indexNot) {
+                    if (indexNot != index) {
+                        selectFlight[indexNot].checked = false;
+                    }
+                });
+            });
+        });
+        
+        const selectReturn = document.querySelectorAll(".select-flreturn-btn");
+        const FlightCodeReturn = document.querySelectorAll(".FlightCodeReturn");
+        const flightCodeReturnValue = document.querySelectorAll("#valueOfcodeReturn");
+        selectReturn.forEach(function (box, index) {
+            box.addEventListener("click", function handle() {
+                FlightCodeReturn[0].value = flightCodeReturnValue[index].textContent;
+                selectReturn.forEach(function (boxNew, indexNot) {
+                    if (indexNot != index) {
+                        selectReturn[indexNot].checked = false;
+                    }
+                });
+            });
+        });
         
         const Item = document.querySelectorAll(".show-list");
         const Seat = document.querySelectorAll(".Ghe-trong");

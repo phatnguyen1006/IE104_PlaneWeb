@@ -1,10 +1,11 @@
 extends ./general.pug
 block content
-    script(src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js")
-    .container.mt-5
-        .d-flex.justify-content-center
-            canvas#myChart(style='width:100%;max-width:600px')
-    hr
+    if reports
+        script(src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js")
+        .container.mt-5
+            .d-flex.justify-content-center
+                canvas#myChart(style='width:100%;max-width:600px')
+        hr
     .container.mb-5.mt-3
         h3.title-report.text-center.text-danger Doanh Thu Năm
         form(method="POST", action='/revenue/year')
@@ -22,6 +23,7 @@ block content
                                         option=local
             .d-flex.justify-content-center
                 button.mt-2.mb-4.btn.btn-info(type="submit") Kết toán
+            input#arrayRevenue(type="hidden", value=reports)
         if reports    
             .table-responsive
                 table.table.table-hover.table-striped
@@ -32,20 +34,25 @@ block content
                             th.text-center Số Chuyến Bay
                             th.text-center Doanh Thu
                             th.text-center Tỉ lệ
+                    - var formatMoney = function(price){  
+                    -   return dollarUSLocale.format(price);
+                    - }
+
+                    - var dollarUSLocale = Intl.NumberFormat('en-US');
                     tbody
                         each report,index in reports
                             tr
                                 td.text-center= index+1
                                 td.text-center= report.Thang
                                 td.text-center= report.SoCB
-                                td.text-center.table-success= report.DoanhThu
+                                td.text-center.table-success= formatMoney(report.DoanhThu)
                                 td.text-center= Number.parseFloat(report.TiLe*100).toFixed(3) + "%"
                     tfoot
                         tr
                         td
                         td
                         th.text-center Tổng:
-                        td.text-center.table-info= total
+                        td.text-center.table-info= formatMoney(total)
                         td
 
             .container.mr-2.mt-3
@@ -54,8 +61,29 @@ block content
                         i.fas.fa-print
                         | &nbsp In báo cáo
     script.
-        var xValues = [1,2,3,4,5,6,7,8,9,10,11,12];
-        var yValues = [7,8,8,9,9,9,10,11,14,14,15];
+        var revenue = JSON.parse(document.getElementById('arrayRevenue').value);
+        //- console.log(revenue);
+
+        function monthArray() {
+            var arrmonth = [];
+            revenue.forEach((month, index) => {
+                arrmonth.push(parseInt(month.Thang));
+            });
+
+            return arrmonth;
+        }
+
+        function parseArray() {
+            var arrValue = [];
+            revenue.forEach((month, index) => {
+                arrValue.push(parseInt(month.DoanhThu.$numberDecimal));
+            });
+
+            return arrValue;
+        }
+
+        var xValues = monthArray();
+        var yValues = parseArray();
 
         new Chart("myChart", {
         type: "line",
@@ -65,14 +93,14 @@ block content
         fill: false,
         lineTension: 0,
         backgroundColor: "red",
-        borderColor: "blue",
+        borderColor: "#00cc66",
         data: yValues
         }]
         },
         options: {
         legend: {display: false},
         scales: {
-        yAxes: [{ticks: {min: 6, max:16}}],
+        yAxes: [{ticks: {min: 1000000, max: 90000000}}],
         }
         }
         });
