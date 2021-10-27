@@ -25,7 +25,7 @@ async function getAllUser() {
 // @Last modified day: 30/05/2021
 async function findUser(info){
 
-    const userFound = await Users.findOne(info,(err) => {
+    const userFound = await Users.find(info,(err) => {
 
         if(!err) console.log("Find  user successful!");
         
