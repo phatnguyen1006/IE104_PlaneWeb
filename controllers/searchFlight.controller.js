@@ -442,7 +442,7 @@ function formatDate(date) {
   var month = date.getMonth();
   var day = date.getDate();
 
-  console.log(`${month + 1}/${day}/${year}`);
+  //console.log(`${month + 1}/${day}/${year}`);
   var newDate = `${month + 1}/${day}/${year}`;
 
   return new Date(newDate);

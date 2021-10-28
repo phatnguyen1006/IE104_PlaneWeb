@@ -128,7 +128,7 @@ module.exports.postInfo = async (req, res) => {
     );
 
     //Chuyến bay về
-    const ticketTypeReturn = req.body.ticketTypeReturn;
+    const ticketTypeReturn = req.body.ticketType;
     var dataReturn = flightReturn.DSHangVe;
     var HangVeReturn = await HangVeService.findTypeTicket(dataReturn);
     var hour_departReturn = flightReturn.GioKhoiHanh;
