@@ -61,45 +61,115 @@ module.exports.postTicket = async (req, res) => {
   //var dateFlightDate = new Date()
   //console.log(IntFlightDate);
 
-  if (ticketType == 1) {
-    const saveTicket = await ticketBought.userTicketBought(info);
-    if (saveTicket) {
-      //console.log("This is saveTicket", saveTicket);
-      console.log("Save bought successfully");
-      req.session.notify = "Bạn đã mua vé thành công!!";
-      res.redirect("/viewTicket");
+  const flightCodeReturn = req.body.flightCodeReturn;
+
+  // Vé 2 chiều
+  if (flightCodeReturn) {
+    const ticketClassReturn = parseInt(req.body.classReturn);
+
+    var infoReturn = {
+      ID: id,
+      HanhKhach: req.body.name,
+      MaCB: req.body.flightCodeReturn,
+      ChuyenBay: req.body.journeyReturn,
+      CMND: req.body.personalId,
+      SDT: req.body.phone,
+      GiaTien: req.body.priceReturn,
+      HangVe: ticketClassReturn,
+      SoLuong: 1,
+      NgayDatVe: todayDate,
+    };
+
+    if (ticketType == 1) {
+      const saveTicket = await ticketBought.userTicketBought(info);
+      const saveTicketReturn = await ticketBought.userTicketBought(infoReturn);
+      if (saveTicket && saveTicketReturn) {
+        //console.log("This is saveTicket", saveTicket);
+        console.log("Save bought successfully");
+        req.session.notify = "Bạn đã mua vé thành công!!";
+        res.redirect("/viewTicket");
+      } else {
+        errors.push("Mua vé thất bại! Xin thử lại");
+        res.render("payment", {
+          flight: info,
+          flightReturn: infoReturn,
+          errors: errors,
+          csrf: req.csrfToken(),
+        });
+      }
+    } else if (ticketType == 0) {
+      const saveTicket = await ticketBooked.userTicketBooked(info);
+      const saveTicketReturn = await ticketBooked.userTicketBooked(infoReturn);
+      if (saveTicket && saveTicketReturn) {
+        console.log("Save booked successfully");
+        req.session.notify = "Bạn đã đặt vé thành công!!";
+        res.redirect("/viewTicket");
+      } else {
+        errors.push("Đặt vé thất bại! Xin thử lại");
+        res.render("payment", {
+          flight: info,
+          flightReturn: infoReturn,
+          errors: errors,
+          csrf: req.csrfToken(),
+        });
+      }
     } else {
-      errors.push("Mua vé thất bại! Xin thử lại");
+      //res.redirect('/ticketInfo');
+      console.log("FAIL ROUND-TRIP");
+      errors.push("Thất bại!! Xin thử lại");
       res.render("payment", {
         flight: info,
+        flightReturn: infoReturn,
         errors: errors,
         csrf: req.csrfToken(),
       });
     }
-  } else if (ticketType == 0) {
-    const saveTicket = await ticketBooked.userTicketBooked(info);
-    if (saveTicket) {
-      console.log("Save booked successfully");
-      req.session.notify = "Bạn đã đặt vé thành công!!";
-      res.redirect("/viewTicket");
-    } else {
-      errors.push("Đặt vé thất bại! Xin thử lại");
-      res.render("payment", {
-        flight: info,
-        errors: errors,
-        csrf: req.csrfToken(),
-      });
-    }
-  } else {
-    //res.redirect('/ticketInfo');
-    console.log("FAIL");
-    errors.push("Thất bại!! Xin thử lại");
-    res.render("payment", {
-      flight: info,
-      errors: errors,
-      csrf: req.csrfToken(),
-    });
+
   }
+  // Vé một chiều 
+  else {
+    if (ticketType == 1) {
+      const saveTicket = await ticketBought.userTicketBought(info);
+      if (saveTicket) {
+        //console.log("This is saveTicket", saveTicket);
+        console.log("Save bought successfully");
+        req.session.notify = "Bạn đã mua vé thành công!!";
+        res.redirect("/viewTicket");
+      } else {
+        errors.push("Mua vé thất bại! Xin thử lại");
+        res.render("payment", {
+          flight: info,
+          errors: errors,
+          csrf: req.csrfToken(),
+        });
+      }
+    } else if (ticketType == 0) {
+      const saveTicket = await ticketBooked.userTicketBooked(info);
+      if (saveTicket) {
+        console.log("Save booked successfully");
+        req.session.notify = "Bạn đã đặt vé thành công!!";
+        res.redirect("/viewTicket");
+      } else {
+        errors.push("Đặt vé thất bại! Xin thử lại");
+        res.render("payment", {
+          flight: info,
+          errors: errors,
+          csrf: req.csrfToken(),
+        });
+      }
+    } else {
+      //res.redirect('/ticketInfo');
+      console.log("FAIL ONE WAY TRIP");
+      errors.push("Thất bại!! Xin thử lại");
+      res.render("payment", {
+        flight: info,
+        errors: errors,
+        csrf: req.csrfToken(),
+      });
+    }
+  }
+
+  
 };
 
 //Function: show ticket info for user to input
