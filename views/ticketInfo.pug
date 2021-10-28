@@ -89,22 +89,22 @@ block content
                                 .row.mt-2
                                     .col-lg-12.mb-1
                                         label.labels.text-dark Chuyến bay về
-                                        input.form-control.bg-light(name="flightCodeGoBack" type='text' id="info-codeFlightGoBack" readonly="readonly" value=flightReturn ? flightReturn.MaCB : "")
+                                        input.form-control.bg-light(name="flightCodeReturn" type='text' id="info-codeFlightGoBack" readonly="readonly" value=flightReturn ? flightReturn.MaCB : "")
                                     .col-lg-12.mb-1
                                         label.labels Hành trình
-                                        input.form-control.bg-light(name="journeyGoBack" type='text' id="info-journey-goback" readonly value=flightReturn ? flightReturn.ChuyenBay: "")
+                                        input.form-control.bg-light(name="journeyReturn" type='text' id="info-journey-goback" readonly value=flightReturn ? flightReturn.ChuyenBay: "")
                                     .col-lg-12.mb-1
                                         label.labels Hành khách
-                                        input.form-control.bg-light(name="name" type='text',id="info-passenger-op-goback", value='', readonly)
+                                        input.form-control.bg-light(type='text',id="info-passenger-op-goback", value='', readonly)
                                     .col-lg-6.mb-1
                                         label.labels CMND
-                                        input.form-control.bg-light(name="personalId" type='text',id="info-cmnd-op-goback", value='', readonly)
+                                        input.form-control.bg-light(type='text',id="info-cmnd-op-goback", value='', readonly)
                                     .col-lg-6.mb-2
                                         label.labels Số điện thoại
-                                        input.form-control.bg-light(name="phone" type='text',id="info-phone-op-goback", value='', readonly)
+                                        input.form-control.bg-light(type='text',id="info-phone-op-goback", value='', readonly)
                                     .col-lg-6.mb-1
                                         label.lables Hạng vé
-                                        input.form-control(type="text" id="info-class-op-goback" readonly)
+                                        input.form-control(name type="text" id="info-class-op-goback" readonly)
                                     .col-lg-6.mb-1
                                     - var formatMoney = function(price){  
                                     -   return dollarUSLocale.format(price);
@@ -114,9 +114,9 @@ block content
                                         label.labels.mx-3 Giá tiền
                                             span#hidden_price(style="display:none;")=flightReturn? flightReturn.GiaVe : ""
                                         input.form-control.mx-3.bg-light(type='text',id="info-price-goback",readonly="readonly")
-                                        input.form-control.mx-3.bg-light(type='hidden',id="price-goback",name="pricegoback", readonly="readonly")
+                                        input.form-control.mx-3.bg-light(type='hidden',id="price-goback",name="priceReturn", readonly="readonly")
                                         //- input(type="hidden"  id="info-ticketType-goback" name="ticketTypegoback" value=flightReturn.GiaVe)
-                                        input.PurDate(type="hidden"  id="info-Date-Buy_Ticket-goback" name="ticketDategoback" value='')
+                                        //- input.PurDate(type="text"  id="info-Date-Buy_Ticket-goback" name="ticketDategoback" value='')
                                 .row.mt-2
                                     .col-6        
                                         button.btn.btn-info.p-2(type='button', data-toggle='modal', data-target='#myModal1') Chọn hạng vé
@@ -136,7 +136,7 @@ block content
                                                             .col-12
                                                                 if HangVeReturn 
                                                                     each hang in HangVeReturn
-                                                                        input.RadioClassGoback.mr-2(name="class" value=hang.maHangVe type="radio" required) 
+                                                                        input.RadioClassGoback.mr-2(name="classReturn" value=hang.maHangVe type="radio" required) 
                                                                         label.ten-hang-ve #{hang.tenHangVe}
                                                                         br
                                                     .modal-footer.d-flex.justify-content-center
