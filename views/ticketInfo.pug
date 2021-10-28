@@ -8,7 +8,10 @@ block content
                     if flight
                         h3 Chuyến bay từ #{flight.ChuyenBay}
                         div.d-flex.justify-content-end
-                            h4.text-dark.font-weight-bold.text-end #{flight.NgayGio.getDate()}/#{flight.NgayGio.getMonth() + 1}/#{flight.NgayGio.getFullYear()}
+                            if flightReturn
+                                h3 Chuyến bay từ #{flightReturn.ChuyenBay}
+                            else
+                                h4.text-dark.font-weight-bold.text-end #{flight.NgayGio.getDate()}/#{flight.NgayGio.getMonth() + 1}/#{flight.NgayGio.getFullYear()}
                     else 
                         h3
                         h6
@@ -52,7 +55,7 @@ block content
                                     input.form-control.mx-3.bg-light(type='text',id="info-price",readonly="readonly")
                                     input.form-control.mx-3.bg-light(type='hidden',id="price",name="price", readonly="readonly")
                                     input(type="hidden"  id="info-ticketType" name="ticketType" value=ticketType)
-                                    input.PurDate(type="hidden"  id="info-Date-Buy_Ticket" name="ticketDate" value='')
+                                    //- input.PurDate(type="hidden"  id="info-Date-Buy_Ticket" name="ticketDate" value='')
                             .row.mt-2
                                 .col-6        
                                     button.btn.btn-info.p-2(type='button', data-toggle='modal', data-target='#myModal') Chọn hạng vé
@@ -143,8 +146,8 @@ block content
                                                         button.btn.btn-secondary(type="button" data-dismiss="modal") Đóng
                                 
                 
-                .row.mt-5
-                    .col-12.d-flex.justify-content-center
+                .row.mt-5.d-flex.justify-content-center
+                    .col-6.d-flex.justify-content-center.bg-white.shadow.pb-4(style="border-radius:5px;")
                         .flex-column
                             .row
                                 div(style="width: 100%")
