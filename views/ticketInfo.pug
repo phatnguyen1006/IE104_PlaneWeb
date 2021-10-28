@@ -12,8 +12,8 @@ block content
                     else 
                         h3
                         h6
-            form.form-ticketInfo(method="post" action="ticketInfo/payment" form="form")
-                .row.mt-4.mb-3
+            form(method="post" action="ticketInfo/payment" form="form")
+                .row.mt-4.mb-3.justify-content-center
                     .col-lg-6#info-ticket
                         h5.text-uppercase.font-weight-bold (đi)Thông tin vé 
                             case ticketType
@@ -51,7 +51,7 @@ block content
                                         span#hidden_price(style="display:none;")=flight? flight.GiaVe : ""
                                     input.form-control.mx-3.bg-light(type='text',id="info-price",readonly="readonly")
                                     input.form-control.mx-3.bg-light(type='hidden',id="price",name="price", readonly="readonly")
-                                    input(type="hidden"  id="info-ticketType" name="ticketType" value=flight.GiaVe)
+                                    input(type="hidden"  id="info-ticketType" name="ticketType" value=ticketType)
                                     input.PurDate(type="hidden"  id="info-Date-Buy_Ticket" name="ticketDate" value='')
                             .row.mt-2
                                 .col-6        
@@ -78,79 +78,85 @@ block content
                                                 .modal-footer.d-flex.justify-content-center
                                                     button.btn.btn-secondary(type="button" data-dismiss="modal") Đóng
                 
+                    if flightReturn
+                        .col-lg-6#info-ticket
+                            h5.text-uppercase.font-weight-bold (về)Thông tin vé 
+                                case ticketType
+                                    when "1": span mua
+                                    when "0": span đặt
+                                    default: span mua/đặt
+                            .p-3.shadow.bg-white(style="height:auto;border-radius:5px;")
+                                .row.mt-2
+                                    .col-lg-12.mb-1
+                                        label.labels.text-dark Chuyến bay về
+                                        input.form-control.bg-light(name="flightCodeGoBack" type='text' id="info-codeFlightGoBack" readonly="readonly" value=flightReturn ? flightReturn.MaCB : "")
+                                    .col-lg-12.mb-1
+                                        label.labels Hành trình
+                                        input.form-control.bg-light(name="journeyGoBack" type='text' id="info-journey-goback" readonly value=flightReturn ? flightReturn.ChuyenBay: "")
+                                    .col-lg-12.mb-1
+                                        label.labels Hành khách
+                                        input.form-control.bg-light(name="name" type='text',id="info-passenger-op-goback", value='', readonly)
+                                    .col-lg-6.mb-1
+                                        label.labels CMND
+                                        input.form-control.bg-light(name="personalId" type='text',id="info-cmnd-op-goback", value='', readonly)
+                                    .col-lg-6.mb-2
+                                        label.labels Số điện thoại
+                                        input.form-control.bg-light(name="phone" type='text',id="info-phone-op-goback", value='', readonly)
+                                    .col-lg-6.mb-1
+                                        label.lables Hạng vé
+                                        input.form-control(type="text" id="info-class-op-goback" readonly)
+                                    .col-lg-6.mb-1
+                                    - var formatMoney = function(price){  
+                                    -   return dollarUSLocale.format(price);
+                                    - }
 
-                    .col-lg-6#info-ticket
-                        h5.text-uppercase.font-weight-bold (về)Thông tin vé 
-                            case ticketType
-                                when "1": span mua
-                                when "0": span đặt
-                                default: span mua/đặt
-                        .p-3.shadow.bg-white(style="height:auto;border-radius:5px;")
-                            .row.mt-2
-                                .col-lg-12.mb-1
-                                    label.labels.text-dark Chuyến bay về
-                                    input.form-control.bg-light(name="flightCodeGoBack" type='text' id="info-codeFlightGoBack" readonly="readonly" value=flight ? flight.MaCB : "")
-                                .col-lg-12.mb-1
-                                    label.labels Hành trình
-                                    input.form-control.bg-light(name="journeyGoBack" type='text' id="info-journey-goback" readonly value=flight ? flight.ChuyenBay: "")
-                                .col-lg-12.mb-1
-                                    label.labels Hành khách
-                                    input.form-control.bg-light(name="name" type='text',id="info-passenger-op-goback", value='', readonly)
-                                .col-lg-6.mb-1
-                                    label.labels CMND
-                                    input.form-control.bg-light(name="personalId" type='text',id="info-cmnd-op-goback", value=''. readonly)
-                                .col-lg-6.mb-2
-                                    label.labels Số điện thoại
-                                    input.form-control.bg-light(name="phone" type='text',id="info-phone-op-goback", value='', readonly)
-                                .col-lg-6.mb-1
-                                    label.lables Hạng vé
-                                    input.form-control(type="text" id="info-class-op-goback" readonly)
-                                .col-lg-6.mb-1
-                                - var formatMoney = function(price){  
-                                -   return dollarUSLocale.format(price);
-                                - }
-
-                                - var dollarUSLocale = Intl.NumberFormat('en-US');
-                                    label.labels.mx-3 Giá tiền
-                                        span#hidden_price(style="display:none;")=flight? flight.GiaVe : ""
-                                    input.form-control.mx-3.bg-light(type='text',id="info-price-goback",readonly="readonly")
-                                    input.form-control.mx-3.bg-light(type='hidden',id="price-goback",name="pricegoback", readonly="readonly")
-                                    input(type="hidden"  id="info-ticketType-goback" name="ticketTypegoback" value=flight.GiaVe)
-                                    input.PurDate(type="hidden"  id="info-Date-Buy_Ticket-goback" name="ticketDategoback" value='')
-                            .row.mt-2
-                                .col-6        
-                                    button.btn.btn-info.p-2(type='button', data-toggle='modal', data-target='#myModal1') Chọn hạng vé
-                                    #myModal1.modal.fade
-                                        .modal-dialog
-                                            .modal-content
-                                                .modal-header
-                                                    h4.modal-title Chọn hạng vé về
-                                                    button.close(type='button', data-dismiss='modal') &times;
-                                                .modal-body
-                                                    .row
-                                                        .col-sm-12.p-2.div-error-add-ticket(style="display:none")
-                                                            h6.error-modal.text-light
-                                                    .row
-                                                        .col-12
-                                                            b Hãy chọn 1 trong các hạng vé dưới đây:
-                                                        .col-12
-                                                            if HangVe 
-                                                                each hang in HangVe
-                                                                    input.RadioClassGoback.mr-2(name="class" value=hang.maHangVe type="radio" required) 
-                                                                    label.ten-hang-ve #{hang.tenHangVe}
-                                                                    br
-                                                .modal-footer.d-flex.justify-content-center
-                                                    button.btn.btn-secondary(type="button" data-dismiss="modal") Đóng
+                                    - var dollarUSLocale = Intl.NumberFormat('en-US');
+                                        label.labels.mx-3 Giá tiền
+                                            span#hidden_price(style="display:none;")=flightReturn? flightReturn.GiaVe : ""
+                                        input.form-control.mx-3.bg-light(type='text',id="info-price-goback",readonly="readonly")
+                                        input.form-control.mx-3.bg-light(type='hidden',id="price-goback",name="pricegoback", readonly="readonly")
+                                        //- input(type="hidden"  id="info-ticketType-goback" name="ticketTypegoback" value=flightReturn.GiaVe)
+                                        input.PurDate(type="hidden"  id="info-Date-Buy_Ticket-goback" name="ticketDategoback" value='')
+                                .row.mt-2
+                                    .col-6        
+                                        button.btn.btn-info.p-2(type='button', data-toggle='modal', data-target='#myModal1') Chọn hạng vé
+                                        #myModal1.modal.fade
+                                            .modal-dialog
+                                                .modal-content
+                                                    .modal-header
+                                                        h4.modal-title Chọn hạng vé về
+                                                        button.close(type='button', data-dismiss='modal') &times;
+                                                    .modal-body
+                                                        .row
+                                                            .col-sm-12.p-2.div-error-add-ticket(style="display:none")
+                                                                h6.error-modal.text-light
+                                                        .row
+                                                            .col-12
+                                                                b Hãy chọn 1 trong các hạng vé dưới đây:
+                                                            .col-12
+                                                                if HangVeReturn 
+                                                                    each hang in HangVeReturn
+                                                                        input.RadioClassGoback.mr-2(name="class" value=hang.maHangVe type="radio" required) 
+                                                                        label.ten-hang-ve #{hang.tenHangVe}
+                                                                        br
+                                                    .modal-footer.d-flex.justify-content-center
+                                                        button.btn.btn-secondary(type="button" data-dismiss="modal") Đóng
                                 
                 
                 .row.mt-5
                     .col-12.d-flex.justify-content-center
                         .flex-column
                             .row
-                                .col-12
-                                    input(type="text", id="sum-price-ticket", value= "0")
+                                div(style="width: 100%")
+                                    if flight
+                                        .d-flex.justify-content-center.flex-column.my-2
+                                            if flightReturn
+                                                .d-flex.justify-content-center
+                                                    h3.my-1 Tổng tiền:
+                                            .input-group.input-group-lg
+                                                input.form-control.bg-light.py-4.px-20(type=flightReturn?"text":"hidden", id="sum-price-ticket", value= "0",aria-label="Sizing example input", aria-describedby="inputGroup-sizing-lg", readonly)
                             .row
-                                .col-12
+                                .col-12.d-flex.justify-content-center
                                     .info-payment
                                         if flight
                                         div(style="display:none;")
@@ -160,12 +166,12 @@ block content
                                                 b.ma-hang-ve #{tiLe.maHangVe}
                                                 br
                                                 b.ti-le-tien #{tiLe.tiLeTien}
-                                                br
+                                            br
                                         div
                                             if flight
-                                                button.btn.btn-primary.profile-button.p-2(type='submit', style="width: 200px; font-size: 25px") Thanh toán
+                                                button.btn.btn-outline-primary.profile-button.p-2(type='submit', style="width: 200px; font-size: 25px") Thanh toán
                                             else
-                                                button.btn.btn-primary.profile-button.p-2(type='submit' disabled) Thanh toán
+                                                button.btn.btn-outline-primary.profile-button.p-2(type='submit' disabled) Thanh toán
 
 
         else    
@@ -174,17 +180,23 @@ block content
         // các hàm oninput
         function output1(){
             var text = document.getElementById("info-passenger-op").value;
-            document.getElementById("info-passenger-op-goback").value = text;
+            if (document.getElementById("info-passenger-op-goback")) {
+                document.getElementById("info-passenger-op-goback").value = text;
+            }
         }
 
         function output2(){
             var text = document.getElementById("info-cmnd-op").value;
-            document.getElementById("info-cmnd-op-goback").value = text;
+            if (document.getElementById("info-cmnd-op-goback")) {
+                document.getElementById("info-cmnd-op-goback").value = text;
+            }
         }
 
         function output3(){
             var text = document.getElementById("info-phone-op").value;
-            document.getElementById("info-phone-op-goback").value = text;
+            if (document.getElementById("info-phone-op-goback")) {
+                document.getElementById("info-phone-op-goback").value = text;
+            }
         }
 
         //set value cho 2 ô giá tiền và tiền
@@ -251,14 +263,14 @@ block content
                             }
                         }
                     }
-                    if(parseInt(document.getElementById("price-goback").value) > 0) {
+                    if(document.getElementById("price-goback") && parseInt(document.getElementById("price-goback").value) > 0) {
                         document.getElementById("sum-price-ticket").value = parseInt(document.getElementById("price").value) + parseInt(document.getElementById("price-goback").value) + " VND"
                     } else {
                         document.getElementById("sum-price-ticket").value = parseInt(document.getElementById("price").value) + " VND"
                     }
 
                         
-                    if (Pay.classList.contains('info-payment')) {
+                    if (document.getElementById("price-goback").value && Pay.classList.contains('info-payment')) {
                         Pay.classList.add('hide-appear');
                     } 
             })
@@ -285,7 +297,7 @@ block content
                     document.getElementById("sum-price-ticket").value = parseInt(document.getElementById("price").value) +  parseInt(document.getElementById("price-goback").value) + " VND"
                     if (Pay.classList.contains('info-payment')) {
                         Pay.classList.add('hide-appear');
-                    } 
+                    }
             })
         });
         
