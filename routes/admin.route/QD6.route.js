@@ -38,4 +38,8 @@ router.post('/flightSchedule', validate.addFlightScheduleValidate, controller.po
 
 router.post('/reset', controller.postReset);
 
+router.post('/updateFlightSchedule', controller.updateFlightSchedule);
+
+router.post('/deleteFlightScheudle', controller.deleteFlightSchedule);
+
 module.exports = router;
