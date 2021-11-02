@@ -451,14 +451,18 @@ module.exports.getFlightManagement = async (req, res) => {
     const flights = await flightSchedules.getFlightSchedulesByPage(page);
     const flightsNextPage = await flightSchedules.getFlightSchedulesByPage(page + 1);
     
-    let isNextPage = false;
+    const allPages = await flightSchedule.getNumberOfSchedulesFlights();
 
-    if (flightsNextPage.length != 0) {
-        isNextPage = true;
+    let isNextPage = true;
+
+    if (flightsNextPage.length == 0) {
+        isNextPage = false;
     }
 
     res.render('flightManagement', {
         flights: flights,
+        isNextPage: isNextPage,
+        allPages: allPages,
     });
 }
 
