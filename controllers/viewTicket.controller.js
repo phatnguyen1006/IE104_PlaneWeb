@@ -41,7 +41,6 @@ module.exports.findTicket = async (req, res) => {
 
         //add GiaVeMua
         bookedTicket[i] = {...bookedTicket[i],GiaVeMua : flight.GiaVe, TenHangVe: getTenHangVe(HangVe, bookedTicket[i].HangVe)};
-        console.log(getTenHangVe(HangVe, bookedTicket[i].HangVe));
         //console.log(flight);
     }
 
