@@ -147,7 +147,7 @@ block content
                                 
                 
                 .row.mt-5.d-flex.justify-content-center
-                    .col-6.d-flex.justify-content-center.bg-white.shadow.pb-4(style="border-radius:5px;")
+                    .col-6.d-flex.justify-content-center.pb-4(style=flightReturn?"border-radius:5px;background-color: white;box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.2);":"border-radius:5px;")
                         .flex-column
                             .row
                                 div(style="width: 100%")
@@ -266,16 +266,20 @@ block content
                             }
                         }
                     }
-                    if(document.getElementById("price-goback") && parseInt(document.getElementById("price-goback").value) > 0) {
+                    if(document.getElementById("price-goback") && parseInt(document.getElementById("price-goback")?.value) > 0) {
+                        console.log("ahaha");
                         document.getElementById("sum-price-ticket").value = parseInt(document.getElementById("price").value) + parseInt(document.getElementById("price-goback").value) + " VND"
                     } else {
-                        document.getElementById("sum-price-ticket").value = parseInt(document.getElementById("price").value) + " VND"
+                        console.log("ahaha111");
+                        document.getElementById("sum-price-ticket").value = parseInt(document.getElementById("price").value) + " VND";
                     }
 
                         
-                    if (document.getElementById("price-goback").value && Pay.classList.contains('info-payment')) {
+                    if (document.getElementById("price-goback")?.value && Pay.classList.contains('info-payment')) {
                         Pay.classList.add('hide-appear');
-                    } 
+                    } else if (!document.getElementById("price-goback")) {
+                        Pay.classList.add('hide-appear');
+                    }
             })
         });
 
