@@ -55,6 +55,17 @@ async function getAllScheduleFlight() {
      return allSchedulesFlight;
 }
 
+async function getNumberOfSchedulesFlights() {
+    try {
+        const numberOfSchedulesFlights = await LichCB.estimatedDocumentCount();
+
+        return numberOfSchedulesFlights;
+
+    } catch (error) {
+        console.log(error);
+        return null;
+    }
+}
 
 async function getFlightSchedulesByPage(page) {
     try {
@@ -418,7 +429,8 @@ module.exports = {
     updateSGTrong,
     deleteCheduleFlight,
     deleteCheduleFlight,
-    getFlightSchedulesByPage
+    getFlightSchedulesByPage,
+    getNumberOfSchedulesFlights
 };
 
 const { deleteManyBoughtTickets, updateManyTicketBought } = require('./flightTickets.service/veMB.service');
