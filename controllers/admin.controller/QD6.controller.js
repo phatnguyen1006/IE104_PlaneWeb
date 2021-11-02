@@ -281,8 +281,7 @@ module.exports.postDeleteHV = async (req, res) => {
 //Output:  render flightSchedule view with flights, ticket class, default days,...
 //Last modified day: 27/5/2021
 module.exports.getFLightSchedule = async (req, res) => {
-    const page = req.body.page;
-    const flights = await flightSchedules.getFlightSchedulesByPage(1);
+    // const flights = await flightSchedules.getFlightSchedulesByPage(page);
     const hangVe = await HangVe.getAllTypeTicket();
     const getQD6 = await  QD6service.getOne();
     var addDate = false;
@@ -444,6 +443,15 @@ module.exports.postReset = async (req, res) => {
     }
 
     res.redirect('/settingQD6/defaultDay');
+}
+
+module.exports.getFlightManagement = async (req, res) => {
+    const page = req.query.page;
+    const flights = await flightSchedules.getFlightSchedulesByPage(page);
+
+    res.render('flightManagement', {
+        flights: flights,
+    });
 }
 
 

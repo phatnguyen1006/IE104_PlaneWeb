@@ -30,6 +30,8 @@ router.post('/changeHV', controller.postChangeHV);
 
 router.post('/deleteHV', controller.postDeleteHV);
 
+router.get('/flightManagement', controller.getFlightManagement);
+
 router.get('/flightSchedule', controller.getFLightSchedule);
 
 router.post('/flightSchedule', validate.addFlightScheduleValidate, controller.postAddFlightSchedule);
