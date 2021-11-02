@@ -58,7 +58,7 @@ async function getAllScheduleFlight() {
 
 async function getFlightSchedulesByPage(page) {
     try {
-        if(page < 0) return [];
+        if(page < 0) throw "Page must be bigger 0";
         const schedulesFlightsList = await LichCB.find().limit(6)
         .skip(6 * page).lean();
 
