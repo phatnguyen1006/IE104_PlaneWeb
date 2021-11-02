@@ -55,6 +55,17 @@ async function getAllScheduleFlight() {
      return allSchedulesFlight;
 }
 
+async function getNumberOfSchedulesFlights() {
+    try {
+        const numberOfSchedulesFlights = await LichCB.estimatedDocumentCount();
+
+        return numberOfSchedulesFlights;
+
+    } catch (error) {
+        console.log(error);
+        return null;
+    }
+}
 
 async function getFlightSchedulesByPage(page) {
     try {
@@ -238,7 +249,7 @@ async function updateScheduleFlight(id, data) {
 // @Input: "data" is a object with two properties "id" and "MaCB". EX: data = { "id": "any id", "MaCB": "any MaCB"}  
 // @Output: This function return true if delete successful or return false if delete failed.
 // @Last modified day: 30/05/2021
-async function deleteCheduleFlight(data) {
+async function deleteScheduleFlight(data) {
 
     const sess = await LichCB.startSession();
     sess.startTransaction(); 
@@ -246,6 +257,58 @@ async function deleteCheduleFlight(data) {
     try {
             
         const deletedSchedule = await LichCB.findByIdAndDelete(data.id,{ session: sess });
+
+        if(deletedSchedule) {
+
+            const [err, err1] = await Promise.all([
+                
+                deleteManyBoughtTickets(data.MaCB),
+                deleteManyBookedTickets(data.MaCB)
+            ])
+
+            console.log(err);
+            console.log(err1);
+
+            if(err && err1) {
+
+                console.log("Delete schedules flight successed!");
+                console.log("Delete bought/booked belong to this flight schedules successful!");
+                await sess.commitTransaction();
+            }
+            else {
+
+                console.log("Delete schedules flight failed!");
+                console.log("Delete bought/booked belong to this flight schedules failed!");
+                throw "Ticket not found!";
+                 
+            }
+        }
+        else {
+
+            throw "Flight schedule not found!";
+        }
+
+        sess.endSession();
+        return true;
+
+    } catch (error) {
+
+        console.log(error);
+        await sess.abortTransaction();
+        sess.endSession();
+        return false;
+    }
+   
+}
+
+async function deleteScheduleFlightFlightCode(MaCB) {
+
+    const sess = await LichCB.startSession();
+    sess.startTransaction(); 
+
+    try {
+            
+        const deletedSchedule = await LichCB.findByIdAndDelete({MaCB: MaCB, session: sess });
 
         if(deletedSchedule) {
 
@@ -416,9 +479,10 @@ module.exports = {
     updateSGDaMua,
     updateSGDat,
     updateSGTrong,
-    deleteCheduleFlight,
-    deleteCheduleFlight,
-    getFlightSchedulesByPage
+    deleteScheduleFlight,
+    deleteScheduleFlightFlightCode,
+    getFlightSchedulesByPage,
+    getNumberOfSchedulesFlights
 };
 
 const { deleteManyBoughtTickets, updateManyTicketBought } = require('./flightTickets.service/veMB.service');
