@@ -249,7 +249,7 @@ async function updateScheduleFlight(id, data) {
 // @Input: "data" is a object with two properties "id" and "MaCB". EX: data = { "id": "any id", "MaCB": "any MaCB"}  
 // @Output: This function return true if delete successful or return false if delete failed.
 // @Last modified day: 30/05/2021
-async function deleteCheduleFlightByFlightCode(data) {
+async function deleteScheduleFlight(data) {
 
     const sess = await LichCB.startSession();
     sess.startTransaction(); 
@@ -301,7 +301,7 @@ async function deleteCheduleFlightByFlightCode(data) {
    
 }
 
-async function deleteCheduleFlight(MaCB) {
+async function deleteScheduleFlightFlightCode(MaCB) {
 
     const sess = await LichCB.startSession();
     sess.startTransaction(); 
@@ -479,8 +479,8 @@ module.exports = {
     updateSGDaMua,
     updateSGDat,
     updateSGTrong,
-    deleteCheduleFlight,
-    deleteCheduleFlightByFlightCode,
+    deleteScheduleFlight,
+    deleteScheduleFlightFlightCode,
     getFlightSchedulesByPage,
     getNumberOfSchedulesFlights
 };

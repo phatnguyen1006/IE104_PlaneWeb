@@ -451,6 +451,23 @@ module.exports.getFlightManagement = async (req, res) => {
     const flights = await flightSchedules.getFlightSchedulesByPage(page);
     const flightsNextPage = await flightSchedules.getFlightSchedulesByPage(page + 1);
     
+    let arrSanBayTG = [];
+
+    for (flight in flights) {
+        let middleAirport = "";
+        if (flight.SanBayTG.length == 2) {
+            middleAirport = flight.SanBayTG[0].airportName.replace('Quốc tế', "QT") + " - " 
+            + flight.SanBayTG[1].airportName.replace('Quốc tế', "QT");
+
+        } else if (flight.SanBayTG.length == 1) {
+            middleAirport = flight.SanBayTG[0].airportName.replace('Quốc tế', "QT");
+        } else {
+            middleAirport = "";
+        }
+
+        arrSanBayTG.push(middleAirport);
+    }
+
     const allPages = await flightSchedule.getNumberOfSchedulesFlights();
 
     let isNextPage = true;
@@ -467,22 +484,24 @@ module.exports.getFlightManagement = async (req, res) => {
             flights: flights,
             isNextPage: isNextPage,
             allPages: allPages,
+            currentPage: page,
             notify: notify,
         });
     } else {
         res.render('flightManagement', {
             flights: flights,
             isNextPage: isNextPage,
+            currentPage: page,
             allPages: allPages,
         });
     }
     
 }
 
-module.exports.deleteFlightSchedule = (req, res) => {
+module.exports.deleteFlightSchedule = async (req, res) => {
     const MaCB = req.body.MaCB;
 
-    const result = await flightSchedules.deleteCheduleFlightByFlightCode(MaCB);
+    const result = await flightSchedules.deleteScheduleFlightFlightCode(MaCB);
 
     if (result) {
         console.log("Deleted flight schedule successfully");
@@ -495,7 +514,24 @@ module.exports.deleteFlightSchedule = (req, res) => {
     }
 }
 
-module.exports.updateFlightSchedule = (req, res) => {
+// module.exports.getUpdateFlightSchedule = async (req, res) => {
+//     // Tất cả hạng vé
+//     const ticketClasses = await HangVe.getAllTypeTicket();
+//     // Tất cả sân bay
+//     const airports = await QD6service.getAirports();
+
+//     // Dữ liệu về chuyến bay
+//     const flightCode = req.body.MaCB;
+//     const flight = flightSchedules.findFlightSchedules(flightCode);
+
+//     res.render('updateFlightSchedule', {
+//         classes: ticketClasses,
+//         airports: airports,
+//         flight: flight,
+//     });
+// }
+
+module.exports.updateFlightSchedule = async (req, res) => {
     const id = req.body._id;
     const GioKhoiHanh = req.body.GioKhoiHanh;
     const GioDen = req.body.GioDen;
