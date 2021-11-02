@@ -513,6 +513,7 @@ module.exports.updateFlightSchedule = (req, res) => {
         GioDen: GioDen,
         ThoiGianBay: ThoiGianBay,
         DSHangVe: JSON.parse(req.body.DSHangVe),
+        SanBayTG: JSON.parse(req.body.SanBayTG),
     }
 
     const updateResult = await flightSchedules.updateScheduleFlight(id, data);
