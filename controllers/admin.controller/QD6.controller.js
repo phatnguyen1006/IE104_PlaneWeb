@@ -445,7 +445,17 @@ module.exports.postReset = async (req, res) => {
 
 module.exports.getFlightManagement = async (req, res) => {
     const page = req.query.page;
+    if (!page) {
+        page = 1;
+    }
     const flights = await flightSchedules.getFlightSchedulesByPage(page);
+    const flightsNextPage = await flightSchedules.getFlightSchedulesByPage(page + 1);
+    
+    let isNextPage = false;
+
+    if (flightsNextPage.length != 0) {
+        isNextPage = true;
+    }
 
     res.render('flightManagement', {
         flights: flights,
