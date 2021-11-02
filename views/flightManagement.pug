@@ -138,7 +138,7 @@ block content
                                 - let rangeEnd = () => (currentPage + pageRange < totalPages) ? currentPage + pageRange : totalPages;
                                 - let hasFirst = rangeStart !== 1;
                                 - let hasLast = rangeEnd() < totalPages;
-                                - console.log(!hasFirst)
+                                - console.log(totalScheduleFlights);
 
                                 if totalPages > 1
                                     ul.pagination.align-items-center.justify-content-center
@@ -267,14 +267,14 @@ block content
                                                         th(scope='col').text-center 
                                                         th(scope='col').text-center 
                                                         
-                                                for flight in flights
+                                                for flight, index in flights
                                                     tbody
                                                         tr.table-striped
                                                             th(scope='row').text-center #{flight.MaCB}
                                                             td.text-center #{flight.ChuyenBay}
                                                             td.text-center #{flight.GioKhoiHanh}:00 #{flight.NgayGio.getDate()}/#{flight.NgayGio.getMonth() + 1}/#{flight.NgayGio.getFullYear()}
                                                             td.text-center #{flight.GioDen}:00
-                                                            td.text-center #{(flight.SanBayTG.length>0)?flight.SanBayTG[0].TenSB:""}
+                                                            td.text-center #{arrSanBayTG[index]}
                                                             td.text-center #{flight.TSLG}
                                                             td.text-center
                                                                 button.btn.btn-outline-primary.btn-update-airport(type='button', data-toggle='modal', data-target='#Update-ticket', data-id=flight._id,data-name=flight.ChuyenBay,data-code= flight.MaCB,data-columns=flight.city,data-type = flight.country) Sửa
