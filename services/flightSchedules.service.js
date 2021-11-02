@@ -55,15 +55,15 @@ async function getAllScheduleFlight() {
      return allSchedulesFlight;
 }
 
-async function getFlightSchedulesByPage(page) {
 
+async function getFlightSchedulesByPage(page) {
     try {
         if(page < 0) return [];
-        const schedulesFlightsList = await LichCB.find().limit(perPage)
-        .skip(perPage * page).lean();
+        const schedulesFlightsList = await LichCB.find().limit(6)
+        .skip(6 * page).lean();
 
         if (schedulesFlightsList)
-        console.log("Get schedules flight successful!");
+            console.log("Get schedules flight successful!");
         else console.log("Get schedules flight failed!");
 
         return schedulesFlightsList;
