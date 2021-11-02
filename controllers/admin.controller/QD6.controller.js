@@ -191,7 +191,7 @@ module.exports.getTicketClass = async (req, res) => {
        }
     }
 
-    console.log(hangVe);
+    // console.log(hangVe);
 
     if (req.session.notify) {
         var notify = req.session.notify;
