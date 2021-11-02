@@ -459,11 +459,73 @@ module.exports.getFlightManagement = async (req, res) => {
         isNextPage = false;
     }
 
-    res.render('flightManagement', {
-        flights: flights,
-        isNextPage: isNextPage,
-        allPages: allPages,
-    });
+    const notify = req.session.notify;
+    delete req.session.notify;
+
+    if (req.session.notify) {
+        res.render('flightManagement', {
+            flights: flights,
+            isNextPage: isNextPage,
+            allPages: allPages,
+            notify: notify,
+        });
+    } else {
+        res.render('flightManagement', {
+            flights: flights,
+            isNextPage: isNextPage,
+            allPages: allPages,
+        });
+    }
+    
+}
+
+module.exports.deleteFlightSchedule = (req, res) => {
+    const MaCB = req.body.MaCB;
+
+    const result = await flightSchedules.deleteCheduleFlightByFlightCode(MaCB);
+
+    if (result) {
+        console.log("Deleted flight schedule successfully");
+        req.session.notify = "Xoá chuyến bay thành công";
+        res.redirect('/settingQD6/flightManagement');
+    } else {
+        console.log("Deleted flight schedule failed");
+        req.session.notify = "Xoá chuyến bay thất bại";
+        res.redirect('/settingQD6/flightManagement');
+    }
+}
+
+module.exports.updateFlightSchedule = (req, res) => {
+    const id = req.body._id;
+    const GioKhoiHanh = req.body.GioKhoiHanh;
+    const GioDen = req.body.GioDen;
+    let ThoiGianBay = 0;
+
+    if (GioKhoiHanh < GioDen) {
+        ThoiGianBay = GioDen - GioKhoiHanh;
+    } else if (GioKhoiHanh > GioDen) {
+        ThoiGianBay = 24 - GioKhoiHanh + GioDen;
+    }
+
+    const data =  {
+        GiaVe: req.body.GiaVe,
+        GioKhoiHanh: GioKhoiHanh,
+        GioDen: GioDen,
+        ThoiGianBay: ThoiGianBay,
+        DSHangVe: JSON.parse(req.body.DSHangVe),
+    }
+
+    const updateResult = await flightSchedules.updateScheduleFlight(id, data);
+
+    if (updateResult) {
+        console.log("Update flight schedule successfully");
+        req.session.notify = "Cập nhật chuyến bay thành công";
+        res.redirect('/settingQD6/flightManagement');
+    } else {
+        console.log("Update flight schedule failed");
+        req.session.notify = "Cập nhật chuyến bay thất bại";
+        res.redirect('/settingQD6/flightManagement');
+    }    
 }
 
 
