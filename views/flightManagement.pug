@@ -42,6 +42,47 @@ block content
                         h4.mt-4.font-weight-bold.text-center Quản lý sân bay
                         
                     .content-airport
+                        .row-sm-6.align-items-center.justify-content-center
+                            mixin pagination(totalNewsCount, limit, currentPage, num)
+                                - let index = 0;
+                                - let pageRange = num || 2;
+                                - let totalPages = totalNewsCount / limit;
+                                - let rangeStart = () => (currentPage - pageRange > 1) ? currentPage - pageRange : 1;
+                                - let rangeEnd = () => (currentPage + pageRange < totalPages) ? currentPage + pageRange : totalPages;
+                                - let hasFirst = rangeStart !== 1;
+                                - let hasLast = rangeEnd() < totalPages;
+                                - console.log(!hasFirst)
+
+                                if totalPages > 1
+                                    ul.pagination.align-items-center.justify-content-center
+                                        li.page-item
+                                            a.page-link(href=`/settingQD6/flightManagement?page=${currentPage - 1}`)
+                                                span.pagination__previous <
+                                        if totalPages > 6 && rangeStart() > 1
+                                            li.page-item
+                                                a.page-link(href=`/settingQD6/flightManagement?page=1`) 1
+                                            li.page-item
+                                                a.page-link(data-eclipdse='true' disabled ) ...
+                                        if totalPages <= 6
+                                            -for(let index = 1; index <= totalPages; index +=1)
+                                                li.page-item
+                                                    a.page-link(href=`/settingQD6/flightManagement?page=${index}`)= index
+                                        else                        
+                                            -for(let index = rangeStart(); index <= rangeEnd(); index +=1)
+                                                li.page-item
+                                                    a.page-link(href=`/settingQD6/flightManagement?page=${index}`)= index
+                                        
+                                        if totalPages>6 && hasLast
+                                            if rangeEnd() + 1 !== totalPages
+                                                li.page-item
+                                                    a.page-link(data-eclipdse='true' disabled ) ...
+                                            li.page-item
+                                                a.page-link(href=`/settingQD6/flightManagement?page=${totalPages}`)= totalPages
+                                        
+                                        li.page-item
+                                            a.page-link(href=`/settingQD6/flightManagement?page=${currentPage + 1}`)
+                                                span.pagination__next >
+                            +pagination(120, 6, 1, 5)
                         //- button.btn.btn-info.mb-2(type='button', data-toggle='modal', data-target='#addAirportModal') Thêm sân bay
                         //- form#addAirportModal.modal.fade(method="post" action="/settingQD6")
                         //-     .modal-dialog.modal-dialog-centered.modal-dialog-scrollable
