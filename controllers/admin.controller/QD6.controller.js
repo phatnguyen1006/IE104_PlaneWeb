@@ -352,7 +352,6 @@ module.exports.getFLightSchedule = async (req, res) => {
         delete req.session.flightSchedule;
 
         res.render('flightSchedule', {
-            flights: flights,
             hangVe: hangVe,
             QD6 : getQD6,
             notify: notify,
@@ -368,7 +367,6 @@ module.exports.getFLightSchedule = async (req, res) => {
     }
     else {
         res.render('flightSchedule', {
-            flights: flights,
             hangVe: hangVe,
             QD6 : getQD6,
             csrf: req.csrfToken()
