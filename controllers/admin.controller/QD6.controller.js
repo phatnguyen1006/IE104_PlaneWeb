@@ -281,7 +281,8 @@ module.exports.postDeleteHV = async (req, res) => {
 //Output:  render flightSchedule view with flights, ticket class, default days,...
 //Last modified day: 27/5/2021
 module.exports.getFLightSchedule = async (req, res) => {
-    const flights = await flightSchedules.getAllScheduleFlight();
+    const page = req.body.page;
+    const flights = await flightSchedules.getFlightSchedulesByPage(1);
     const hangVe = await HangVe.getAllTypeTicket();
     const getQD6 = await  QD6service.getOne();
     var addDate = false;

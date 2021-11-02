@@ -13,6 +13,7 @@ module.exports.findTicket = async (req, res) => {
 
     const HangVe = await HangVeService.getAllTypeTicket();
     var id=null;
+
     if (req.signedCookies.userId) {
         id = req.signedCookies.userId;
     }

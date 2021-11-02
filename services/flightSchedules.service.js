@@ -418,6 +418,7 @@ module.exports = {
     updateSGTrong,
     deleteCheduleFlight,
     deleteCheduleFlight,
+    getFlightSchedulesByPage
 };
 
 const { deleteManyBoughtTickets, updateManyTicketBought } = require('./flightTickets.service/veMB.service');
