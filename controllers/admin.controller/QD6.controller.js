@@ -456,7 +456,7 @@ module.exports.getFlightManagement = async (req, res) => {
 
     for (var flight of flights) {
         var middleAirport = "";
-        console.log(flight.SanBayTG);
+        // console.log(flight.SanBayTG);
         if (flight.SanBayTG.length == 2) {
             middleAirport = flight.SanBayTG[0].TenSB.replace('Quốc tế', "QT") + " - " 
             + flight.SanBayTG[1].TenSB.replace('Quốc tế', "QT");
@@ -480,7 +480,7 @@ module.exports.getFlightManagement = async (req, res) => {
     let notify = req.session.notify;
     delete req.session.notify;
 
-    console.log(arrSanBayTG);
+    // console.log(arrSanBayTG);
 
     if (req.session.notify) {
         res.render('flightManagement', {
