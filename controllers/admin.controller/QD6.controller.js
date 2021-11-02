@@ -444,23 +444,24 @@ module.exports.postReset = async (req, res) => {
 }
 
 module.exports.getFlightManagement = async (req, res) => {
-    const page = req.query.page;
-    if (!page) {
+    var page = req.query.page;
+    if (!page || page <= 0) {
         page = 1;
     }
-    const flights = await flightSchedules.getFlightSchedulesByPage(page);
-    const flightsNextPage = await flightSchedules.getFlightSchedulesByPage(page + 1);
     
-    let arrSanBayTG = [];
+    var flights = await flightSchedules.getFlightSchedulesByPage(page);
+    const flightsNextPage = await flightSchedules.getFlightSchedulesByPage(page + 1);
 
-    for (flight in flights) {
-        let middleAirport = "";
+    var arrSanBayTG = [];
+
+    for (var flight of flights) {
+        var middleAirport = "";
+        console.log(flight.SanBayTG);
         if (flight.SanBayTG.length == 2) {
-            middleAirport = flight.SanBayTG[0].airportName.replace('Quốc tế', "QT") + " - " 
-            + flight.SanBayTG[1].airportName.replace('Quốc tế', "QT");
-
+            middleAirport = flight.SanBayTG[0].TenSB.replace('Quốc tế', "QT") + " - " 
+            + flight.SanBayTG[1].TenSB.replace('Quốc tế', "QT");
         } else if (flight.SanBayTG.length == 1) {
-            middleAirport = flight.SanBayTG[0].airportName.replace('Quốc tế', "QT");
+            middleAirport = flight.SanBayTG[0].TenSB.replace('Quốc tế', "QT");
         } else {
             middleAirport = "";
         }
@@ -468,16 +469,18 @@ module.exports.getFlightManagement = async (req, res) => {
         arrSanBayTG.push(middleAirport);
     }
 
-    const allPages = await flightSchedule.getNumberOfSchedulesFlights();
+    const allPages = await flightSchedules.getNumberOfSchedulesFlights();
 
-    let isNextPage = true;
+    var isNextPage = true;
 
     if (flightsNextPage.length == 0) {
         isNextPage = false;
     }
 
-    const notify = req.session.notify;
+    let notify = req.session.notify;
     delete req.session.notify;
+
+    console.log(arrSanBayTG);
 
     if (req.session.notify) {
         res.render('flightManagement', {
@@ -485,6 +488,7 @@ module.exports.getFlightManagement = async (req, res) => {
             isNextPage: isNextPage,
             allPages: allPages,
             currentPage: page,
+            arrSanBayTG: arrSanBayTG,
             notify: notify,
         });
     } else {
@@ -492,6 +496,7 @@ module.exports.getFlightManagement = async (req, res) => {
             flights: flights,
             isNextPage: isNextPage,
             currentPage: page,
+            arrSanBayTG: arrSanBayTG,
             allPages: allPages,
         });
     }
