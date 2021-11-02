@@ -21,7 +21,6 @@ module.exports.findTicket = async (req, res) => {
     }
 
     var bookedTicket = await findBookedTicket.findTicketsBooked(id);
-    console.log(bookedTicket);
     var boughtTicket = await findBoughtTicket.findTicketsBought(id);
     
     const timeDB = await getTime.getOne();
@@ -41,8 +40,13 @@ module.exports.findTicket = async (req, res) => {
         }
 
         //add GiaVeMua
-        bookedTicket[i] = {...bookedTicket[i],GiaVeMua : flight.GiaVe};
+        bookedTicket[i] = {...bookedTicket[i],GiaVeMua : flight.GiaVe, TenHangVe: getTenHangVe(HangVe, bookedTicket[i].HangVe)};
+        console.log(getTenHangVe(HangVe, bookedTicket[i].HangVe));
         //console.log(flight);
+    }
+
+    for (let i=0 ; i<boughtTicket.length ; i++) {
+        boughtTicket[i] = {...boughtTicket[i], TenHangVe: getTenHangVe(HangVe, boughtTicket[i].HangVe)};
     }
     //console.log(cancelTime);
 
@@ -120,3 +124,12 @@ module.exports.postChange = async (req, res) => {
     res.redirect('/viewTicket')
 }
 
+
+function getTenHangVe(HangVe, maHangVe) {
+    
+    for(hangve of HangVe) {
+        if(hangve.maHangVe === maHangVe) return hangve.tenHangVe;
+    }
+
+    return "";
+}
