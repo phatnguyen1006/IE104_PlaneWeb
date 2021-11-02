@@ -64,6 +64,8 @@ block content
         var revenue = JSON.parse(document.getElementById('arrayRevenue').value);
         //- console.log(revenue);
 
+        var mm = [1,2,3,4,5,6,7,8,9,10,11,12];
+
         function monthArray() {
             var arrmonth = [];
             revenue.forEach((month, index) => {
@@ -74,15 +76,22 @@ block content
         }
 
         function parseArray() {
-            var arrValue = [];
+            var arrValue = [0,0,0,0,0,0,0,0,0,0,0,0];
+            var i = 0;
             revenue.forEach((month, index) => {
-                arrValue.push(parseInt(month.DoanhThu.$numberDecimal));
+                console.log("mm: ", mm[i]);
+                console.log("month: ", parseInt(month.Thang));
+                if (mm[parseInt(month.Thang)-1] == parseInt(month.Thang)) {
+                    console.log("run: ****************");
+                    arrValue[parseInt(month.Thang)-1] = parseInt(month.DoanhThu.$numberDecimal);
+                }
             });
 
             return arrValue;
         }
 
-        var xValues = monthArray();
+        //- var xValues = monthArray();
+        var xValues = [1,2,3,4,5,6,7,8,9,10,11,12];
         var yValues = parseArray();
 
         new Chart("myChart", {
@@ -100,7 +109,7 @@ block content
         options: {
         legend: {display: false},
         scales: {
-        yAxes: [{ticks: {min: 1000000, max: 90000000}}],
+        yAxes: [{ticks: {min: 0, max: 90000000}}],
         }
         }
         });
