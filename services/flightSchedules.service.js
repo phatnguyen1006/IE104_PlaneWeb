@@ -55,6 +55,24 @@ async function getAllScheduleFlight() {
      return allSchedulesFlight;
 }
 
+async function getFlightSchedulesByPage(page) {
+
+    try {
+        if(page < 0) return [];
+        const schedulesFlightsList = await LichCB.find().limit(perPage)
+        .skip(perPage * page).lean();
+
+        if (schedulesFlightsList)
+        console.log("Get schedules flight successful!");
+        else console.log("Get schedules flight failed!");
+
+        return schedulesFlightsList;
+    } catch (error) {
+        console.log(error);
+        return [];
+    }
+}
+
 // @Function: Get one schedule flight by MaCB
 // @Input: MaCB of schedule flight want to find
 // @Output: ducument schedules flight if match with MaCB/ null if not match

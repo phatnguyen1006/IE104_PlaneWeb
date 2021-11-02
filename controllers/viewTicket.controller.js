@@ -21,6 +21,7 @@ module.exports.findTicket = async (req, res) => {
     }
 
     var bookedTicket = await findBookedTicket.findTicketsBooked(id);
+    console.log(bookedTicket);
     var boughtTicket = await findBoughtTicket.findTicketsBought(id);
     
     const timeDB = await getTime.getOne();
@@ -118,3 +119,4 @@ module.exports.postChange = async (req, res) => {
 
     res.redirect('/viewTicket')
 }
+
