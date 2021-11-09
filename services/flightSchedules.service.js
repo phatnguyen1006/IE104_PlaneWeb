@@ -470,10 +470,15 @@ async function checkFlightSchedule(MaCB) {
         const flight = await LichCB.find({MaCB: MaCB});
 
         for (hangVe in flight.DSHangVe) {
-            
+            if (hangVe.SGDaMua != 0) {
+                return false;
+            }
         }
-    } catch (error) {
 
+        return true;
+    } catch (error) {
+        console.log(error);
+        return null;
     }
 }
 
@@ -495,7 +500,8 @@ module.exports = {
     deleteScheduleFlight,
     deleteScheduleFlightFlightCode,
     getFlightSchedulesByPage,
-    getNumberOfSchedulesFlights
+    getNumberOfSchedulesFlights,
+    checkFlightSchedule,
 };
 
 const { deleteManyBoughtTickets, updateManyTicketBought } = require('./flightTickets.service/veMB.service');
