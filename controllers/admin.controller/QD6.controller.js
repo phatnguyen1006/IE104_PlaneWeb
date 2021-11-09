@@ -512,24 +512,24 @@ module.exports.deleteFlightSchedule = async (req, res) => {
   }
 };
 
-// module.exports.getUpdateFlightSchedule = async (req, res) => {
-//     // Tất cả hạng vé
-//     const ticketClasses = await HangVe.getAllTypeTicket();
-//     // Tất cả sân bay
-//     const airports = await QD6service.getAirports();
+module.exports.getUpdateFlightSchedule = async (req, res) => {
+    // Tất cả hạng vé
+    const ticketClasses = await HangVe.getAllTypeTicket();
+    // Tất cả sân bay
+    const airports = await QD6service.getAirports();
 
-//     // Dữ liệu về chuyến bay
-//     const flightCode = req.body.MaCB;
-//     const flight = flightSchedules.findFlightSchedules(flightCode);
+    // Dữ liệu về chuyến bay
+    const flightCode = req.params.MaCB;
+    const flight = flightSchedules.findFlightSchedules(flightCode);
 
-//     res.render('updateFlightSchedule', {
-//         classes: ticketClasses,
-//         airports: airports,
-//         flight: flight,
-//     });
-// }
+    res.render('updateFlightSchedule', {
+        classes: ticketClasses,
+        airports: airports,
+        flight: flight,
+    });
+}
 
-module.exports.updateFlightSchedule = async (req, res) => {
+module.exports.postUpdateFlightSchedule = async (req, res) => {
   const id = req.body._id;
   const GioKhoiHanh = req.body.GioKhoiHanh;
   const GioDen = req.body.GioDen;
@@ -555,11 +555,11 @@ module.exports.updateFlightSchedule = async (req, res) => {
   if (updateResult) {
     console.log("Update flight schedule successfully");
     req.session.notify = "Cập nhật chuyến bay thành công";
-    res.redirect("/settingQD6/flightManagement");
+    res.redirect("/settingQD6/updateFlightSchedule");
   } else {
     console.log("Update flight schedule failed");
     req.session.notify = "Cập nhật chuyến bay thất bại";
-    res.redirect("/settingQD6/flightManagement");
+    res.redirect("/settingQD6/updateFlightSchedule");
   }
 };
 
@@ -577,6 +577,4 @@ function capitalizeFirstLetter(city) {
   return result;
 }
 
-module.exports.updateFlightSchedule = (req, res) => {
-  res.render('updateFlightSchedule');
-}
+
