@@ -95,7 +95,6 @@ block content
                                     button.btn.btn-info.mb-2(type='button', data-toggle='modal', data-target='#addAirportModal') Thêm sân bay
                             if flights.length > 0
                                 .row
-                                    
                                     .col-sm-12
                                         .table-responsive
                                             table.table.text-nowrap
@@ -134,7 +133,8 @@ block content
                             mixin pagination(totalScheduleFlights, limit, currentPage, num)
                                 - let index = 0;
                                 - let pageRange = num || 2;
-                                - let totalPages = parseInt(totalScheduleFlights / limit);
+                                - let totalPages = totalScheduleFlights / limit;
+                                - totalPages = parseInt(totalPages);
                                 - let rangeStart = () => (currentPage - pageRange > 1) ? currentPage - pageRange : 1;
                                 - let rangeEnd = () => (currentPage + pageRange < totalPages) ? currentPage + pageRange : totalPages;
                                 - let hasFirst = rangeStart !== 1;

@@ -472,7 +472,7 @@ module.exports.getFlightManagement = async (req, res) => {
     }
   }
 
-  const allPages = await flightSchedules.getNumberOfSchedulesFlights();
+  let allPages = await flightSchedules.getNumberOfSchedulesFlights();
 
   var isNextPage = true;
 
@@ -482,8 +482,6 @@ module.exports.getFlightManagement = async (req, res) => {
 
   let notify = req.session.notify;
   delete req.session.notify;
-
-console.log(flights);
 
   if (req.session.notify) {
     res.render("flightManagement", {
@@ -533,7 +531,8 @@ module.exports.getUpdateFlightSchedule = async (req, res) => {
 
     // Dữ liệu về chuyến bay
     const flightCode = req.query.MaCB;
-    const flight = flightSchedules.findFlightSchedules(flightCode);
+    const flight = await flightSchedules.getOneScheduleFlightByMaCB(flightCode);
+    console.log(flight.ChuyenBay.split('-'));
 
     if (req.session.notify && req.session.flightSchedule && req.session.check) {
       var notify = req.session.notify;
@@ -576,7 +575,7 @@ module.exports.getUpdateFlightSchedule = async (req, res) => {
         }
         myDate_1 = myDate_1.addDays();
       } else {
-        console.log(addDate);
+        //console.log(addDate);
         if (addDate === true) {
           Date.prototype.addDays = function () {
             var date = new Date(newFlight.NgayGio);
@@ -585,7 +584,7 @@ module.exports.getUpdateFlightSchedule = async (req, res) => {
             return console.log(date);
           };
         } else {
-          console.log("2");
+          //console.log("2");
           Date.prototype.addDays = function () {
             var date = new Date(newFlight.NgayGio);
             return date;
@@ -648,11 +647,11 @@ module.exports.postUpdateFlightSchedule = async (req, res) => {
   if (updateResult) {
     console.log("Update flight schedule successfully");
     req.session.notify = "Cập nhật chuyến bay thành công";
-    res.redirect("/settingQD6/updateFlightSchedule");
+    res.redirect("/settingQD6/flightManagement");
   } else {
     console.log("Update flight schedule failed");
     req.session.notify = "Cập nhật chuyến bay thất bại";
-    res.redirect("/settingQD6/updateFlightSchedule");
+    res.redirect("/settingQD6/flightManagement");
   }
 };
 

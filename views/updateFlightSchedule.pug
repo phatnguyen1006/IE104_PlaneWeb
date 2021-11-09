@@ -1,7 +1,7 @@
 extends ./general.pug
 block content
     .container-fluid
-        .row.setting-area.m-5            
+        .row.setting-area.m-5
             .col-lg-12.right-content-setting.bg-light
                 if errors 
                     div.bg-danger.m-2.p-3(style="border-radius:7px;")
@@ -55,7 +55,7 @@ block content
                                     each Ve in newFlight.DSHangVe
                                         tr
                                         th SL ghế hạng #{Ve.maHangVe}:
-                                        td 
+                                        td
                                             .font-weight-bold  #{Ve.SLG}
                         .border-top.pt-3.m-2
                             .table-responsive.text-nowrap
@@ -77,20 +77,20 @@ block content
                 if (notify == "Thêm lịch chuyến bay thất bại" && (typeof notify !== "undefined"))
                     div.bg-danger.mt-3.p-3(style="border-radius:7px;")
                         span.closebtn(onclick="this.parentElement.style.display='none';") &times;
-                        h5.text-light #{notify} 
+                        h5.text-light #{notify}
                         
                 form.content-setting.mb-3(id="form-ex" method="post" action="/settingQD6/flightSchedule")
                     .title-add-flight
                         h4.mt-4.font-weight-bold.text-center Cập nhật chuyến bay
-                    //- .title-hd.font-italic    
-                    //-     h6 Hướng dẫn:
-                    //-         ul
-                    //-             li Chọn Điểm đi, Điểm đến có sẵn trong bảng( không được trùng nhau)  
-                    //-             li Mã sân bay
-                    //-                 span  (gồm 5 kí tự bắt đầu bằng "VN" kèm 3 chữ số)
-                    //-             li Giờ đi là các số từ 0 đến 23.9 công sai 0.1
-                    //-             li Giờ đến là các số từ 0 đến 24 công sai 0.1
-                    //-             b VD: 3.2 nghĩa là 3 giờ 12 phút, 23.8 nghĩa là 23 giờ 48 phút
+                    .title-hd.font-italic    
+                        h6 Hướng dẫn:
+                            ul
+                                li Chọn Điểm đi, Điểm đến có sẵn trong bảng( không được trùng nhau)  
+                                li Mã sân bay
+                                    span  (gồm 5 kí tự bắt đầu bằng "VN" kèm 3 chữ số)
+                                li Giờ đi là các số từ 0 đến 23.9 công sai 0.1
+                                li Giờ đến là các số từ 0 đến 24 công sai 0.1
+                                b VD: 3.2 nghĩa là 3 giờ 12 phút, 23.8 nghĩa là 23 giờ 48 phút
 
                         h6.text-danger * : Bắt buộc  
                     .content-flight
@@ -98,18 +98,18 @@ block content
                             .col-lg-5.mb-2
                                 label.font-weight-bold(for='booking' id="start") Điểm đi:
                                 select.select_SBD.form-control(id='booking', placehodler='Điểm đến' type="text" name="departureCity" form="form-ex" required)
-                                    option Chọn điểm đi
+                                    option= flight.ChuyenBay.split("-")[0]
                                     each place in QD6.Airports
                                         option= place.city      
                             .col-lg-4.mb-2
                                 label.font-weight-bold(for='sel1') Điểm đến:
                                 select.select_SBDen.form-control(id='sel1' name="arrivalCity" form="form-ex" required)
-                                    option Chọn điểm đến
+                                    option= flight.ChuyenBay.split("-")[1]
                                     each local in QD6.Airports
                                         option.location= local.city
                             .col-lg-3.mb-2
                                 label.font-weight-bold Mã CB:
-                                input.form-control(type="text" pattern="VN[0-9]{3}" required name="MaCB" value="VN")
+                                input.form-control(type="text" pattern="VN[0-9]{3}" required name="MaCB" value=flight.MaCB?flight.MaCB:"MaCB" disabled)
                         div.input-TenSB(style="display:none;")
                             for sanbay in QD6.Airports
                                 p.Name-SBD #{sanbay.airportName}
@@ -126,7 +126,7 @@ block content
                                         button.close(type='button', data-dismiss='modal') &times;
                                     .modal-body
                                         p.font-italic Có thể thêm hoặc không thêm tùy ý các sân bay trung gian dưới đây, sau khi nhập thông tin xong thì click nút 
-                                            span.font-weight-bold Thêm SBTG
+                                            span.font-weight-bold Cập nhật SBTG
                                             span.font-italic  để xác nhận thông tin
                                         div.bg-danger#Notification.mb-2.p-2(style="display:none;")
                                             span.closebtn(onclick="this.parentElement.style.display='none';") &times;
@@ -139,18 +139,18 @@ block content
                                                     .col-sm-5
                                                         h6 Sân bay TG
                                                         select.TenSBTG.form-control(name="SBTG" form="form-ex")
-                                                            option Chọn sân bay trung gian
+                                                            option Chọn sân bag TG
                                                             each sanbayTG in QD6.Airports
                                                                 option= sanbayTG.airportName
                                                     .col-sm-4
                                                         h6 TG dừng
-                                                        input.TGDung.form-control(type="number", min=Number(QD6.minStopTime) ,max=Number(QD6.maxStopTime))
+                                                        input.TGDung.form-control(type="number", min=Number(QD6.minStopTime), max=Number(QD6.maxStopTime))
                                                     .col-sm-3
                                                         h6 Ghi chú
                                                         input.GhiChu.form-control(type="text")      
                                                 .row.mb-2  
                                                     .col-sm-4
-                                                        input.btn.ThemSBTG.btn-info.form-control(type="button" disabled value="Thêm SBTG "+count)     
+                                                        input.btn.ThemSBTG.btn-info.form-control(type="button" disabled value="Thêm SBTG "+count)
                                     .modal-footer.d-flex.justify-content-center               
                                         button.btn.btn-secondary.btn-add-airportTG(type='button', data-dismiss='modal') Đóng
                      
@@ -158,20 +158,21 @@ block content
                     .content-flight
                         .row
                             .col-sm-6
-                                label Nhập ngày bay
-                                input#Number-SanBayTG.form-control.mb-2(type="date" min=1 max=5 form="form-ex" name="NgayGio" required)
+                                label Ngày bay
+                                - var ngayGio = flight.NgayGio.getDate()+"/"+(parseInt(flight.NgayGio.getMonth()+1)).toString()+"/"+flight.NgayGio.getFullYear()
+                                input#Number-SanBayTG.form-control.mb-2(type="date" form="form-ex" name="NgayGio" value=ngayGio required)
                             .col-sm-4
                                 label Giá Vé
-                                input#GiaTien.form-control.mb-2(type="number" min=0 form="form-ex" name="GiaVe" required)
+                                input#GiaTien.form-control.mb-2(type="number" min=0 form="form-ex" name="GiaVe" value=parseInt(flight.GiaVe) required)
 
 
                         .row
                             .col-sm-6.mb-1
                                 label Giờ Khởi hành
-                                input.GioKhoiHanh.form-control(type="number" min=0 max=23.9 step=0.1 name="GioKhoiHanh" required)
+                                input.GioKhoiHanh.form-control(type="text" min=0 max=23.9 step=0.1 name="GioKhoiHanh" value=flight.GioKhoiHanh required)
                             .col-sm-6.mb-1
                                 label Giờ Đến
-                                input.GioDen.form-control(type="number" min=0 name="GioDen" step=0.1 max=24 required  disabled)
+                                input.GioDen.form-control(type="text" min=0 name="GioDen" step=0.1 max=24 required value=flight.GioDen disabled)
                                 input.ThoiGianBay.form-control(type="hidden" name="ThoiGianBay" value=QD6.minFlightTime)
                                 input.TSLG.form-control(type="hidden" name="TSLG")
                                 
