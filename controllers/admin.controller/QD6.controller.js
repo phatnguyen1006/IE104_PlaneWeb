@@ -532,7 +532,6 @@ module.exports.getUpdateFlightSchedule = async (req, res) => {
     // Dữ liệu về chuyến bay
     const flightCode = req.query.MaCB;
     const flight = await flightSchedules.getOneScheduleFlightByMaCB(flightCode);
-    console.log(flight.ChuyenBay.split('-'));
 
     if (req.session.notify && req.session.flightSchedule && req.session.check) {
       var notify = req.session.notify;
