@@ -42,7 +42,6 @@ block content
                         h4.mt-4.font-weight-bold.text-center Quản lý sân bay
                         
                     .content-airport
-                        //- button.btn.btn-info.mb-2(type='button', data-toggle='modal', data-target='#addAirportModal') Thêm sân bay
                         form#addAirportModal.modal.fade(method="post" action="/settingQD6")
                             .modal-dialog.modal-dialog-centered.modal-dialog-scrollable
                                 .modal-content
@@ -142,9 +141,10 @@ block content
 
                                 if totalPages > 1
                                     ul.pagination.align-items-center.justify-content-center
-                                        li.page-item
-                                            a.page-link(href=`/settingQD6/flightManagement?page=${currentPage - 1}`)
-                                                span.pagination__previous <
+                                        if(parseInt(currentPage) > 1)
+                                            li.page-item
+                                                a.page-link(href=`/settingQD6/flightManagement?page=${parseInt(currentPage) - 1}`)
+                                                    span.pagination__previous <
                                         if totalPages > 6 && rangeStart() > 1
                                             li.page-item
                                                 a.page-link(href=`/settingQD6/flightManagement?page=1`) 1
@@ -167,9 +167,10 @@ block content
                                                 a.page-link(href=`/settingQD6/flightManagement?page=${totalPages}`)= totalPages
 
                                         li.page-item
-                                            a.page-link(href=`/settingQD6/flightManagement?page=${currentPage + 1}`)
-                                                span.pagination__next >
-                            +pagination(120, 6, 1, 5)
+                                            if(parseInt(currentPage) < totalPages -1)
+                                                a.page-link(href=`/settingQD6/flightManagement?page=${parseInt(currentPage) + 1}`)
+                                                    span.pagination__next >
+                            +pagination(allPages, 6, currentPage, 5)
 
             .right-content-setting.bg-light#modalRightSecond(class="col-lg-12 in-right" style="display: none; border-radius: 10px;")
                 if (notify == "Xoá sân bay thành công" && (typeof notify !== "undefined"))
