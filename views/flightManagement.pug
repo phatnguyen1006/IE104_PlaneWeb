@@ -280,7 +280,7 @@ block content
                                                             td.text-center
                                                                 button.btn.btn-outline-primary.btn-update-airport(type='button', data-toggle='modal', data-target='#Update-ticket', data-id=flight._id,data-name=flight.ChuyenBay,data-code= flight.MaCB,data-columns=flight.city,data-type = flight.country) Sửa
                                                             td
-                                                                button.btn.btn-outline-danger.btn-delete-airport(type='button', data-toggle='modal', data-target='#delete-flight-schedule', data-name=flight.airportName) Xóa
+                                                                button.btn.btn-outline-danger.btn-delete-airport(type='button', data-toggle='modal', data-target='#delete-flight-schedule', data-name=flight.MaCB) Xóa
                                                 tfoot
                                                     tr
                                                         th(scope='col').text-center
@@ -293,22 +293,22 @@ block content
                                                         th(scope='col').text-center
                                                             button#btn-switch-modal.fa.btn.btn-outline-dark(type="button" onclick="showMoreForm()" class="fa-angle-double-right")
                        
-                        //- Modal of delete Schedule flight form                        
-                        form#delete-flight-schedule.modal.fade(method="post" action="/settingQD6/deleteFlightSchedule")
-                            .modal-dialog
-                                .modal-content
-                                    .modal-header
-                                        h4.modal-title.font-weight-bold Xóa Chuyến Bay
-                                        button.close(type='button', data-dismiss='modal') &times;
-                                    .modal-body
-                                        p Bạn chắc chắn muốn xóa chuyến bay 
-                                            span.Ten-san-bay.font-weight-bold  
-                                            span  này không?
-                                        
-                                    .modal-footer.d-flex.justify-content-center
-                                        input(type="hidden" name="_csrf" value=csrf)
-                                        button.btn.btn-secondary(type="button" data-dismiss="modal") Đóng
-                                        button.btn.btn-danger.confirm-delete-airport(type='submit' name="MaCB") Xóa Chuyến Bay
+                            //- Modal of delete Schedule flight form                        
+                            form#delete-flight-schedule.modal.fade(method="post" action="/settingQD6/deleteFlightSchedule")
+                                .modal-dialog
+                                    .modal-content
+                                        .modal-header
+                                            h4.modal-title.font-weight-bold Xóa Chuyến Bay
+                                            button.close(type='button', data-dismiss='modal') &times;
+                                        .modal-body
+                                            p Bạn chắc chắn muốn xóa chuyến bay 
+                                                span.Ten-san-bay.font-weight-bold  
+                                                span  này không?
+                                            
+                                        .modal-footer.d-flex.justify-content-center
+                                            input(type="hidden" name="_csrf" value=csrf)
+                                            button.btn.btn-secondary(type="button" data-dismiss="modal") Đóng
+                                            button.btn.btn-danger.confirm-delete-airport(type='submit' name="MaCB") Xóa Chuyến Bay
 
     script.
         var a_btn =  document.querySelectorAll(".item-setting-link");
