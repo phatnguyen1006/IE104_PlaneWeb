@@ -12,6 +12,7 @@ module.exports.getQD6 = async (req, res) => {
   const hangVe = await HangVe.getAllTypeTicket();
   const getQD6 = await QD6service.getOne();
 
+
   for (var i = 0; i < getQD6.Airports.length; i++) {
     if (await QD6service.checkAirport(getQD6.Airports[i].airportName)) {
       getQD6.Airports[i].TrangThai = 1;
@@ -194,6 +195,7 @@ module.exports.getTicketClass = async (req, res) => {
       notify: notify,
       csrf: req.csrfToken(),
     });
+
   } else {
     res.render("ticketClass", {
       hangVe: hangVe,
@@ -573,4 +575,8 @@ function capitalizeFirstLetter(city) {
 
   const result = arrWords.join(" ");
   return result;
+}
+
+module.exports.updateFlightSchedule = (req, res) => {
+  res.render('updateFlightSchedule');
 }
