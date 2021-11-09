@@ -132,7 +132,7 @@ block content
                             mixin pagination(totalScheduleFlights, limit, currentPage, num)
                                 - let index = 0;
                                 - let pageRange = num || 2;
-                                - let totalPages = totalScheduleFlights / limit;
+                                - let totalPages = parseInt(totalScheduleFlights / limit);
                                 - let rangeStart = () => (currentPage - pageRange > 1) ? currentPage - pageRange : 1;
                                 - let rangeEnd = () => (currentPage + pageRange < totalPages) ? currentPage + pageRange : totalPages;
                                 - let hasFirst = rangeStart !== 1;
@@ -280,7 +280,7 @@ block content
                                                             td.text-center
                                                                 button.btn.btn-outline-primary.btn-update-airport(type='button', data-toggle='modal', data-target='#Update-ticket', data-id=flight._id,data-name=flight.ChuyenBay,data-code= flight.MaCB,data-columns=flight.city,data-type = flight.country) Sửa
                                                             td
-                                                                button.btn.btn-outline-danger.btn-delete-airport(type='button', data-toggle='modal', data-target='#delete-airport', data-name=flight.airportName) Xóa
+                                                                button.btn.btn-outline-danger.btn-delete-airport(type='button', data-toggle='modal', data-target='#delete-flight-schedule', data-name=flight.airportName) Xóa
                                                 tfoot
                                                     tr
                                                         th(scope='col').text-center
@@ -292,57 +292,23 @@ block content
                                                         th(scope='col').text-center
                                                         th(scope='col').text-center
                                                             button#btn-switch-modal.fa.btn.btn-outline-dark(type="button" onclick="showMoreForm()" class="fa-angle-double-right")
-                        //- //-Modal of updateAirport form  
-                        //- form#Update-ticket.modal.fade(method="post" action="/settingQD6/updateAirport")
-                        //-     .modal-dialog
-                        //-         .modal-content
-                        //-             .modal-header
-                        //-                 h4.modal-title.font-weight-bold Chỉnh sửa thông tin sân bay
-                        //-                 button.close(type='button', data-dismiss='modal') &times;
-                        //-             .modal-body
-                        //-                 .title.font-italic
-                        //-                     h6 Một sân bay gồm 4 thông tin sau đây:
-                        //-                         ul
-                        //-                             li Mã sân bay 
-                        //-                                 h6 (gồm 4 chữ cái in hoa + "/" + 3 chữ cái in hoa) 
-                        //-                                 h6.font-weight-bold VD: ABCD/XYZ
-                        //-                             li Tên sân bay
-                        //-                             li TP/Tỉnh
-                        //-                             li Quốc gia
-                        //-                 .row
-                        //-                     .col-sm-12
-                        //-                         label.font-weight-bold Mã sân bay
-                        //-                         input.form-control.code-airport(type="text" name="airportCode" value=""  readonly)
-                        //-                     .col-sm-12.mt-2 
-                        //-                         label.font-weight-bold Tên sân bay
-                        //-                         input.form-control.name-airport(type="text" name="airportName" value="" required)
-                        //-                     .col-sm-12
-                        //-                         label.font-weight-bold Thành phố/Tỉnh
-                        //-                         input.form-control.location(type="text" name="city"  value="" required)
-                        //-                     .col-sm-12
-                        //-                         label.font-weight-bold Quốc Gia
-                        //-                         input.form-control.QG(type="text" name="country"  value="" required)
-                        //-             .modal-footer.d-flex.justify-content-center
-                        //-                 input(type="hidden" name="_csrf" value=csrf)
-                        //-                 button.btn.btn-secondary(type="button" data-dismiss="modal") Đóng
-                        //-                 button.btn.btn-outline-primary.btn-update(type='submit' name="_id") Lưu chỉnh sửa
-
-                        //-Modal of deleteAirport form                        
-                        //- form#delete-airport.modal.fade(method="post" action="/settingQD6/deleteAirport")
-                        //-     .modal-dialog
-                        //-         .modal-content
-                        //-             .modal-header
-                        //-                 h4.modal-title.font-weight-bold Xóa Sân Bay
-                        //-                 button.close(type='button', data-dismiss='modal') &times;
-                        //-             .modal-body
-                        //-                 p Bạn chắc chắn muốn xóa vé 
-                        //-                     span.Ten-san-bay.font-weight-bold  
-                        //-                     span  này không?
+                       
+                        //- Modal of delete Schedule flight form                        
+                        form#delete-flight-schedule.modal.fade(method="post" action="/settingQD6/deleteFlightSchedule")
+                            .modal-dialog
+                                .modal-content
+                                    .modal-header
+                                        h4.modal-title.font-weight-bold Xóa Chuyến Bay
+                                        button.close(type='button', data-dismiss='modal') &times;
+                                    .modal-body
+                                        p Bạn chắc chắn muốn xóa chuyến bay 
+                                            span.Ten-san-bay.font-weight-bold  
+                                            span  này không?
                                         
-                        //-             .modal-footer.d-flex.justify-content-center
-                        //-                 input(type="hidden" name="_csrf" value=csrf)
-                        //-                 button.btn.btn-secondary(type="button" data-dismiss="modal") Đóng
-                        //-                 button.btn.btn-danger.confirm-delete-airport(type='submit' name="airportName") Xóa sân bay
+                                    .modal-footer.d-flex.justify-content-center
+                                        input(type="hidden" name="_csrf" value=csrf)
+                                        button.btn.btn-secondary(type="button" data-dismiss="modal") Đóng
+                                        button.btn.btn-danger.confirm-delete-airport(type='submit' name="MaCB") Xóa Chuyến Bay
 
     script.
         var a_btn =  document.querySelectorAll(".item-setting-link");
