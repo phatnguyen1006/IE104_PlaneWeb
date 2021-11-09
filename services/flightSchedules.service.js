@@ -465,6 +465,19 @@ async function updateSGTrong(dataUpdate, inc) {
 }
 
 
+async function checkFlightSchedule(MaCB) {
+    try {
+        const flight = await LichCB.find({MaCB: MaCB});
+
+        for (hangVe in flight.DSHangVe) {
+            
+        }
+    } catch (error) {
+
+    }
+}
+
+
 // =================================================================================
 // @Modules export
 module.exports = {

@@ -36,6 +36,8 @@ router.get('/flightSchedule', controller.getFLightSchedule);
 
 router.post('/flightSchedule', validate.addFlightScheduleValidate, controller.postAddFlightSchedule);
 
+router.post('updateFlightSchedule', )
+
 router.post('/reset', controller.postReset);
 
 router.post('/updateFlightSchedule', controller.updateFlightSchedule);
