@@ -493,6 +493,7 @@ console.log(flights);
       currentPage: page,
       arrSanBayTG: arrSanBayTG,
       notify: notify,
+      csrf: req.csrfToken(),
     });
   } else {
     res.render("flightManagement", {
@@ -501,6 +502,7 @@ console.log(flights);
       currentPage: page,
       arrSanBayTG: arrSanBayTG,
       allPages: allPages,
+      csrf: req.csrfToken(),
     });
   }
 };
