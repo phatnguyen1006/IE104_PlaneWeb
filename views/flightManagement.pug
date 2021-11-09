@@ -116,7 +116,9 @@ block content
                                                             td.text-center #{flight.GioKhoiHanh}:00 #{flight.NgayGio.getDate()}/#{flight.NgayGio.getMonth() + 1}/#{flight.NgayGio.getFullYear()}
                                                             td.text-center #{flight.TSLG}
                                                             td.text-center
-                                                                button.btn.btn-outline-primary.btn-update-airport(type='button', data-toggle='modal', data-target='#Update-ticket', data-id=flight._id,data-name=flight.ChuyenBay,data-code= flight.MaCB,data-columns=flight.city,data-type = flight.country) Sửa
+                                                                //- button.btn.btn-outline-primary.btn-update-airport(type='button', data-toggle='modal', data-target='#Update-ticket', data-id=flight._id,data-name=flight.ChuyenBay,data-code= flight.MaCB,data-columns=flight.city,data-type = flight.country) Sửa
+                                                                button.btn.btn-outline-primary.btn-update-airport(type='button', data-toggle='modal', data-target='#Update-ticket', data-id=flight._id,data-name=flight.ChuyenBay,data-code= flight.MaCB,data-columns=flight.city,data-type = flight.country)
+                                                                    a(href=`/settingQD6/updateFlightSchedule?MaCB=${flight.MaCB}`) Sửa
                                                             td
                                                                 button.btn.btn-outline-danger.btn-delete-airport(type='button', data-toggle='modal', data-target='#delete-airport', data-name=flight.airportName) Xóa
                                                 tfoot
@@ -249,8 +251,8 @@ block content
                                 if flights.length > 0
                                     .col-sm-8
                                         h3.font-weight-bold Danh sách các sân bay
-                                .col-sm-4.text-right.pr-5
-                                    button.btn.btn-info.mb-2(type='button', data-toggle='modal', data-target='#addAirportModal') Thêm sân bay
+                                //- .col-sm-4.text-right.pr-5
+                                //-     button.btn.btn-info.mb-2(type='button', data-toggle='modal', data-target='#addAirportModal') Thêm sân bay
                             if flights.length > 0
                                 .row
                                     
@@ -278,7 +280,9 @@ block content
                                                             td.text-center #{arrSanBayTG[index]}
                                                             td.text-center #{flight.TSLG}
                                                             td.text-center
-                                                                button.btn.btn-outline-primary.btn-update-airport(type='button', data-toggle='modal', data-target='#Update-ticket', data-id=flight._id,data-name=flight.ChuyenBay,data-code= flight.MaCB,data-columns=flight.city,data-type = flight.country) Sửa
+                                                                //- button.btn.btn-outline-primary.btn-update-airport(type='button', data-toggle='modal', data-target='#Update-ticket', data-id=flight._id,data-name=flight.ChuyenBay,data-code= flight.MaCB,data-columns=flight.city,data-type = flight.country) Sửa
+                                                                button.btn.btn-outline-primary.btn-update-airport(type='button', data-toggle='modal', data-target='#Update-ticket', data-id=flight._id,data-name=flight.ChuyenBay,data-code= flight.MaCB,data-columns=flight.city,data-type = flight.country)
+                                                                    a(href=`/settingQD6/updateFlightSchedule?MaCB=${flight.MaCB}`) Sửa
                                                             td
                                                                 button.btn.btn-outline-danger.btn-delete-airport(type='button', data-toggle='modal', data-target='#delete-flight-schedule', data-name=flight.airportName) Xóa
                                                 tfoot
@@ -355,20 +359,20 @@ block content
             })
         });
 
-        btn_update.forEach((e,index) => {
-            e.addEventListener('click',function (){
-                const code = e.dataset.code
-                const id = e.dataset.id
-                const name = e.dataset.name
-                const city = e.dataset.columns
-                const country = e.dataset.type
-                document.querySelector('.btn-update').value = id;
-                document.querySelector('.code-airport').value = code;
-                document.querySelector('.name-airport').value = name;
-                document.querySelector('.location').value = city;
-                document.querySelector('.QG').value = country;
-            })
-        });
+        //- btn_update.forEach((e,index) => {
+        //-     e.addEventListener('click',function (){
+        //-         const code = e.dataset.code
+        //-         const id = e.dataset.id
+        //-         const name = e.dataset.name
+        //-         const city = e.dataset.columns
+        //-         const country = e.dataset.type
+        //-         document.querySelector('.btn-update').value = id;
+        //-         document.querySelector('.code-airport').value = code;
+        //-         document.querySelector('.name-airport').value = name;
+        //-         document.querySelector('.location').value = city;
+        //-         document.querySelector('.QG').value = country;
+        //-     })
+        //- });
 
         document.addEventListener('DOMContentLoaded', ()=>{
         chose_MaSB.addEventListener('input',function Action(){
