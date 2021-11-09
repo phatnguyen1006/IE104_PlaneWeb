@@ -597,7 +597,7 @@ module.exports.getUpdateFlightSchedule = async (req, res) => {
       delete req.session.flightSchedule;
 
     res.render('updateFlightSchedule', {
-        classes: ticketClasses,
+        hangVe: ticketClasses,
         airports: airports,
         flight: flight,
         QD6: getQD6,
@@ -613,7 +613,7 @@ module.exports.getUpdateFlightSchedule = async (req, res) => {
     });
   } else {
     res.render('updateFlightSchedule', {
-      classes: ticketClasses,
+      hangVe: ticketClasses,
       airports: airports,
       flight: flight,
       QD6: getQD6,
