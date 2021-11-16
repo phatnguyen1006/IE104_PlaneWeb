@@ -39,60 +39,17 @@ block content
                     
                 .content-setting.mb-3
                     .title-add-airport 
-                        h4.mt-4.font-weight-bold.text-center Quản lý sân bay
-                        
-                    .content-airport
-                        form#addAirportModal.modal.fade(method="post" action="/settingQD6")
-                            .modal-dialog.modal-dialog-centered.modal-dialog-scrollable
-                                .modal-content
-                                    .modal-header
-                                        h4.modal-title.font-weight-bold Thêm sân bay mới
-                                        button.close(type='button', data-dismiss='modal') &times;
-                                    .modal-body
-                                        .title.font-italic
-                                            h6 Một sân bay gồm 4 thông tin sau đây:
-                                                ul
-                                                    li Mã sân bay 
-                                                        h6 (gồm 4 chữ cái in hoa + "/" + 3 chữ cái in hoa) 
-                                                        h6.font-weight-bold VD: ABCD/XYZ
-                                                    li Tên sân bay
-                                                    li Thành phố/ Tỉnh
-                                                    li Quốc gia
-                                            h6.text-danger * : Bắt buộc  
-                                        .row
-                                            .col-sm-12.error-setting(style="display:none")
-                                                h6.p-2.text-error-setting.text-light
-                                        .row
-                                            .col-sm-12.error-setting1(style="display:none")
-                                                h6.p-2.text-error-setting1.text-light
-                                        .row
-                                            .col-sm-12
-                                                label Mã sân bay
-                                                    span.text-danger * 
-                                                input.form-control.AirportCode(type="text" name="airportCode" placeholder="VVVN/HAN" pattern="[A-Z]{4}/[A-Z]{3}" maxlength=20 required)
-                                                label Tên sân bay
-                                                    span.text-danger * 
-                                                input.form-control.AirportTen(type="text" name="airportName" placeholder="Quy Nhơn" required)
-                                                label TP/Tỉnh
-                                                    span.text-danger * 
-                                                input.form-control(type="text" name="city" placeholder="Bình Định" required)
-                                                label Quốc gia
-                                                    span.text-danger * 
-                                                input.form-control(type="text" name="country" placeholder="Việt Nam" required)
-
-                                    .modal-footer.d-flex.justify-content-center
-                                        input(type="hidden" name="_csrf" value=csrf)
-                                        button.btn.btn-secondary(type="button" data-dismiss="modal") Đóng
-                                        button.btn.btn-success.btn-add-airport(type='submit' disabled) Thêm sân bay
-                        
+                        h4.mt-4.font-weight-bold.text-center Quản lý chuyến bay
                     
                         .content-delete-airport.mt-5
                             .row 
                                 if flights.length > 0
                                     .col-sm-8
-                                        h3.font-weight-bold Danh sách các sân bay
+                                        h3.font-weight-bold Danh sách các chuyến bay
                                 .col-sm-4.text-right.pr-5
-                                    button.btn.btn-info.mb-2(type='button', data-toggle='modal', data-target='#addAirportModal') Thêm sân bay
+                                    button.btn-addflightschedule.mb-2.p-2(type='button') 
+                                        a(href=`/settingQD6/flightSchedule` ) Thêm sân bay
+
                             if flights.length > 0
                                 .row
                                     .col-sm-12
@@ -198,61 +155,14 @@ block content
                     
                 .content-setting.mb-3
                     .title-add-airport 
-                        h4.mt-4.font-weight-bold.text-center Quản lý sân bay
-                        
-                    .content-airport
-                        //- button.btn.btn-info.mb-2(type='button', data-toggle='modal', data-target='#addAirportModal') Thêm sân bay
-                        form#addAirportModal.modal.fade(method="post" action="/settingQD6")
-                            .modal-dialog.modal-dialog-centered.modal-dialog-scrollable
-                                .modal-content
-                                    .modal-header
-                                        h4.modal-title.font-weight-bold Thêm sân bay mới
-                                        button.close(type='button', data-dismiss='modal') &times;
-                                    .modal-body
-                                        .title.font-italic
-                                            h6 Một sân bay gồm 4 thông tin sau đây:
-                                                ul
-                                                    li Mã sân bay 
-                                                        h6 (gồm 4 chữ cái in hoa + "/" + 3 chữ cái in hoa) 
-                                                        h6.font-weight-bold VD: ABCD/XYZ
-                                                    li Tên sân bay
-                                                    li Thành phố/ Tỉnh
-                                                    li Quốc gia
-                                            h6.text-danger * : Bắt buộc  
-                                        .row
-                                            .col-sm-12.error-setting(style="display:none")
-                                                h6.p-2.text-error-setting.text-light
-                                        .row
-                                            .col-sm-12.error-setting1(style="display:none")
-                                                h6.p-2.text-error-setting1.text-light
-                                        .row
-                                            .col-sm-12
-                                                label Mã sân bay
-                                                    span.text-danger * 
-                                                input.form-control.AirportCode(type="text" name="airportCode" placeholder="VVVN/HAN" pattern="[A-Z]{4}/[A-Z]{3}" maxlength=20 required)
-                                                label Tên sân bay
-                                                    span.text-danger * 
-                                                input.form-control.AirportTen(type="text" name="airportName" placeholder="Quy Nhơn" required)
-                                                label TP/Tỉnh
-                                                    span.text-danger * 
-                                                input.form-control(type="text" name="city" placeholder="Bình Định" required)
-                                                label Quốc gia
-                                                    span.text-danger * 
-                                                input.form-control(type="text" name="country" placeholder="Việt Nam" required)
-
-                                    .modal-footer.d-flex.justify-content-center
-                                        input(type="hidden" name="_csrf" value=csrf)
-                                        button.btn.btn-secondary(type="button" data-dismiss="modal") Đóng
-                                        button.btn.btn-success.btn-add-airport(type='submit' disabled) Thêm sân bay
-                        
+                        h4.mt-4.font-weight-bold.text-center Quản lý chuyến bay
                     
                         .content-delete-airport.mt-5
                             .row 
                                 if flights.length > 0
                                     .col-sm-8
-                                        h3.font-weight-bold Danh sách các sân bay
-                                //- .col-sm-4.text-right.pr-5
-                                //-     button.btn.btn-info.mb-2(type='button', data-toggle='modal', data-target='#addAirportModal') Thêm sân bay
+                                        h3.font-weight-bold Danh sách các chuyến bay
+                                
                             if flights.length > 0
                                 .row
                                     
