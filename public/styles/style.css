@@ -348,3 +348,35 @@ footer {
 .checkbox > input:active {
   border: 2px solid #34495e;
 }
+
+
+.btn-addflightschedule {
+  background-color: #41b883;
+  border: none;
+  border-radius: 5px;
+}
+
+.btn-addflightschedule > a:hover, a:active, a:link, a:visited {
+  text-decoration: none;
+  color: black;
+}
+
+.btn-addflightschedule > a:hover {
+  color: #ffffff;
+}
+
+
+.btn-returnflightmanagment {
+  background-color: #41b883;
+  border: none;
+  border-radius: 5px;
+}
+
+.btn-returnflightmanagment > a:hover, a:active, a:link, a:visited {
+  text-decoration: none;
+  color: black;
+}
+
+.btn-returnflightmanagment > a:hover {
+  color: #ffffff;
+}
