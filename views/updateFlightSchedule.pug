@@ -164,7 +164,7 @@ block content
                         .row
                             .col-sm-6
                                 label Ngày bay
-                                - var ngayGio = flight.NgayGio.getFullYear()+"-"+(parseInt(flight.NgayGio.getMonth()+1)).toString()+"-"+flight.NgayGio.getDate();
+                                - var ngayGio = flight.NgayGio.getFullYear()+"-"+(parseInt(flight.NgayGio.getMonth()+1)<10?"0"+parseInt(flight.NgayGio.getMonth()+1):parseInt(flight.NgayGio.getMonth()+1)).toString()+"-"+flight.NgayGio.getDate();
                                 //- - ngayGio = ngayGioBf.toLocaleDateString();
                                 input#Number-SanBayTG.form-control.mb-2(type="date" form="form-ex" name="NgayGio" value=ngayGio required)
                             .col-sm-4
@@ -226,9 +226,9 @@ block content
                     
                     .btn-submit.d-flex.justify-content-center
                         input(type="hidden" name="_csrf" value=csrf form="form-ex")
-                        .row
-                            a(href="/settingQD6/flightManagement")
-                                button.btn.btn-outline-dark(type="button") Trở về
+                        .row.justify-content-between
+                            a.pr-4(href="/settingQD6/flightManagement")
+                                button.btn.btn-outline-dark(type="button") Quay lại
                             button.btn.btn-outline-primary.btnSub(type="submit" disabled form="form-ex") Thêm chuyến bay
                         input#DSHangVe(type="hidden" name="DSHangVe" fomr="form-ex")
                         input#arraySBTG(type="hidden" name="SanBayTG" fomr="form-ex" value="")
