@@ -149,10 +149,10 @@ block content
                                                                     option= sanbayTG.airportName
                                                     .col-sm-4
                                                         h6 TG dừng
-                                                        input.TGDung.form-control(type="number", min=Number(QD6.minStopTime), max=Number(QD6.maxStopTime))
+                                                        input.TGDung.form-control(type="number", min=Number(QD6.minStopTime), max=Number(QD6.maxStopTime), value=flight.SanBayTG[Number(count)]?flight.SanBayTG[Number(count)].TGDung:"")
                                                     .col-sm-3
                                                         h6 Ghi chú
-                                                        input.GhiChu.form-control(type="text")      
+                                                        input.GhiChu.form-control(type="text", value=flight.SanBayTG[Number(count)]?flight.SanBayTG[Number(count)].GhiChu:"")      
                                                 .row.mb-2  
                                                     .col-sm-4
                                                         input.btn.ThemSBTG.btn-info.form-control(type="button" disabled value="Thêm SBTG "+count)
@@ -203,12 +203,12 @@ block content
                                             div.element1
                                                 .row.mb-2.mt-3
                                                     .col-sm-6
-                                                        span Số lượng ghế    
+                                                        span Số lượng ghế
                                                         span.font-weight-bold  #{classTicket.tenHangVe}
                                                 
                                                 .row.mb-2
                                                     .col-lg-6.mb-2
-                                                        input.Sum-seat.form-control(type="number" min=5 ) 
+                                                        input.Sum-seat.form-control(type="number" min=5 value=flight.DSHangVe[Number(hangveIndex)]?flight.DSHangVe[Number(hangveIndex++)].SLG:"")
                                                     .col-lg-3
                                                         input.Addi.btn.btn-info.form-control(type="button" value="Thêm"  disabled)
                                                     .col-lg-0
