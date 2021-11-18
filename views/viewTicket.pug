@@ -75,7 +75,7 @@ block content
                                                             - var dollarUSLocale = Intl.NumberFormat('en-US');
                                                             tr
                                                             th(scope='col') Giá Vé
-                                                            td !{formatMoney(booked.GiaTien)}
+                                                            td !{formatMoney(booked.GiaTien)} vnđ
                                                                 p.price-hide(style="display:none;") #{booked.GiaVeMua}
                                                                 p.DuocChuyen(style="display:none;") #{booked.TrangThai}
                                                                 input(type="hidden" name="_id" value=booked._id)
@@ -160,7 +160,7 @@ block content
                                                     - var dollarUSLocale = Intl.NumberFormat('en-US');
                                                     tr
                                                     th(scope='col') Giá Vé
-                                                    td(scope='col') !{formatMoney(bought.GiaTien)}
+                                                    td(scope='col') !{formatMoney(bought.GiaTien)} vnđ
 
                                                     tr
                                                     th(scope='row') Trạng thái

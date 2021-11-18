@@ -156,7 +156,7 @@ block content
                                                             each sanbayTG in QD6.Airports
                                                                 option= sanbayTG.airportName
                                                     .col-sm-4
-                                                        h6 TG dừng
+                                                        h6 TG dừng (phút)
                                                         input.TGDung.form-control(type="number", min=Number(QD6.minStopTime) ,max=Number(QD6.maxStopTime))
                                                     .col-sm-3
                                                         h6 Ghi chú
@@ -231,8 +231,7 @@ block content
 
                     .row.justify-content-center
                         
-                        button.btn.btn-outline-dark.mr-2
-                            a(href=`/settingQD6/flightManagement`) Quay lại
+                        a.btn.btn-outline-dark.mr-2(href=`/settingQD6/flightManagement`) Quay lại
 
                         .btn-submit.d-flex.justify-content-center
                             input(type="hidden" name="_csrf" value=csrf form="form-ex")

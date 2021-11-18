@@ -46,6 +46,6 @@ router.post("/updateFlightSchedule", controller.postUpdateFlightSchedule);
 
 router.post("/reset", controller.postReset);
 
-router.post("/deleteFlightScheudle", controller.deleteFlightSchedule);
+router.post("/deleteFlightSchedule", controller.deleteFlightSchedule);
 
 module.exports = router;

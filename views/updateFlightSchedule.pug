@@ -79,7 +79,7 @@ block content
                         span.closebtn(onclick="this.parentElement.style.display='none';") &times;
                         h5.text-light #{notify}
                         
-                form.content-setting.mb-3(id="form-ex" method="post" action="/settingQD6/flightSchedule")
+                form.content-setting.mb-3(id="form-ex" method="post" action="/settingQD6/updateFlightSchedule")
                     .title-add-flight
                         h4.mt-4.font-weight-bold.text-center Cập nhật chuyến bay
                     .title-hd.font-italic    
@@ -109,13 +109,13 @@ block content
                                         option.location= local.city
                             .col-lg-3.mb-2
                                 label.font-weight-bold Mã CB:
-                                input.form-control(type="text" pattern="VN[0-9]{3}" required name="MaCB" value=flight.MaCB?flight.MaCB:"MaCB" disabled)
+                                input.form-control(type="text" pattern="VN[0-9]{3}" required name="MaCB" value=flight.MaCB?flight.MaCB:"MaCB" readonly)
                         div.input-TenSB(style="display:none;")
                             for sanbay in QD6.Airports
                                 p.Name-SBD #{sanbay.airportName}
                                 p.Name-SBDen #{sanbay.airportName}
-                            input.SBD(type="text" name="SanBayDi")
-                            input.SBDen(type="text" name="SanBayDen")
+                            input.SBD(type="text" name="SanBayDi" value=flight.SanBayDi?flight.SanBayDi:"")
+                            input.SBDen(type="text" name="SanBayDen" value=flight.SanBayDen?flight.SanBayDen:"")
                     .content-SanBayTG
                         button.btn.btn-info.mb-2(type='button', data-toggle='modal', data-target='#addAirportModal' title="Thêm sân bay trung gian") Thêm SBTG
                         #addAirportModal.modal.fade
@@ -125,8 +125,8 @@ block content
                                         h4.modal-title.font-weight-bold Thêm sân bay trung gian
                                         button.close(type='button', data-dismiss='modal') &times;
                                     .modal-body
-                                        p.font-italic Có thể thêm hoặc không thêm tùy ý các sân bay trung gian dưới đây, sau khi nhập thông tin xong thì click nút
-                                            span.font-weight-bold Cập nhật SBTG
+                                        p.font-italic Nếu bạn cần cập nhật một SBTG, bạn bắt buộc phải nhập lại toàn bộ danh sách vì lý do ghi đè dữ liệu sẽ gây ra chồng chập.
+                                            span.font-weight-bold  Cập nhật SBTG 
                                             span.font-italic  để xác nhận thông tin
                                         div.bg-danger#Notification.mb-2.p-2(style="display:none;")
                                             span.closebtn(onclick="this.parentElement.style.display='none';") &times;
@@ -134,7 +134,7 @@ block content
                                         //- - var count = 0;
                                         while count < QD6.maxIntermediateAirport
                                             div.element
-                                                b= "Sân bay trung gian " + ++count
+                                                b= "Sân bay trung gian " + Number(count)
                                                 .row.mb-2
                                                     .col-sm-5
                                                         h6 Sân bay TG
@@ -148,14 +148,18 @@ block content
                                                                 each sanbayTG in QD6.Airports
                                                                     option= sanbayTG.airportName
                                                     .col-sm-4
-                                                        h6 TG dừng
+                                                        h6 TG dừng (phút)
                                                         input.TGDung.form-control(type="number", min=Number(QD6.minStopTime), max=Number(QD6.maxStopTime), value=flight.SanBayTG[Number(count)]?flight.SanBayTG[Number(count)].TGDung:"")
                                                     .col-sm-3
                                                         h6 Ghi chú
-                                                        input.GhiChu.form-control(type="text", value=flight.SanBayTG[Number(count)]?flight.SanBayTG[Number(count)].GhiChu:"")      
+                                                        input.GhiChu.form-control(type="text", value=flight.SanBayTG[Number(count)]?flight.SanBayTG[Number(count)].GhiChu:"") 
                                                 .row.mb-2  
-                                                    .col-sm-4
-                                                        input.btn.ThemSBTG.btn-info.form-control(type="button" disabled value="Thêm SBTG "+count)
+                                                    .col-sm-6
+                                                        if flight.SanBayTG[Number(count)]
+                                                            input.btn.SuaSBTG.btn-success.form-control(type="button" value="Cập nhật SBTG "+Number(count +1))
+                                                            input.btn.ThemSBTG.btn-info.form-control(type="hidden" disabled value="Thêm SBTG "+Number(count++ +1))
+                                                        else 
+                                                            input.btn.ThemSBTG.btn-info.form-control(type="button" disabled value="Thêm SBTG "+Number(count++ +1))
                                     .modal-footer.d-flex.justify-content-center               
                                         button.btn.btn-secondary.btn-add-airportTG(type='button', data-dismiss='modal') Đóng
                      
@@ -166,7 +170,7 @@ block content
                                 label Ngày bay
                                 - var ngayGio = flight.NgayGio.getFullYear()+"-"+(parseInt(flight.NgayGio.getMonth()+1)<10?"0"+parseInt(flight.NgayGio.getMonth()+1):parseInt(flight.NgayGio.getMonth()+1)).toString()+"-"+flight.NgayGio.getDate();
                                 //- - ngayGio = ngayGioBf.toLocaleDateString();
-                                input#Number-SanBayTG.form-control.mb-2(type="date" form="form-ex" name="NgayGio" value=ngayGio required)
+                                input#Number-SanBayTG.form-control.mb-2(type="date" form="form-ex" name="NgayGio" value=ngayGio required readonly)
                             .col-sm-4
                                 label Giá Vé
                                 input#GiaTien.form-control.mb-2(type="number" min=0 form="form-ex" name="GiaVe" value=parseInt(flight.GiaVe) required)
@@ -178,9 +182,8 @@ block content
                                 input.GioKhoiHanh.form-control(type="text" min=0 max=23.9 step=0.1 name="GioKhoiHanh" value=flight.GioKhoiHanh required)
                             .col-sm-6.mb-1
                                 label Giờ Đến
-                                input.GioDen.form-control(type="text" min=0 name="GioDen" step=0.1 max=24 required value=flight.GioDen disabled)
+                                input.GioDen.form-control(type="text" min=0 name="GioDen" step=0.1 max=24 required value=flight.GioDen)
                                 input.ThoiGianBay.form-control(type="hidden" name="ThoiGianBay" value=QD6.minFlightTime)
-                                input.TSLG.form-control(type="hidden" name="TSLG")
                                 
 
                         button.btn.btn-info.mb-2(type='button', data-toggle='modal', data-target='#addTicketClassModal') Thêm hạng vé
@@ -229,9 +232,9 @@ block content
                         .row.justify-content-between
                             a.pr-4(href="/settingQD6/flightManagement")
                                 button.btn.btn-outline-dark(type="button") Quay lại
-                            button.btn.btn-outline-primary.btnSub(type="submit" disabled form="form-ex") Thêm chuyến bay
-                        input#DSHangVe(type="hidden" name="DSHangVe" fomr="form-ex")
-                        input#arraySBTG(type="hidden" name="SanBayTG" fomr="form-ex" value="")
+                            button.btn.btn-outline-primary.btnSub(type="submit" form="form-ex") Cập nhật
+                        input#DSHangVe(type="hidden" name="DSHangVe" fomr="form-ex" value=flight.DSHangVe?flight.DSHangVe:"")
+                        input#arraySBTG(type="hidden" name="SanBayTG" fomr="form-ex" value=flight.SanBayTG?flight.SanBayTG:"")
                 
     script.
         var select_SBD =  document.querySelector(".select_SBD");
@@ -252,6 +255,7 @@ block content
         var TGDung = document.querySelectorAll(".TGDung");
         var GhiChu = document.querySelectorAll(".GhiChu");
         var btn_add_SBTG = document.querySelectorAll(".ThemSBTG");
+        var btn_update_SBTG = document.querySelectorAll(".SuaSBTG");
         var e = document.querySelectorAll(".Code-class");
         var btn_sub = document.querySelector(".btnSub");
     
@@ -284,6 +288,8 @@ block content
         //gán string thành mảng object cho sân bay trung gian
         btn_add_SBTG.forEach((b,index) => {
             b.addEventListener('click',function addi(ev){
+            //- TG = JSON.parse(document.getElementById('arraySBTG').value);
+            //- console.log('d',TG);
             ev.preventDefault();  
             btn_add_SBTG[index].disabled = true;
             document.querySelectorAll(".element")[index].style.display = "none";
@@ -298,6 +304,30 @@ block content
                 GhiChu: GhiChu[index].value
             }
             TG.push(FlightTG);
+            document.getElementById('arraySBTG').value = JSON.stringify(TG);
+            });
+        });
+
+
+        // Cập nhật: gán string thành mảng object cho sân bay trung gian
+        btn_update_SBTG.forEach((b,index) => {
+            b.addEventListener('click',function addi(ev){
+            TG = JSON.parse(document.getElementById('arraySBTG').value);
+            console.log('d',TG);
+            ev.preventDefault();  
+            btn_update_SBTG[index].disabled = true;
+            document.querySelectorAll(".element")[index].style.display = "none";
+            num_sb++;
+            //- if(num_sb >= 0 && num_sb+num_ve <= btn_add_SBTG.length + btn_add.length && num_ve >= 1){
+            //-     btn_sub.disabled = false;
+            //- }
+            
+            var FlightTG = {
+                TenSB: TenSB[index].value,
+                TGDung: TGDung[index].value,
+                GhiChu: GhiChu[index].value
+            }
+            TG[index] = FlightTG;
             document.getElementById('arraySBTG').value = JSON.stringify(TG);
             });
         });
@@ -380,7 +410,8 @@ block content
                 }
 
                 if(check[0] == "true" && TGDung[index].value >= parseInt(TGDung[index].min) && TGDung[index].value <= parseInt(TGDung[index].max)){
-                    btn_add_SBTG[index].disabled = false;
+                    console.log(index);
+                    if (btn_add_SBTG[index]) btn_add_SBTG[index].disabled = false;
                 }
             });
         });

@@ -75,8 +75,8 @@ block content
                                                 p.font-weight-bold  #{Sanbaydi}
                                             .col-12 
                                                 b.dl-GioKH #{hour_depart[index]} giờ #{minute_depart[index]} phút
-                                                //- span , #{myDate[index].getDate()}/#{myDate[index].getMonth() + 1}/#{myDate[index].getFullYear()}
-                                                span , #{myDate[index]}
+                                                span , #{myDate[index].getDate()}/#{myDate[index].getMonth() + 1}/#{myDate[index].getFullYear()}
+                                                //- span , #{myDate[index]}
                                             .col-12
                                                 p #{flight.SanBayDi}
                                     .col-sm-2
@@ -109,7 +109,7 @@ block content
 
                                                     - var dollarUSLocale = Intl.NumberFormat('en-US');
                                                     .col-12 Giá tiền:
-                                                        span.font-weight-bold !{formatMoney(flight.GiaVe)} VNĐ 
+                                                        span.font-weight-bold  !{formatMoney(flight.GiaVe)} VNĐ 
                                 .row.mt-1
                                     .col-lg-3
                                     .col-lg-6

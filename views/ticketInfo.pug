@@ -41,14 +41,14 @@ block content
                                 .col-lg-6.mb-2
                                     label.labels Số điện thoại
                                     input.form-control.bg-light(name="phone" type='text',id="info-phone-op", value='',, oninput="output3();")
-                                .col-lg-6.mb-1
+                                .col-lg-6.mb-2
                                     label.lables Hạng vé
                                     input.form-control(type="text" id="info-class-op" readonly)
-                                .col-lg-6.mb-1
+                                .col-lg-12.mb-1
+                                    button.btn.btn-info.p-2(type='button', data-toggle='modal', data-target='#myModal') Chọn hạng vé
                                 - var formatMoney = function(price){  
                                 -   return dollarUSLocale.format(price);
                                 - }
-
                                 - var dollarUSLocale = Intl.NumberFormat('en-US');
                                     label.labels.mx-3 Giá tiền
                                         span#hidden_price(style="display:none;")=flight? flight.GiaVe : ""
@@ -58,7 +58,6 @@ block content
                                     //- input.PurDate(type="hidden"  id="info-Date-Buy_Ticket" name="ticketDate" value='')
                             .row.mt-2
                                 .col-6        
-                                    button.btn.btn-info.p-2(type='button', data-toggle='modal', data-target='#myModal') Chọn hạng vé
                                     #myModal.modal.fade
                                         .modal-dialog
                                             .modal-content

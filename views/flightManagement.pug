@@ -2,7 +2,7 @@ extends ./general.pug
 block content
     .container-fluid
         .row.setting-area.m-5#modalMain
-            .col-lg-4.left-content-setting#modalLeft(style="background-color: #66b3ff")
+            .col-lg-4.left-content-setting#modalLeft(style="background-color: #459ef7")
                 .title-setting.pt-3
                     h1.font-weight-bold.text-center Cài đặt
                 .item-setting-area.mt-4.text-center(style="list-style-type: none;z-index: 1;width: 100%;cursor:pointer;")
@@ -47,8 +47,9 @@ block content
                                     .col-sm-8
                                         h3.font-weight-bold Danh sách các chuyến bay
                                 .col-sm-4.text-right.pr-5
-                                    button.btn-addflightschedule.mb-2.p-2(type='button') 
-                                        a(href=`/settingQD6/flightSchedule` ) Thêm sân bay
+                                    a(href=`/settingQD6/flightSchedule` )
+                                        button.btn-addflightschedule.mb-2.p-2(type='button') Thêm chuyến bay
+                                        
 
                             if flights.length > 0
                                 .row
@@ -153,8 +154,12 @@ block content
                 if (notify == "Cập nhật sân bay thất bại" && (typeof notify !== "undefined"))
                     div.bg-danger.mt-3.p-3(style="border-radius:7px;")
                         span.closebtn(onclick="this.parentElement.style.display='none';") &times;
-                        h5.text-light #{notify} 
-                    
+                        h5.text-light #{notify}
+                if notify
+                    div.bg-success.mt-3.p-3(style="border-radius:7px;")
+                        span.closebtn(onclick="this.parentElement.style.display='none';") &times;
+                        h5.text-light #{notify}
+
                 .content-setting.mb-3
                     .title-add-airport 
                         h4.mt-4.font-weight-bold.text-center Quản lý chuyến bay

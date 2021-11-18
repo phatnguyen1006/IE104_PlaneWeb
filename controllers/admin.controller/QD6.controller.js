@@ -448,8 +448,8 @@ module.exports.getFlightManagement = async (req, res) => {
 
     arrSanBayTG.push(middleAirport);
 
-    for (hangVe in flight.DSHangVe) {
-      if (hangVe.SGDaMua != 0) {
+    for (hangVe of flight.DSHangVe) {
+      if (hangVe.SGDaMua != 0 && hangVe.SGDaMua != "undefined") {
         flight.DuocXoa = 0;
         break;
       }
@@ -491,7 +491,7 @@ module.exports.getFlightManagement = async (req, res) => {
   }
 };
 
-//Function: delete a flight schedule 
+//Function: delete a flight schedule
 //Input: flight code
 //Output:  result of deleting flight
 module.exports.deleteFlightSchedule = async (req, res) => {
@@ -510,8 +510,8 @@ module.exports.deleteFlightSchedule = async (req, res) => {
   }
 };
 
-//Function: get data and render update flight schedule page  
-//Input: nothing 
+//Function: get data and render update flight schedule page
+//Input: nothing
 //Output: render the page
 module.exports.getUpdateFlightSchedule = async (req, res) => {
   // Tất cả hạng vé
@@ -605,6 +605,7 @@ module.exports.getUpdateFlightSchedule = async (req, res) => {
       csrf: req.csrfToken(),
     });
   } else {
+    console.log(flight);
     res.render("updateFlightSchedule", {
       count: 0,
       hangveIndex: 0,
@@ -618,13 +619,22 @@ module.exports.getUpdateFlightSchedule = async (req, res) => {
 };
 
 //Function: update flight's data
-//Input: new data of flight schedule 
-//Output: result of updating flight 
+//Input: new data of flight schedule
+//Output: result of updating flight
 module.exports.postUpdateFlightSchedule = async (req, res) => {
   const id = req.body._id;
   const GioKhoiHanh = req.body.GioKhoiHanh;
   const GioDen = req.body.GioDen;
   let ThoiGianBay = 0;
+  let TSLG = 0;
+
+  if (req.body.DSHangVe) {
+    req.body.DSHangVe.forEach((hangVe) => {
+      TSLG += hangVe.SLG;
+    });
+  }
+
+  console.log("b", req.body);
 
   if (GioKhoiHanh < GioDen) {
     ThoiGianBay = GioDen - GioKhoiHanh;
@@ -636,10 +646,13 @@ module.exports.postUpdateFlightSchedule = async (req, res) => {
     GiaVe: req.body.GiaVe,
     GioKhoiHanh: GioKhoiHanh,
     GioDen: GioDen,
+    TSLG,
     ThoiGianBay: ThoiGianBay,
     DSHangVe: JSON.parse(req.body.DSHangVe),
     SanBayTG: JSON.parse(req.body.SanBayTG),
   };
+
+  console.log("a", data);
 
   const updateResult = await flightSchedules.updateScheduleFlight(id, data);
 
