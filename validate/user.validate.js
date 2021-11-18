@@ -5,7 +5,6 @@ const userService = require('../services/user.service');
 //Function: wont let user create new user when missing data
 //Input: creating user form 
 //Output:  allow to move to next function or not
-//Last modified day: 21/4/2021
 module.exports.postCreate = async (req, res, next) => {
     var errors = [];
 
@@ -51,7 +50,6 @@ module.exports.postCreate = async (req, res, next) => {
 //Function: wont let login when missing data
 //Input: login form  
 //Output:  allow to move to next function or not
-//Last modified day: 21/4/2021
 module.exports.loginValidate= (req, res, next) => {
   var errors = [];
 
@@ -74,6 +72,9 @@ module.exports.loginValidate= (req, res, next) => {
   next(); // move to next middleware(function
 }
 
+//Function: check if new update user info is validate 
+//Input: user's data
+//Output: is data validate
 module.exports.updateInfoValidate = (req, res, next) => {
   var errors = [];
 

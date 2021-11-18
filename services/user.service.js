@@ -6,7 +6,6 @@ const Users = require('../models/user.model');
 // @Function: Get all users from db
 // @Input: no
 // @Output: array of user/ null if get fail
-// @Last modified day: 30/05/2021
 async function getAllUser() {
 
     const users = await Users.find((err) => {
@@ -22,7 +21,6 @@ async function getAllUser() {
 // @Function: Find user from db
 // @Input: object info contain field of user need to find
 // @Outpt: array ducument user if found/ null if not found
-// @Last modified day: 30/05/2021
 async function findUser(info){
 
     const userFound = await Users.find(info,(err) => {
@@ -38,7 +36,6 @@ async function findUser(info){
 // @Function: Find one user from db
 // @Input: object info contain field of user need to find
 // @Outpt: ducument user if found/ null if not found
-// @Last modified day: 30/05/2021
 async function findOneUser(data){
 
     const userFound = await Users.findOne(data,(err) => {
@@ -55,7 +52,6 @@ async function findOneUser(data){
 // @For register account
 // @Input: object data contain all field of user need to add
 // @Output: ducument user add sucess/ null if add fail
-// @Last modified day: 30/05/2021
 async function addUser(data) {
     
     try {
@@ -79,7 +75,6 @@ async function addUser(data) {
 // @Function: Update data user
 // @Input: object data contain  field of user need to update
 // @Output: ducument user after update sucess/ null if update fail
-// @Last modified day: 30/05/2021
 async function updateUserById(id, data) {
     
     const userUpdated = await Users.findOneAndUpdate({

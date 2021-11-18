@@ -4,7 +4,6 @@ const Years = require('../../services/flightSchedules.service');
 // Function: getMonthReport
 // Input: Nothing
 // Output: Render the view
-
 module.exports.getMonthReport = async (req, res) => {
     let minYears = await Years.getMinYearofSchedulesFlight();
     let maxYears = await Years.getMaxYearofSchedulesFlight();
@@ -23,7 +22,6 @@ module.exports.getMonthReport = async (req, res) => {
 // Function: postMonthReport
 // Input: Nothing
 // Output: Render the view with data
-
 module.exports.postMonthReport = async (req, res) => {
     const { month, year } = req.body;
     let flightTotal = 0;

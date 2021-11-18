@@ -13,7 +13,6 @@ const { findTypeTicket } = require('../../services/flightTickets.service/hangVe.
 // Function: ReportMonthlyRevenue
 // Input: data
 // Output: A list of LichCB.DSChuyenBay
-// Last Modified: 8/6/2020
 
 async function ReportMonthlyRevenue(data) {
     const flightsData = await LichCB.find({
@@ -69,7 +68,6 @@ async function ReportMonthlyRevenue(data) {
 // Function: AddFlightRevenue
 // Input: data
 // Output: Notify Success or Error
-// Last Modified: 8/6/2020
 
 async function AddFlightRevenue(data) {
     const checkFlightRevenue = await DTChuyenBay.exists({

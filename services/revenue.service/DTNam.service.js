@@ -16,7 +16,6 @@ const DTChuyenBay = require('../../models/revenue/DTChuyenBay.model');
 // Function: ReportYearRevenue
 // Input: data
 // Output: A list of DTNam.DanhSach
-// Last Modified: 8/6/2021
 
 async function ReportYearRevenue(data) {
     const monthsData = await DTChuyenBay.find({
@@ -56,7 +55,6 @@ async function ReportYearRevenue(data) {
 // Funciton: AddYearRevenue
 // Input: data
 // Output: A notify Success or Error
-// Last Modified: 8/6/2020
 
 async function AddYearRevenue(data) {
     const checkYearRevenue = DTNam.exists({

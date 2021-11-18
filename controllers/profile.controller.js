@@ -40,6 +40,9 @@ module.exports.postUserProfile = async (req, res) => {
 
 }
 
+//Function: update user info
+//Input: new data of user 
+//Output: result of updating user's info
 module.exports.updateInfo = async (req, res) => {
     var id ="";
     var data = {

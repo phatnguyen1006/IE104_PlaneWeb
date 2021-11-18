@@ -5,7 +5,6 @@ const flightScheduleService = require('../services/flightSchedules.service');
 //Function: check new flight schedule data
 //Input: flight schedule data 
 //Output:  notify if there is an errors 
-//Last modified day: 24/6/2021
 module.exports.addFlightScheduleValidate = async (req, res, next) => {
 if (!req.body.SanBayTG) {
     req.body.SanBayTG='{}';
@@ -65,7 +64,6 @@ next();
 //Function: check if there is a same HV in database when adding a new one 
 //Input: new ticket class 
 //Output: notify when there is a same class
-//Last modified day: 26/5/2021
 module.exports.addHV = async (req, res, next) => {
     const ticketType = await HangVe.getAllTypeTicket();
     const check = req.body.maHangVe;

@@ -3,7 +3,6 @@ const adminService = require('../services/admin.service');
 //Function: wont let admin create new admin when missing data
 //Input: creating admin form 
 //Output:  allow to move to next function or not
-//Last modified day: 21/4/2021
 module.exports.postCreateAdmin = async (req, res, next) => {
     var errors = [];
 

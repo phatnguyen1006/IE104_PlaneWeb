@@ -491,6 +491,9 @@ module.exports.getFlightManagement = async (req, res) => {
   }
 };
 
+//Function: delete a flight schedule 
+//Input: flight code
+//Output:  result of deleting flight
 module.exports.deleteFlightSchedule = async (req, res) => {
   const MaCB = req.body.MaCB;
 
@@ -507,6 +510,9 @@ module.exports.deleteFlightSchedule = async (req, res) => {
   }
 };
 
+//Function: get data and render update flight schedule page  
+//Input: nothing 
+//Output: render the page
 module.exports.getUpdateFlightSchedule = async (req, res) => {
   // Tất cả hạng vé
   const ticketClasses = await HangVe.getAllTypeTicket();
@@ -611,6 +617,9 @@ module.exports.getUpdateFlightSchedule = async (req, res) => {
   }
 };
 
+//Function: update flight's data
+//Input: new data of flight schedule 
+//Output: result of updating flight 
 module.exports.postUpdateFlightSchedule = async (req, res) => {
   const id = req.body._id;
   const GioKhoiHanh = req.body.GioKhoiHanh;

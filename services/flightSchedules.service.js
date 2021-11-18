@@ -4,7 +4,6 @@ var { LichCB } = require('../models/flightSchedules.model');
 // @Function: Get min year of schedules flight
 // @Input: no
 // Output: min year/ null if get fail
-// @Last modified day: 12/06/2021
 async function getMinYearofSchedulesFlight() {
 
     try {
@@ -23,7 +22,6 @@ async function getMinYearofSchedulesFlight() {
 // @Function: Get max year of schedules flight
 // @Input: no
 // Output: max year/ null if get fail
-// @Last modified day: 12/06/2021
 async function getMaxYearofSchedulesFlight() {
   try {
     const maxYear = await LichCB.find({})
@@ -43,7 +41,6 @@ async function getMaxYearofSchedulesFlight() {
 // @Function: Get all schedules flight
 // @Input: no
 // Output: array of schedules flight/ null if get fail
-// @Last modified day: 30/05/2021
 async function getAllScheduleFlight() {
 
      const allSchedulesFlight = await LichCB.find().lean();
@@ -87,7 +84,6 @@ async function getFlightSchedulesByPage(page) {
 // @Function: Get one schedule flight by MaCB
 // @Input: MaCB of schedule flight want to find
 // @Output: ducument schedules flight if match with MaCB/ null if not match
-// @Last modified day: 30/05/2021
 async function getOneScheduleFlightByMaCB(MaCB) {
 
     try {
@@ -109,7 +105,6 @@ async function getOneScheduleFlightByMaCB(MaCB) {
 // @Function: Find flight schedule by SanBayDi, SanBayDen and NgayGio
 // @Input is a object name data. data = { "SanBayDi": "value", "SanBayDen": "value", "NgayGio": "value"}
 // @Output a value is array of flight schedules or null 
-// @Last modified day: 30/05/2021
 async function findFlightSchedules(data) {
 
     //console.log(data);
@@ -173,7 +168,6 @@ async function findFlightSchedules(data) {
 // @Function: Add schedules flight 
 // @Input: data: one document of schedules flight
 // @Output: true if add success/ false if add fail
-// @Last modified day: 30/05/2021
 async function addScheduleFlight(data) {
 
     try {
@@ -197,7 +191,6 @@ async function addScheduleFlight(data) {
 // @Input: id of schedule flight and object data contains all field you want change. EX: data = { ChuyenBay: "anything"}
 // --> update all field if any field in data match any flield  in ticket bought/booked. 
 // @Output: data of schedule flight after update/null if fail
-// @Last modified day: 30/05/2021
 async function updateScheduleFlight(id, data) {
     const session = await LichCB.startSession();
 
@@ -248,7 +241,6 @@ async function updateScheduleFlight(id, data) {
 // @This function detete one shedule flight and all bought/booked belong to this schedule flight with parameter "data"
 // @Input: "data" is a object with two properties "id" and "MaCB". EX: data = { "id": "any id", "MaCB": "any MaCB"}  
 // @Output: This function return true if delete successful or return false if delete failed.
-// @Last modified day: 30/05/2021
 async function deleteScheduleFlight(data) {
 
     const sess = await LichCB.startSession();
@@ -342,7 +334,6 @@ async function takeListFlight() {
 // @Fucntion: Update number of bought tickets when user bought/booked ticket
 // @Input: dataUpdate must contain field HangVe and inc is number of ticker user bought/booked
 // @Output: info about update/ null if update fail
-// @Last modified day: 30/05/2021
 async function updateSGDaMua(dataUpdate, inc) {
 
     let temp = "increase";
@@ -374,7 +365,6 @@ async function updateSGDaMua(dataUpdate, inc) {
 
 // @Function: Update number of booked tickets
 // @Same function updateSGDaMua
-// @Last modified day: 30/05/2021
 async function updateSGDat(dataUpdate, inc) {
 
     let temp = "increase";
@@ -408,7 +398,6 @@ async function updateSGDat(dataUpdate, inc) {
 // @Function: Update number of tickets remain
 // @Input: dataUpdate must contain field HangVe and inc is number of ticker user bought/booked
 // @Output: info about update/ null if update fail
-// @Last modified day: 30/05/2021
 async function updateSGTrong(dataUpdate, inc) {
 
     let temp = "increase";
@@ -438,7 +427,9 @@ async function updateSGTrong(dataUpdate, inc) {
     }
 }
 
-
+//Function: Check if flight schedule can be deleted - if there is any user has bouhgt ticket, it cannot be deleted 
+//Input: flight code of flight 
+//Output: is ready to be deleted
 async function checkFlightSchedule(MaCB) {
     try {
         const flight = await LichCB.find({MaCB: MaCB});

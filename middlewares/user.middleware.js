@@ -1,7 +1,9 @@
 const Users = require('../models/user.model');
 const Admin = require('../models/admin.model')
 
-
+//Function: check if user is valid
+//Input: nothing
+//Output: permission to have user's rights
 module.exports = async (req, res, next) => {
     if (await !req.session.user) {
         if (req.signedCookies.userId)

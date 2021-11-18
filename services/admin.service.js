@@ -6,7 +6,6 @@ const Admin = require('../models/admin.model');
 // @Function: Get all admin
 // @Input: no 
 // @Output: all document admin
-// @Last modified day: 30/05/2021
 async function getAllAdmin() {
 
     const allAdmin = await Admin.find((err) => {
@@ -22,7 +21,6 @@ async function getAllAdmin() {
 // @Function: Get One admin
 // @Input: object data contain document field belong to admin
 // @Output: ducument match with data or null if not found
-// @Last modified day: 30/05/2021
 async function getOneAdmin(data) {
 
     const admin = await Admin.findOne(data, (err) => {
@@ -36,7 +34,6 @@ async function getOneAdmin(data) {
 // @Function: Add admin 
 // @Input: object data is document admin contain all field in admin.model
 // @Output: data/ null if add fail
-// @Last modified day: 30/05/2021
 async function addAdmin(data) {
        
     try {
@@ -61,7 +58,6 @@ async function addAdmin(data) {
 // @Function: Update info admin
 // @Input: object data contain field of admin need to update
 // @Output: ducument admin after update/ null if can't update
-// @Last modified day: 30/05/2021
 async function updatedAdmin(id, data) {
 
     const updatedInfo = await Admin.findByIdAndUpdate(
@@ -83,7 +79,6 @@ async function updatedAdmin(id, data) {
 // @Fucntion: Delete Admin 
 // @Input: id is _id of document admin need to delete
 // @Output: ducument admin after delete/ null if can't delete
-// @Last modified day: 30/05/2021
 async function deletedAdmin(id) {
 
     // Counting number of   documents in collection
