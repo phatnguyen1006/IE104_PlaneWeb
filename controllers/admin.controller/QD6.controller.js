@@ -318,16 +318,16 @@ module.exports.getFLightSchedule = async (req, res) => {
       }
       myDate_1 = myDate_1.addDays();
     } else {
-      console.log(addDate);
+      //console.log(addDate);
       if (addDate === true) {
         Date.prototype.addDays = function () {
           var date = new Date(newFlight.NgayGio);
           date.setUTCDate(date.getDate() + 1);
 
-          return console.log(date);
+          return date;
         };
       } else {
-        console.log("2");
+        //console.log("2");
         Date.prototype.addDays = function () {
           var date = new Date(newFlight.NgayGio);
           return date;
@@ -434,7 +434,8 @@ module.exports.getFlightManagement = async (req, res) => {
   const flightsNextPage = await flightSchedules.getFlightSchedulesByPage(
     page + 1
   );
-
+  // console.log(flights[0]);
+  // console.log(flights[0].TSLG);
   var arrSanBayTG = [];
 
   for (var flight of flights) {
@@ -580,7 +581,7 @@ module.exports.getUpdateFlightSchedule = async (req, res) => {
             var date = new Date(newFlight.NgayGio);
             date.setUTCDate(date.getDate() + 1);
   
-            return console.log(date);
+            return date;
           };
         } else {
           //console.log("2");
