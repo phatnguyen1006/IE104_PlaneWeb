@@ -614,6 +614,7 @@ module.exports.getUpdateFlightSchedule = async (req, res) => {
   } else {
     res.render("updateFlightSchedule", {
       count: 0,
+      hangveIndex: 0,
       hangVe: ticketClasses,
       airports: airports,
       flight: flight,

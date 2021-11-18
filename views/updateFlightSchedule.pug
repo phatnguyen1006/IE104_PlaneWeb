@@ -208,7 +208,7 @@ block content
                                                 
                                                 .row.mb-2
                                                     .col-lg-6.mb-2
-                                                        input.Sum-seat.form-control(type="number" min=5 )
+                                                        input.Sum-seat.form-control(type="number" min=5 value=flight.DSHangVe[Number(hangveIndex)]?flight.DSHangVe[Number(hangveIndex++)].SLG:"")
                                                     .col-lg-3
                                                         input.Addi.btn.btn-info.form-control(type="button" value="Thêm"  disabled)
                                                     .col-lg-0
