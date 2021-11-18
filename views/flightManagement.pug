@@ -67,14 +67,17 @@ block content
                                                 for flight in flights
                                                     tbody
                                                         tr.table-striped
-                                                            th(scope='row').text-center #{flight.MaCB}
+                                                            th(scope='row').text-center.MaCB #{flight.MaCB}
                                                             td.text-center #{flight.ChuyenBay}
+                                                                span.TrangThai(style="display:none;") #{flight.DuocXoa}
                                                             td.text-center #{flight.GioKhoiHanh}:00 #{flight.NgayGio.getDate()}/#{flight.NgayGio.getMonth() + 1}/#{flight.NgayGio.getFullYear()}
                                                             td.text-center #{flight.TSLG}
                                                             td.text-center
-                                                                //- button.btn.btn-outline-primary.btn-update-airport(type='button', data-toggle='modal', data-target='#Update-ticket', data-id=flight._id,data-name=flight.ChuyenBay,data-code= flight.MaCB,data-columns=flight.city,data-type = flight.country) Sửa
-                                                                button.btn.btn-outline-primary.btn-update-airport(type='button', data-toggle='modal', data-target='#Update-ticket', data-id=flight._id,data-name=flight.ChuyenBay,data-code= flight.MaCB,data-columns=flight.city,data-type = flight.country)
-                                                                    a(href=`/settingQD6/updateFlightSchedule?MaCB=${flight.MaCB}`) Sửa
+                                                                 if flight.DuocXoa
+                                                                    button.btn.btn-outline-primary.btn-update-flight-schedule(type='button', data-toggle='modal', data-target='#Update-ticket', data-id=flight._id,data-name=flight.ChuyenBay,data-code= flight.MaCB,data-columns=flight.city,data-type = flight.country)
+                                                                        a(href=`/settingQD6/updateFlightSchedule?MaCB=${flight.MaCB}`) Sửa
+                                                                 else 
+                                                                    button.btn.btn-outline-primary.btn-update-flight-schedule(type='button', data-toggle='modal', data-target='#Update-ticket', data-id=flight._id,data-name=flight.ChuyenBay,data-code= flight.MaCB,data-columns=flight.city,data-type = flight.country, disabled) Sửa
                                                             td
                                                                 button.btn.btn-outline-danger.btn-delete-flight-schedule(type='button', data-toggle='modal', data-target='#delete-flight-schedule', data-name=flight.MaCB) Xóa
                                                 tfoot
@@ -183,16 +186,19 @@ block content
                                                 for flight, index in flights
                                                     tbody
                                                         tr.table-striped
-                                                            th(scope='row').text-center #{flight.MaCB}
+                                                            th(scope='row').text-center.MaCB #{flight.MaCB}
                                                             td.text-center #{flight.ChuyenBay}
+                                                                span.TrangThai(style="display:none;") #{flight.DuocXoa}
                                                             td.text-center #{flight.GioKhoiHanh}:00 #{flight.NgayGio.getDate()}/#{flight.NgayGio.getMonth() + 1}/#{flight.NgayGio.getFullYear()}
                                                             td.text-center #{flight.GioDen}:00
                                                             td.text-center #{arrSanBayTG[index]}
                                                             td.text-center #{flight.TSLG}
                                                             td.text-center
-                                                                //- button.btn.btn-outline-primary.btn-update-airport(type='button', data-toggle='modal', data-target='#Update-ticket', data-id=flight._id,data-name=flight.ChuyenBay,data-code= flight.MaCB,data-columns=flight.city,data-type = flight.country) Sửa
-                                                                button.btn.btn-outline-primary.btn-update-airport(type='button', data-toggle='modal', data-target='#Update-ticket', data-id=flight._id,data-name=flight.ChuyenBay,data-code= flight.MaCB,data-columns=flight.city,data-type = flight.country)
-                                                                    a(href=`/settingQD6/updateFlightSchedule?MaCB=${flight.MaCB}`) Sửa
+                                                                if flight.DuocXoa
+                                                                    button.btn.btn-outline-primary.btn-update-flight-schedule(type='button', data-toggle='modal', data-target='#Update-ticket', data-id=flight._id,data-name=flight.ChuyenBay,data-code= flight.MaCB,data-columns=flight.city,data-type = flight.country)
+                                                                        a(href=`/settingQD6/updateFlightSchedule?MaCB=${flight.MaCB}`) Sửa
+                                                                else 
+                                                                    button.btn.btn-outline-primary.btn-update-flight-schedule(type='button', data-toggle='modal', data-target='#Update-ticket', data-id=flight._id,data-name=flight.ChuyenBay,data-code= flight.MaCB,data-columns=flight.city,data-type = flight.country, disabled) Sửa
                                                             td
                                                                 button.btn.btn-outline-danger.btn-delete-flight-schedule(type='button', data-toggle='modal', data-target='#delete-flight-schedule', data-name=flight.MaCB) Xóa
                                                 tfoot
@@ -228,38 +234,40 @@ block content
         var a_btn =  document.querySelectorAll(".item-setting-link");
         var li_btn =  document.querySelectorAll(".item-setting");
         var content =  document.querySelectorAll(".content-setting");
-        var code =  document.querySelectorAll(".ma-san-bay");
+        var code =  document.querySelectorAll(".MaCB");
         var APName =  document.querySelectorAll(".ten-AP");
         //var chose_MaCB =  document.querySelector(".item-MaCB");
-        var chose_MaSB =  document.querySelector(".AirportCode");
-        var chose_TenSB =  document.querySelector(".AirportTen");
+        //var chose_MaSB =  document.querySelector(".AirportCode");
+        //var chose_TenSB =  document.querySelector(".AirportTen");
         var btn_del_flight_schedule = document.querySelectorAll('.btn-delete-flight-schedule');
-        var btn_update = document.querySelectorAll('.btn-update-airport');
+        var btn_update = document.querySelectorAll('.btn-update-flight-schedule');
+         var btn_update_link = document.querySelectorAll('.link_update');
         var text = document.querySelector('.text-error-setting');
         var text1 = document.querySelector('.text-error-setting1');
         var stt = document.querySelectorAll('.TrangThai');
 
         document.addEventListener('DOMContentLoaded', ()=>{
-        for(var k = 0;k < code.length;k++){
-            if(stt[k].innerHTML == "0"){
-                btn_del_flight_schedule[k].disabled = true;
-                btn_update[k].disabled = true;
-            }else{
-                btn_del_flight_schedule[k].style.display = "inline";
-                btn_update[k].style.display = "inline";
+            for(var k = 0;k < code.length;k++){
+                console.log(stt[k].innerHTML);
+                if(stt[k].innerHTML == "0"){
+                    btn_del_flight_schedule[k].disabled = true;
+                    btn_update[k].disabled = true;
+                }else{
+                    btn_del_flight_schedule[k].style.display = "inline";
+                    btn_update[k].style.display = "inline";
+                }
             }
-        }
         });
 
         
-        //- a_btn.forEach((e,index) => {
-        //-     e.addEventListener('click',function handle(){
-        //-         li_btn.forEach(btn => btn.classList.remove('active'));
-        //-         li_btn[index].classList.add('active');
-        //-         content.forEach(item=> item.classList.remove('disappear'));
-        //-         content[index].classList.add('disappear');
-        //-     });
-        //- });
+        a_btn.forEach((e,index) => {
+            e.addEventListener('click',function handle(){
+                li_btn.forEach(btn => btn.classList.remove('active'));
+                li_btn[index].classList.add('active');
+                content.forEach(item=> item.classList.remove('disappear'));
+                content[index].classList.add('disappear');
+            });
+        });
 
         btn_del_flight_schedule.forEach((e,index) => {
             e.addEventListener('click',function (){
@@ -284,59 +292,59 @@ block content
         //-     })
         //- });
 
-        document.addEventListener('DOMContentLoaded', ()=>{
-        chose_MaSB.addEventListener('input',function Action(){
+        //- document.addEventListener('DOMContentLoaded', ()=>{
+        //- chose_MaSB.addEventListener('input',function Action(){
             
-            for(var i = 0;i < code.length;i++){
-                if(chose_MaSB.value == code[i].innerHTML){
-                    document.querySelector('.text-error-setting').innerHTML="Mã sân bay đã tồn tại";
-                    document.querySelector('.error-setting').style.display= "block";
-                    document.querySelector('.error-setting').style.background= "#e43d43";
-                    //document.querySelector('.btn-add-airport').disabled = true;
-                    return;
-                }
-                else if(chose_MaSB.value == ""){
-                    document.querySelector('.error-setting').style.display= "none";
-                    //document.querySelector('.btn-add-airport').disabled = false;
-                }
-                else{
-                    document.querySelector('.error-setting').style.background= "#75d061";
-                    document.querySelector('.text-error-setting').innerHTML="Nhập mã sân bay thành công";
-                    //document.querySelector('.btn-add-airport').disabled = false;
-                }
-            }
-            if(text.innerHTML=="Nhập mã sân bay thành công" && text1.innerHTML=="Nhập tên sân bay thành công"){
-                document.querySelector('.btn-add-airport').disabled = false;
-            }
-        });
-        });
+        //-     for(var i = 0;i < code.length;i++){
+        //-         if(chose_MaSB.value == code[i].innerHTML){
+        //-             document.querySelector('.text-error-setting').innerHTML="Mã sân bay đã tồn tại";
+        //-             document.querySelector('.error-setting').style.display= "block";
+        //-             document.querySelector('.error-setting').style.background= "#e43d43";
+        //-             //document.querySelector('.btn-add-airport').disabled = true;
+        //-             return;
+        //-         }
+        //-         else if(chose_MaSB.value == ""){
+        //-             document.querySelector('.error-setting').style.display= "none";
+        //-             //document.querySelector('.btn-add-airport').disabled = false;
+        //-         }
+        //-         else{
+        //-             document.querySelector('.error-setting').style.background= "#75d061";
+        //-             document.querySelector('.text-error-setting').innerHTML="Nhập mã sân bay thành công";
+        //-             //document.querySelector('.btn-add-airport').disabled = false;
+        //-         }
+        //-     }
+        //-     if(text.innerHTML=="Nhập mã sân bay thành công" && text1.innerHTML=="Nhập tên sân bay thành công"){
+        //-         document.querySelector('.btn-add-airport').disabled = false;
+        //-     }
+        //- });
+        //- });
         
-        document.addEventListener('DOMContentLoaded', ()=>{
-        chose_TenSB.addEventListener('input',function Action(){
-            for(var i = 0;i < APName.length;i++){
-                if(chose_TenSB.value == APName[i].innerHTML){
+        //- document.addEventListener('DOMContentLoaded', ()=>{
+        //- chose_TenSB.addEventListener('input',function Action(){
+        //-     for(var i = 0;i < APName.length;i++){
+        //-         if(chose_TenSB.value == APName[i].innerHTML){
                     
-                    document.querySelector('.text-error-setting1').innerHTML="Tên sân bay đã tồn tại";
-                    document.querySelector('.error-setting1').style.display= "block";
-                    document.querySelector('.error-setting1').style.background= "#e43d43";
-                    //document.querySelector('.btn-add-airport').disabled = true;
-                    return;
-                }
-                else if(chose_TenSB.value == ""){
-                    document.querySelector('.error-setting1').style.display= "none";
-                    //document.querySelector('.btn-add-airport').disabled = false;
-                }
-                else{
-                    document.querySelector('.error-setting1').style.background= "#75d061";
-                    document.querySelector('.text-error-setting1').innerHTML="Nhập tên sân bay thành công";
-                    //document.querySelector('.btn-add-airport').disabled = false;
-                }
-            }
-            if(text.innerHTML =="Nhập mã sân bay thành công" && text1.innerHTML=="Nhập tên sân bay thành công"){
-                document.querySelector('.btn-add-airport').disabled = false;
-            }
-        });
-        });
+        //-             document.querySelector('.text-error-setting1').innerHTML="Tên sân bay đã tồn tại";
+        //-             document.querySelector('.error-setting1').style.display= "block";
+        //-             document.querySelector('.error-setting1').style.background= "#e43d43";
+        //-             //document.querySelector('.btn-add-airport').disabled = true;
+        //-             return;
+        //-         }
+        //-         else if(chose_TenSB.value == ""){
+        //-             document.querySelector('.error-setting1').style.display= "none";
+        //-             //document.querySelector('.btn-add-airport').disabled = false;
+        //-         }
+        //-         else{
+        //-             document.querySelector('.error-setting1').style.background= "#75d061";
+        //-             document.querySelector('.text-error-setting1').innerHTML="Nhập tên sân bay thành công";
+        //-             //document.querySelector('.btn-add-airport').disabled = false;
+        //-         }
+        //-     }
+        //-     if(text.innerHTML =="Nhập mã sân bay thành công" && text1.innerHTML=="Nhập tên sân bay thành công"){
+        //-         document.querySelector('.btn-add-airport').disabled = false;
+        //-     }
+        //- });
+        //- });
 
         var leftModal = document.getElementById("modalLeft");
         var rightModal = document.getElementById("modalRight");
