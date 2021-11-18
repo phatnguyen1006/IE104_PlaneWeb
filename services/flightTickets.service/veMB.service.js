@@ -4,7 +4,6 @@ const {LichCB} = require("../../models/flightSchedules.model");
 // @function: Find tickets bought
 // @Input: id is _id of document user bought ticket
 // @Output: array of ticket
-// @Last modified day: 30/05/2021
 async function findTicketsBought(id) {
 
     const TicketsBought = await VeMB.find({ID: id},(err) => {
@@ -21,7 +20,6 @@ async function findTicketsBought(id) {
 // This function run in function updateSchedulesFlight in flightSchedules.service.js
 // @Input: MaCB , data contain fields change in schedule flight relate to this ticket
 // @Output: any data/null
-// @Last modified day: 30/05/2021
 async function updateManyTicketBought(MaCB,data) {
 
     try {
@@ -42,7 +40,6 @@ async function updateManyTicketBought(MaCB,data) {
 // @Function: Delete ticket bought
 // @Input: an object data contain _id of ticket
 // @Output: true if delete success/ false if fail
-// @Last modified day: 30/05/2021
 async function deleteTicketBought(data) {
 
     // Start a session
@@ -94,7 +91,6 @@ async function deleteTicketBought(data) {
 // For trigger delete a flight schedule
 // This function run in another function 
 // @Input: MaCB of ticket bought
-// @Last modified day: 30/05/2021
 async function deleteManyBoughtTickets(MaCB) {
 
     try {   
@@ -138,7 +134,6 @@ async function deleteManyBoughtTickets(MaCB) {
 // @Similar function userTicketBooked
 // @Input: object data contain all field in VeMB.model
 // @Output: true if bought success / false if bought fail
-// @Last modified day: 30/05/2021
 async function userTicketBought(data) {
   // Start a session
   const session = await VeMB.startSession();
@@ -216,7 +211,6 @@ async function userTicketBought(data) {
 // @Function: Bought ticket version lite
 // Use for function change ticket booked to ticket bought
 // @Similar function userTicketBooked
-// @Last modified day: 30/05/2021
 async function userTicketBoughtV2(data) {
     // Start a session
     const session = await VeMB.startSession();

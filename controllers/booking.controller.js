@@ -3,7 +3,6 @@ const { getAirports } = require('../services/QD6.service')
 //Function: get booking route  
 //Input: notify from session 
 //Output:  render booking view 
-//Last modified day: 23/4/2021 
 module.exports.index = async(req, res) => {
     if (req.session.notify) {
         //console.log(req.session.notify);

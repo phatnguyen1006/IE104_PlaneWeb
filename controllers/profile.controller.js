@@ -7,7 +7,6 @@ const adminService = require('../services/admin.service');
 //Function: get profile view 
 //Input: local user or admin  
 //Output:  render profile view with data  
-//Last modified day: 15/3/2021
 module.exports.getUserProfile = (req, res) => {
     const notify = req.session.notify; 
     delete req.session.notify;
@@ -30,7 +29,6 @@ module.exports.getUserProfile = (req, res) => {
 //Function: change profile avatar  
 //Input: file image 
 //Output: change profile avatar and save it to database 
-//Last modified day: 25/5/2021
 module.exports.postUserProfile = async (req, res) => {
     if (req.file) {
         const user = await User.findOneAndUpdate({ _id: req.signedCookies.userId },

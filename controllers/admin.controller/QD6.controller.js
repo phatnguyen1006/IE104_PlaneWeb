@@ -6,7 +6,6 @@ const { mongo } = require("mongoose");
 //Function: Get QD6 data from database and transfer it to FE
 //Input: nothing
 //Output: Render the view QD6 with data(flights, ticket's class,...)
-//Last modified day: 19/6/2021
 module.exports.getQD6 = async (req, res) => {
   const flights = await flightSchedules.getAllScheduleFlight();
   const hangVe = await HangVe.getAllTypeTicket();
@@ -46,7 +45,6 @@ module.exports.getQD6 = async (req, res) => {
 //Function: get expire days' values from database and transfer it to FE
 //Input: nothing
 //Output: render defaultDay view with data
-//Last modified day: 8/6/2021
 module.exports.getDefaultDay = async (req, res) => {
   const getQD6 = await QD6service.getOne();
   if (req.session.notify) {
@@ -69,7 +67,6 @@ module.exports.getDefaultDay = async (req, res) => {
 //Function: get data from defaultDay from FE and make change to database
 //Input: values of expire day
 //Output: result whether the change is success or not
-//Last modified day: 7/6/2021
 module.exports.postDefaultDay = async (req, res) => {
   var data = {
     maxIntermediateAirport: req.body.maxIntermediateAirport,
@@ -95,7 +92,6 @@ module.exports.postDefaultDay = async (req, res) => {
 //Function: Add new airport
 //Input: new airport's data including airport's code, airport's name and city of the airport
 //Output:  save new airport to database
-//Last modified day: 4/6/2021
 module.exports.postAddAirport = async (req, res) => {
   var airport = {
     airportCode: req.body.airportCode,
@@ -119,7 +115,6 @@ module.exports.postAddAirport = async (req, res) => {
 //Function: delete one airport in database
 //Input: airport's name
 //Output: result whether the delete result is success or not
-//Last modified day: 29/5/2021
 module.exports.postDeleteAirport = async (req, res) => {
   var airportName = req.body.airportName;
   //console.log(airportName);
@@ -138,7 +133,6 @@ module.exports.postDeleteAirport = async (req, res) => {
 //Function: change airport info
 //Input: airportCode and new data
 //Output: result of changing airport's data
-//Last modified day: 20/6/2021
 module.exports.postUpdateAirport = async (req, res) => {
   var id = req.body._id;
   var data = {
@@ -171,7 +165,6 @@ module.exports.postUpdateAirport = async (req, res) => {
 //Function: get ticket's class data from database to show it on FE
 //Input: nothing
 //Output: render ticket class view with data of ticket class from database
-//Last modified day: 19/6/2021
 module.exports.getTicketClass = async (req, res) => {
   var hangVe = await HangVe.getAllTypeTicket();
 
@@ -205,7 +198,6 @@ module.exports.getTicketClass = async (req, res) => {
 //Function: add new ticket class
 //Input: ticket class info: name, code and proportion
 //Output:  result of adding new class
-//Last modified day: 30/5/2021
 module.exports.postAddHV = async (req, res) => {
   var newHangVe = {
     maHangVe: req.body.maHangVe,
@@ -227,7 +219,6 @@ module.exports.postAddHV = async (req, res) => {
 //Function: change one class value
 //Input: class's id
 //Output:  result of changing one class
-//Last modified day: 30/5/2021
 module.exports.postChangeHV = async (req, res) => {
   var id = req.body.idHV;
   var dataHV = {
@@ -249,7 +240,6 @@ module.exports.postChangeHV = async (req, res) => {
 //Function: delete one ticket class
 //Input: ticket class id
 //Output:  result of deleting one ticket class
-//Last modified day: 28/5/2021
 module.exports.postDeleteHV = async (req, res) => {
   var maHangVe = req.body.maHangVe;
 
@@ -268,7 +258,6 @@ module.exports.postDeleteHV = async (req, res) => {
 //Function: get data of flights' schedules from database and transfer it to FE
 //Input: nothing
 //Output:  render flightSchedule view with flights, ticket class, default days,...
-//Last modified day: 27/5/2021
 module.exports.getFLightSchedule = async (req, res) => {
   // const flights = await flightSchedules.getFlightSchedulesByPage(page);
   const hangVe = await HangVe.getAllTypeTicket();
@@ -361,7 +350,6 @@ module.exports.getFLightSchedule = async (req, res) => {
 //Function: add new flight schedule
 //Input: flight schedule data: journey, schedule's code, cost, arrival and depart airport-time, data, flight time,...
 //Output:  adding new flight schedule
-//Last modified day: 31/5/2021
 module.exports.postAddFlightSchedule = async (req, res) => {
   var depart = req.body.departureCity;
   var arrive = req.body.arrivalCity;
@@ -400,7 +388,6 @@ module.exports.postAddFlightSchedule = async (req, res) => {
 //Function: reset all expire day values
 //Input: nothing
 //Output:  result of reseting values
-//Last modified day: 2/6/2021
 module.exports.postReset = async (req, res) => {
   var data = {
     maxIntermediateAirport: null,

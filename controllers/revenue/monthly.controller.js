@@ -4,7 +4,6 @@ const Years = require('../../services/flightSchedules.service');
 // Function: getMonthReport
 // Input: Nothing
 // Output: Render the view
-// Last Modified: 30/9/2020
 
 module.exports.getMonthReport = async (req, res) => {
     let minYears = await Years.getMinYearofSchedulesFlight();
@@ -24,7 +23,6 @@ module.exports.getMonthReport = async (req, res) => {
 // Function: postMonthReport
 // Input: Nothing
 // Output: Render the view with data
-// Last Modified: 8/6/2020
 
 module.exports.postMonthReport = async (req, res) => {
     const { month, year } = req.body;

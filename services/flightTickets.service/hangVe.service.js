@@ -5,7 +5,6 @@ const {LichCB} = require("../../models/flightSchedules.model");
 //@Function: get all type ticket 
 //@Input: no input
 //@Output: An object array type ticket or null when get data fail
-//@Last modified day: 30/05/2021
 async function getAllTypeTicket() {
     try {
         const typeTicket = await HangVe.find({}).lean();
@@ -24,7 +23,6 @@ async function getAllTypeTicket() {
 //@Input: a object data contain three field: tiLeTien, tenHangVe, maHangVe
 //@Example: data = {tiLeTien: value, tenHangVe: "value", maHangVe: "value"}
 //@Output: object data or null when add fail  
-//@Last modified day: 05/06/2021
 async function addNewTypeTicket(data) {
     try {
         const addNew = new HangVe(data);
@@ -44,7 +42,6 @@ async function addNewTypeTicket(data) {
 // and id is _id of ducument type ticket update
 //@Example: data = {tiLeTien: value, tenHangVe: "value", maHangVe: "value"}
 //@Output: object ducument after update or null when update fail 
-//@Last modified day: 05/06/2021
 async function updateTypeTicket(id, data) {
     try {
         const update = await HangVe.findByIdAndUpdate(id, data);
@@ -60,7 +57,6 @@ async function updateTypeTicket(id, data) {
 //@Function: find type ticket for flight schedules 
 //@Input: a object data is field DSHangVe in flight schedules (flightSchedules.model.js)
 //@Output:  object array of HangVe or null when find fail
-//@Last modified day: 05/06/2021
 async function findTypeTicket(data) {
    
     data = data.map((i) => i.maHangVe);
@@ -80,7 +76,6 @@ async function findTypeTicket(data) {
 //@Function: delete one type ticket  
 //@Input: maHangVe of ducument type ticket 
 //@Output: object result or null when delete fail
-//@Last modified day: 05/06/2021
 async function deleteTypeTicket(maHangVe) {
     try {
       const findTypeTicet = await LichCB.find({
@@ -104,7 +99,6 @@ async function deleteTypeTicket(maHangVe) {
 //@Function: check type ticket  exists in LichCB
 //@Input: maHangVe of ducument type ticket 
 //@Output: true/false
-//@Last modified day: 19/06/2021
 async function checkTypeTicket(maHangVe) {
     try {
       const findTypeTicet = await LichCB.find({

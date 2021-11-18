@@ -6,7 +6,6 @@ const HangVeService = require("../services/flightTickets.service/hangVe.service"
 //Function: get ticket info view for buyers
 //Input: user from locals
 //Output: render ticketInfo view for whom bought
-//Last modified day: 15/5/2021
 module.exports.getTicketInfoView = async (req, res) => {
   let flightCode = req.session.flightCode;
   const ticketType = req.session.ticketType;
@@ -31,7 +30,6 @@ module.exports.getTicketInfoView = async (req, res) => {
 //Function: save buy or book ticket
 //Input: info of ticket: name, flight, PID,...
 //Output:  save ticket result
-//Last modified day: 14/4/2021
 module.exports.postTicket = async (req, res) => {
   var errors = [];
   var ticketClass = parseInt(req.body.class);
@@ -175,7 +173,6 @@ module.exports.postTicket = async (req, res) => {
 //Function: show ticket info for user to input
 //Input: flight code and ticket type
 //Output:  ticket info
-//Last modified day: 13/4/2021
 module.exports.postInfo = async (req, res) => {
   const flightCode = req.body.flightCode;
   const flightCodeReturn = req.body.flightCodeReturn;

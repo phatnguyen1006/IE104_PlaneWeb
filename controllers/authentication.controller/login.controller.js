@@ -5,7 +5,6 @@ const adminService = require('../../services/admin.service');
 //Function: get the view for user 
 //Input: nothing 
 //Output:  render login view 
-//Last modified day: 15/5/2021
 module.exports.login = (req, res) => {
     if(req.signedCookies.userId || req.signedCookies.adminId) {
         res.redirect('/');
@@ -31,7 +30,6 @@ module.exports.login = (req, res) => {
 //Function: check login from database to let user login 
 //Input: user's gmail and password 
 //Output:  if there is a user then set cookie for them, if not re-render the login view 
-//Last modified day: 2/5/2021
 module.exports.postLogin = async (req, res) => {
     var gmail = req.body.gmail;
     var password = req.body.password;
@@ -71,7 +69,6 @@ module.exports.postLogin = async (req, res) => {
 //Function: login with encrypted password 
 //Input: user's gmail and password
 //Output: if there is a user then set cookie for them, if not re-render the login view  
-//Last modified day: 10/5/2021
 module.exports.enlogin = async (req, res) => {
     const Gmail = req.body.gmail;
     const password = req.body.password;
@@ -112,7 +109,6 @@ module.exports.enlogin = async (req, res) => {
 //Function: get login view of admin 
 //Input: nothing 
 //Output:  render admin's login view 
-//Last modified day: 20/5/2021
 module.exports.adminLogin = async (req, res) => {
     if(req.signedCookies.userId || req.signedCookies.adminId) {
         res.redirect('/');
@@ -136,7 +132,6 @@ module.exports.adminLogin = async (req, res) => {
 //Function: get data from admin's login view and check it in database 
 //Input: admin's gmail and password 
 //Output:  if there is an admin then set cookie for them, if not re-render the login view  
-//Last modified day: 20/5/2021
 module.exports.adminPostLogin = async (req, res) => {
     const Gmail = req.body.gmail;
     const password = req.body.password;
@@ -177,7 +172,6 @@ module.exports.adminPostLogin = async (req, res) => {
 //Function: logout for admin 
 //Input: nothing 
 //Output:  clear cookie
-//Last modified day: 15/5/2021
 module.exports.logoutAdmin = (req, res) => {
     console.log('Admin logout!!!');
     res.clearCookie('adminId');

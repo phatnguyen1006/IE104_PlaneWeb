@@ -5,7 +5,6 @@ const { addAdmin } = require('../services/admin.service');
 //Function: get registration view for signup
 //Input: nothing 
 //Output: render view for signup   
-//Last modified day: 15/3/2021
 module.exports.index = (req, res) => {
     if (req.session.notify) {
         //console.log(req.session.notify);
@@ -27,7 +26,6 @@ module.exports.index = (req, res) => {
 //Function: create new user 
 //Input: user's name, gmail and password 
 //Output:  result of adding new user 
-//Last modified day: 20//3/2021
 module.exports.postCreate = async (req, res) => {
     const Userdata = {
         userName: req.body.username,
@@ -52,7 +50,6 @@ module.exports.postCreate = async (req, res) => {
 //Function: get registration view for admin 
 //Input: nothing 
 //Output: render registration for admin 
-//Last modified day: 20/5/2021
 module.exports.indexAdmin = (req, res) => {
     if (req.session.notify) {
         //console.log(req.session.notify);
@@ -75,7 +72,6 @@ module.exports.indexAdmin = (req, res) => {
 //Function: create new admin 
 //Input: admin's name, username, password, password, gmail and phone
 //Output: result of creating new admin
-//Last modified day: 20/5/2021 
 module.exports.postCreateAdmin = async (req, res) => {
     var adminData = {
         Name : req.body.name, 

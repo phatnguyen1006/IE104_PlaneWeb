@@ -7,7 +7,6 @@ const HangVeService = require('../services/flightTickets.service/hangVe.service'
 //Function: find ticket of user or admin and transfer data to FE to show 
 //Input: user info from locals or cookie
 //Output:  booked and bought tickets of user
-//Last modified day: 26/4/2021
 module.exports.findTicket = async (req, res) => {
     //console.log(req.session.notify)
 
@@ -81,7 +80,6 @@ module.exports.findTicket = async (req, res) => {
 //Function: change ticket info (only booked ticket)
 //Input: id of ticket 
 //Output: result of update ticket info
-//Last modified day: 26/4/2021
 module.exports.postTicketChange = async (req, res) => {
     var ticketID = req.body._id;
     var info = {
@@ -103,7 +101,6 @@ module.exports.postTicketChange = async (req, res) => {
 //Function: paid to change booked from bought ticket 
 //Input: id ticket
 //Output: save ticket it to bought ticket and delete it in booked ticket
-//Last modified day: 26/4/2021
 module.exports.postChange = async (req, res) => {
     const data = {
         id: req.body._id,
