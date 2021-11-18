@@ -1,7 +1,6 @@
-//Function: 
-//Input: 
-//Output:  
-//Last modified day:
+//Function: check if ticket's info is validate
+//Input: data of ticket
+//Output: is ticket validate
 module.exports.postTicket = (req, res, next) => {
     var errors = [];
     var regName = /^[a-zA-Z]+ [a-zA-Z]+$/;

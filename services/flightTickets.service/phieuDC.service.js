@@ -4,7 +4,6 @@ const  PhieuDC  = require('../../models/flightsTicket/phieuDC.model');
 // @Function: Find tickets  booked
 // @Input: id is _id of document ticket booked
 // @Output: document ticket booked
-// @Last modified day: 30/05/2021
 async function findTicketsBooked(id) {
 
     const TicketBooked = await PhieuDC.find({ID: id},(err) => {
@@ -20,7 +19,6 @@ async function findTicketsBooked(id) {
 // @Function: Update ticket booked
 // @Input: id of ticket booked , data contain fields change in schedule flight relate to this ticket
 // @Output: document was updated/null when update faild
-// @Last modified day: 30/05/2021
 async function updateTicketBooked(id,data) {
 
     try {
@@ -42,7 +40,6 @@ async function updateTicketBooked(id,data) {
 // @This function run in function updateSchedulesFlight in flightSchedules.service.js
 // @Input: MaCB , data contain fields change in schedule flight relate to this ticket
 // @Output: object info /null
-// @Last modified day: 30/05/2021
 async function updateManyTicketBooked(MaCB,data) {
 
     try {
@@ -63,7 +60,6 @@ async function updateManyTicketBooked(MaCB,data) {
 // @Function: Delete ticket booked
 // @Input: data is contain id of document ticket booked
 // @Output: true when delete success/ fail when fail
-// @Last modified day: 30/05/2021
 async function deleteTicketBooked(data) {
 
     const session = await PhieuDC.startSession();
@@ -104,7 +100,6 @@ async function deleteTicketBooked(data) {
 // This function run in another function 
 // @Input: MaCB of ticket
 // @Ouput: true if delete success / false if delete fail
-// @Last modified day: 30/05/2021
 async function deleteManyBookedTickets(MaCB) {
 
     try {
@@ -147,7 +142,6 @@ async function deleteManyBookedTickets(MaCB) {
 // @Function: Booked ticket -> decrease number of remain ticket -> increase number of bought/booked ticket
 // @Input data: all field in VeMB model
 // @Output: true if booked ticket success/false if if booked ticket fail
-// @Last modified day: 30/05/2021
 async function userTicketBooked(data) {
 
     const session = await PhieuDC.startSession();
@@ -216,7 +210,6 @@ async function userTicketBooked(data) {
 // @Function: Change booked ticket to bought ticket
 // @Input: is a object contain field id. id is flield _id on cluster.
 // @Output: true if change success/false if change fail
-// @Last modified day: 30/05/2021
 async function changeBookedToBoughtTicket(data) {
 
     const session = await PhieuDC.startSession();

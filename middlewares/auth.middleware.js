@@ -4,7 +4,6 @@ const Admin = require('../models/admin.model');
 //Function: middleware of user rights  
 //Input: userId from cookie
 //Output: allow it to go to the next function or not 
-//Last modified day: 30/5/2021
 module.exports.requireUser = async (req, res, next) => {
     //console.log(req.signedCookies.adminId);
     
@@ -22,7 +21,6 @@ module.exports.requireUser = async (req, res, next) => {
 //Function: middleware of admin rights  
 //Input: adminId from cookie 
 //Output:  allow it to go to the next function or not 
-//Last modified day: 28/5/2021
 module.exports.requireAdmin = (req, res, next) => { 
 
     if(!req.signedCookies.adminId){

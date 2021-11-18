@@ -6,7 +6,6 @@ const { LichCB } = require("../models/flightSchedules.model");
 // @Function: Get all field in one ducoment QD6
 // @Intput: no
 // @Output: object contain all field of QG6/ null if get fail
-// @Last modified day: 30/05/2021
 async function getOne() {
    try {
        const allField = await QD6.find({}).lean();
@@ -25,7 +24,6 @@ async function getOne() {
 // @Function: Get array Airports
 // @Input: no
 // @Outpt: array object Airport/ null if get fail
-// @Last modified day: 30/05/2021
 async function getAirports() {
 
     try {
@@ -43,7 +41,6 @@ async function getAirports() {
 // @Fucntion: Update all field in QD6
 // @Input: object data contain field of QD6 need to update
 // @Output: info update
-// @Last modified day: 30/05/2021
 async function updateAllField(data) {
 
     const newdata = {
@@ -73,7 +70,6 @@ async function updateAllField(data) {
 // @Fucntion: add new airport to array Airports
 // @Input: object newData contain field of a airport
 // @Output: info update
-// @Last modified day: 30/05/2021
 async function addNewAirport(newAirport) {
 
     try {
@@ -92,7 +88,6 @@ async function addNewAirport(newAirport) {
 // @Fucntion: update airport in array Airports
 // @Input: object newData contain field of a airport need to update
 // @Output: info update
-// @Last modified day: 30/05/2021
 async function updateAirport(data, id) {
     try {
         const update = await QD6.updateOne(
@@ -112,7 +107,6 @@ async function updateAirport(data, id) {
 // @Fucntion: delete airport in array Airports
 // @Input: airport name
 // @Output: info delete/ null if delete fail
-// @Last modified day: 30/05/2021
 async function deleteAirport(airportName) {
       try {
         const check = await LichCB.find({
@@ -143,7 +137,6 @@ async function deleteAirport(airportName) {
 // @Fucntion: check airport exists in LichCB
 // @Input: airport name
 // @Output: true/false
-// @Last modified day: 19/06/2021
 async function checkAirport(airportName) {
 
       try {

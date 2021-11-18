@@ -4,7 +4,6 @@ const time = require("../services/QD6.service");
 //Function: find flights
 //Input: journey, depart and arrive airport, |||||||| Truyền vào biến dateReturn
 //Output:  render searchFlight view with found flights
-//Last modified day: 25/2/2021
 module.exports.postTicket = async (req, res) => {
   var journey = req.query.departureAirport + "-" + req.query.arrivalAirport;
   var depart = req.query.departureAirport;
