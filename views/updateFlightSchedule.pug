@@ -125,13 +125,13 @@ block content
                                         h4.modal-title.font-weight-bold Thêm sân bay trung gian
                                         button.close(type='button', data-dismiss='modal') &times;
                                     .modal-body
-                                        p.font-italic Có thể thêm hoặc không thêm tùy ý các sân bay trung gian dưới đây, sau khi nhập thông tin xong thì click nút 
+                                        p.font-italic Có thể thêm hoặc không thêm tùy ý các sân bay trung gian dưới đây, sau khi nhập thông tin xong thì click nút
                                             span.font-weight-bold Cập nhật SBTG
                                             span.font-italic  để xác nhận thông tin
                                         div.bg-danger#Notification.mb-2.p-2(style="display:none;")
                                             span.closebtn(onclick="this.parentElement.style.display='none';") &times;
                                             h6.text-light#text-Notification
-                                        - var count = 0;
+                                        //- - var count = 0;
                                         while count < QD6.maxIntermediateAirport
                                             div.element
                                                 b= "Sân bay trung gian " + ++count
@@ -139,9 +139,14 @@ block content
                                                     .col-sm-5
                                                         h6 Sân bay TG
                                                         select.TenSBTG.form-control(name="SBTG" form="form-ex")
-                                                            option Chọn sân bag TG
-                                                            each sanbayTG in QD6.Airports
-                                                                option= sanbayTG.airportName
+                                                            if flight.SanBayTG[Number(count)]
+                                                                option= flight.SanBayTG[Number(count)].TenSB
+                                                                each sanbayTG in QD6.Airports
+                                                                    option= sanbayTG.airportName
+                                                            else 
+                                                                option Chọn Sân Bay
+                                                                each sanbayTG in QD6.Airports
+                                                                    option= sanbayTG.airportName
                                                     .col-sm-4
                                                         h6 TG dừng
                                                         input.TGDung.form-control(type="number", min=Number(QD6.minStopTime), max=Number(QD6.maxStopTime))
@@ -159,7 +164,8 @@ block content
                         .row
                             .col-sm-6
                                 label Ngày bay
-                                - var ngayGio = flight.NgayGio.getDate()+"/"+(parseInt(flight.NgayGio.getMonth()+1)).toString()+"/"+flight.NgayGio.getFullYear()
+                                - var ngayGio = flight.NgayGio.getFullYear()+"-"+(parseInt(flight.NgayGio.getMonth()+1)<10?"0"+parseInt(flight.NgayGio.getMonth()+1):parseInt(flight.NgayGio.getMonth()+1)).toString()+"-"+flight.NgayGio.getDate();
+                                //- - ngayGio = ngayGioBf.toLocaleDateString();
                                 input#Number-SanBayTG.form-control.mb-2(type="date" form="form-ex" name="NgayGio" value=ngayGio required)
                             .col-sm-4
                                 label Giá Vé
@@ -215,12 +221,15 @@ block content
                                                     .col-lg-0
                                                         input.Code-class.form-control(type="hidden" value=classTicket.maHangVe )
                                     .modal-footer.d-flex.justify-content-center
-                                        button.btn.btn-secondary.btn-add-ticketClass(type="button" data-dismiss='modal') Đóng       
+                                        button.btn.btn-secondary.btn-add-ticketClass(type="button" data-dismiss='modal') Đóng
 
                     
                     .btn-submit.d-flex.justify-content-center
                         input(type="hidden" name="_csrf" value=csrf form="form-ex")
-                        button.btn.btn-outline-primary.btnSub(type="submit" disabled form="form-ex") Thêm chuyến bay
+                        .row.justify-content-between
+                            a.pr-4(href="/settingQD6/flightManagement")
+                                button.btn.btn-outline-dark(type="button") Quay lại
+                            button.btn.btn-outline-primary.btnSub(type="submit" disabled form="form-ex") Thêm chuyến bay
                         input#DSHangVe(type="hidden" name="DSHangVe" fomr="form-ex")
                         input#arraySBTG(type="hidden" name="SanBayTG" fomr="form-ex" value="")
                 

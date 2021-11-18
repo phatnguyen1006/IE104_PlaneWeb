@@ -12,7 +12,6 @@ module.exports.getQD6 = async (req, res) => {
   const hangVe = await HangVe.getAllTypeTicket();
   const getQD6 = await QD6service.getOne();
 
-
   for (var i = 0; i < getQD6.Airports.length; i++) {
     if (await QD6service.checkAirport(getQD6.Airports[i].airportName)) {
       getQD6.Airports[i].TrangThai = 1;
@@ -195,7 +194,6 @@ module.exports.getTicketClass = async (req, res) => {
       notify: notify,
       csrf: req.csrfToken(),
     });
-
   } else {
     res.render("ticketClass", {
       hangVe: hangVe,
@@ -465,11 +463,11 @@ module.exports.getFlightManagement = async (req, res) => {
 
     for (hangVe in flight.DSHangVe) {
       if (hangVe.SGDaMua != 0) {
-          flight.DuocXoa = 0; 
-          break;
+        flight.DuocXoa = 0;
+        break;
       }
-      
-      flight.DuocXoa = 1; 
+
+      flight.DuocXoa = 1;
     }
   }
 
@@ -523,103 +521,107 @@ module.exports.deleteFlightSchedule = async (req, res) => {
 };
 
 module.exports.getUpdateFlightSchedule = async (req, res) => {
-    // Tất cả hạng vé
-    const ticketClasses = await HangVe.getAllTypeTicket();
-    // Tất cả sân bay
-    const airports = await QD6service.getAirports();
-    const getQD6 = await QD6service.getOne();
-    var addDate = false;
+  // Tất cả hạng vé
+  const ticketClasses = await HangVe.getAllTypeTicket();
+  // Tất cả sân bay
+  const airports = await QD6service.getAirports();
+  const getQD6 = await QD6service.getOne();
+  var addDate = false;
 
-    // Dữ liệu về chuyến bay
-    const flightCode = req.query.MaCB;
-    const flight = await flightSchedules.getOneScheduleFlightByMaCB(flightCode);
+  // Dữ liệu về chuyến bay
+  const flightCode = req.query.MaCB;
+  const flight = await flightSchedules.getOneScheduleFlightByMaCB(flightCode);
+  console.log(flight.ChuyenBay.split("-"));
 
-    if (req.session.notify && req.session.flightSchedule && req.session.check) {
-      var notify = req.session.notify;
-      var newFlight = req.session.flightSchedule;
-      var myDate = new Date(newFlight.NgayGio);
-      var myDate_1 = new Date(newFlight.NgayGio);
-      var hour_depart = newFlight.GioKhoiHanh;
-      var minute_depart = parseInt((hour_depart - parseInt(hour_depart)) * 60);
-      hour_depart = parseInt(newFlight.GioKhoiHanh);
-      var hour_arrival = newFlight.GioDen;
-      var minute_arrival = parseInt((hour_arrival - parseInt(hour_arrival)) * 60);
-      hour_arrival = parseInt(newFlight.GioDen);
-      for (var i = 0; i < parseInt(newFlight.SanBayTG.length); i++) {
-        minute_arrival = minute_arrival + parseInt(newFlight.SanBayTG[i].TGDung);
+  if (req.session.notify && req.session.flightSchedule && req.session.check) {
+    var notify = req.session.notify;
+    var newFlight = req.session.flightSchedule;
+    var myDate = new Date(newFlight.NgayGio);
+    var myDate_1 = new Date(newFlight.NgayGio);
+    var hour_depart = newFlight.GioKhoiHanh;
+    var minute_depart = parseInt((hour_depart - parseInt(hour_depart)) * 60);
+    hour_depart = parseInt(newFlight.GioKhoiHanh);
+    var hour_arrival = newFlight.GioDen;
+    var minute_arrival = parseInt((hour_arrival - parseInt(hour_arrival)) * 60);
+    hour_arrival = parseInt(newFlight.GioDen);
+    for (var i = 0; i < parseInt(newFlight.SanBayTG.length); i++) {
+      minute_arrival = minute_arrival + parseInt(newFlight.SanBayTG[i].TGDung);
+    }
+    if (minute_arrival >= 60) {
+      minute_arrival = minute_arrival - 60;
+      hour_arrival += 1;
+
+      if (hour_arrival == 24) {
+        hour_arrival = 0;
+        addDate = true;
       }
-      if (minute_arrival >= 60) {
-        minute_arrival = minute_arrival - 60;
-        hour_arrival += 1;
-  
-        if (hour_arrival == 24) {
-          hour_arrival = 0;
-          addDate = true;
-        }
-      }
-  
-      if (req.session.check == "true") {
-        if (addDate === true) {
-          Date.prototype.addDays = function () {
-            var date = new Date(newFlight.NgayGio);
-            date.setUTCDate(date.getDate() + 2);
-  
-            return date;
-          };
-        } else {
-          Date.prototype.addDays = function () {
-            var date = new Date(newFlight.NgayGio);
-            date.setUTCDate(date.getDate() + 1);
-            return date;
-          };
-        }
-        myDate_1 = myDate_1.addDays();
+    }
+
+    if (req.session.check == "true") {
+      if (addDate === true) {
+        Date.prototype.addDays = function () {
+          var date = new Date(newFlight.NgayGio);
+          date.setUTCDate(date.getDate() + 2);
+
+          return date;
+        };
       } else {
-        //console.log(addDate);
-        if (addDate === true) {
-          Date.prototype.addDays = function () {
-            var date = new Date(newFlight.NgayGio);
-            date.setUTCDate(date.getDate() + 1);
-  
-            return date;
-          };
-        } else {
-          //console.log("2");
-          Date.prototype.addDays = function () {
-            var date = new Date(newFlight.NgayGio);
-            return date;
-          };
-        }
-        myDate_1 = myDate_1.addDays();
+        Date.prototype.addDays = function () {
+          var date = new Date(newFlight.NgayGio);
+          date.setUTCDate(date.getDate() + 1);
+          return date;
+        };
       }
-      delete req.session.notify;
-      delete req.session.flightSchedule;
+      myDate_1 = myDate_1.addDays();
+    } else {
+      //console.log(addDate);
+      if (addDate === true) {
+        Date.prototype.addDays = function () {
+          var date = new Date(newFlight.NgayGio);
+          date.setUTCDate(date.getDate() + 1);
 
-    res.render('updateFlightSchedule', {
-        hangVe: ticketClasses,
-        airports: airports,
-        flight: flight,
-        QD6: getQD6,
-        notify: notify,
-        newFlight: newFlight,
-        hour_depart: hour_depart,
-        minute_depart: minute_depart,
-        hour_arrival: hour_arrival,
-        minute_arrival: minute_arrival,
-        myDate: myDate,
-        myDate_1: myDate_1,
-        csrf: req.csrfToken(),
+          return console.log(date);
+        };
+      } else {
+        //console.log("2");
+        Date.prototype.addDays = function () {
+          var date = new Date(newFlight.NgayGio);
+          return date;
+        };
+      }
+      myDate_1 = myDate_1.addDays();
+    }
+    delete req.session.notify;
+    delete req.session.flightSchedule;
+
+    res.render("updateFlightSchedule", {
+      count: 0,
+      hangveIndex: 0,
+      hangVe: ticketClasses,
+      airports: airports,
+      flight: flight,
+      QD6: getQD6,
+      notify: notify,
+      newFlight: newFlight,
+      hour_depart: hour_depart,
+      minute_depart: minute_depart,
+      hour_arrival: hour_arrival,
+      minute_arrival: minute_arrival,
+      myDate: myDate,
+      myDate_1: myDate_1,
+      csrf: req.csrfToken(),
     });
   } else {
-    res.render('updateFlightSchedule', {
+    res.render("updateFlightSchedule", {
+      count: 0,
       hangVe: ticketClasses,
       airports: airports,
       flight: flight,
       QD6: getQD6,
       csrf: req.csrfToken(),
-    }) 
+    });
   }
-}
+};
 
 module.exports.postUpdateFlightSchedule = async (req, res) => {
   const id = req.body._id;
@@ -668,5 +670,3 @@ function capitalizeFirstLetter(city) {
   const result = arrWords.join(" ");
   return result;
 }
-
-

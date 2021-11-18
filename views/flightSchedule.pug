@@ -2,20 +2,20 @@ extends ./general.pug
 block content
     .container-fluid
         .row.setting-area.m-5
-            .col-lg-4.left-content-setting.shadow(style="background-color: #0059b3")
-                .title-setting.pt-3
-                    h2.font-weight-bold.text-center Cài đặt
-                .item-setting-area.mt-4.text-center(style="list-style-type: none;z-index: 1;width: 100%;cursor:pointer;")
-                    li.item-setting
-                        a.item-setting-link(href="/settingQD6") Quản lý sân bay
-                    li.item-setting
-                        a.item-setting-link(href="/settingQD6/defaultDay") Thông số chi tiết
-                    li.item-setting
-                        a.item-setting-link(href="/settingQD6/ticketClass") Quản lý hạng vé
-                    li.item-setting.active
-                        a.item-setting-link(href="/settingQD6/flightSchedule") Thêm chuyến bay
+            //- .col-lg-4.left-content-setting.shadow(style="background-color: #0059b3")
+            //-     .title-setting.pt-3
+            //-         h2.font-weight-bold.text-center Cài đặt
+            //-     .item-setting-area.mt-4.text-center(style="list-style-type: none;z-index: 1;width: 100%;cursor:pointer;")
+            //-         li.item-setting
+            //-             a.item-setting-link(href="/settingQD6") Quản lý sân bay
+            //-         li.item-setting
+            //-             a.item-setting-link(href="/settingQD6/defaultDay") Thông số chi tiết
+            //-         li.item-setting
+            //-             a.item-setting-link(href="/settingQD6/ticketClass") Quản lý hạng vé
+            //-         li.item-setting.active
+            //-             a.item-setting-link(href="/settingQD6/flightSchedule") Thêm chuyến bay
                         
-            .col-lg-8.right-content-setting.bg-light
+            .col-lg-12.right-content-setting.bg-light
                 if errors 
                     div.bg-danger.m-2.p-3(style="border-radius:7px;")
                         span.closebtn(onclick="this.parentElement.style.display='none';") &times;
@@ -229,12 +229,16 @@ block content
                                     .modal-footer.d-flex.justify-content-center
                                         button.btn.btn-secondary.btn-add-ticketClass(type="button" data-dismiss='modal') Đóng       
 
-                    
-                    .btn-submit.d-flex.justify-content-center
-                        input(type="hidden" name="_csrf" value=csrf form="form-ex")
-                        button.btn.btn-outline-primary.btnSub(type="submit" disabled form="form-ex") Thêm chuyến bay
-                        input#DSHangVe(type="hidden" name="DSHangVe" fomr="form-ex")
-                        input#arraySBTG(type="hidden" name="SanBayTG" fomr="form-ex" value="")
+                    .row.justify-content-center
+                        
+                        button.btn-returnflightmanagment.mr-2
+                            a(href=`/settingQD6/flightManagement`) Quay lại
+
+                        .btn-submit.d-flex.justify-content-center
+                            input(type="hidden" name="_csrf" value=csrf form="form-ex")
+                            button.btn.btn-outline-primary.btnSub(type="submit" disabled form="form-ex") Thêm chuyến bay
+                            input#DSHangVe(type="hidden" name="DSHangVe" fomr="form-ex")
+                            input#arraySBTG(type="hidden" name="SanBayTG" fomr="form-ex" value="")
                 
     script.
         var select_SBD =  document.querySelector(".select_SBD");
