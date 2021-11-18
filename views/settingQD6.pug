@@ -191,6 +191,7 @@ block content
 
         document.addEventListener('DOMContentLoaded', ()=>{
         for(var k = 0;k < code.length;k++){
+            console.log(stt[k].innerHTML);
             if(stt[k].innerHTML == "0"){
                 btn_del_airport[k].disabled = true;
                 btn_update[k].disabled = true;
