@@ -588,7 +588,7 @@ module.exports.getUpdateFlightSchedule = async (req, res) => {
     delete req.session.flightSchedule;
 
     res.render("updateFlightSchedule", {
-      count: 0,
+      // count: 0,
       hangveIndex: 0,
       hangVe: ticketClasses,
       airports: airports,
@@ -607,7 +607,7 @@ module.exports.getUpdateFlightSchedule = async (req, res) => {
   } else {
     console.log(flight);
     res.render("updateFlightSchedule", {
-      count: 0,
+      // count: 0,
       hangveIndex: 0,
       hangVe: ticketClasses,
       airports: airports,
@@ -629,12 +629,10 @@ module.exports.postUpdateFlightSchedule = async (req, res) => {
   let TSLG = 0;
 
   if (req.body.DSHangVe) {
-    req.body.DSHangVe.forEach((hangVe) => {
+    JSON.parse(req.body.DSHangVe).forEach((hangVe) => {
       TSLG += hangVe.SLG;
     });
   }
-
-  console.log("b", req.body);
 
   if (GioKhoiHanh < GioDen) {
     ThoiGianBay = GioDen - GioKhoiHanh;
@@ -651,8 +649,6 @@ module.exports.postUpdateFlightSchedule = async (req, res) => {
     DSHangVe: JSON.parse(req.body.DSHangVe),
     SanBayTG: JSON.parse(req.body.SanBayTG),
   };
-
-  console.log("a", data);
 
   const updateResult = await flightSchedules.updateScheduleFlight(id, data);
 
