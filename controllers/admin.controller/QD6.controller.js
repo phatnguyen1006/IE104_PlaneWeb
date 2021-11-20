@@ -631,6 +631,13 @@ module.exports.getUpdateFlightSchedule = async (req, res) => {
 //Input: new data of flight schedule
 //Output: result of updating flight
 module.exports.postUpdateFlightSchedule = async (req, res) => {
+  const DuocXoa = req.body.check;
+
+  if (DuocXoa == 0) {
+    res.redirect('/');
+    return;
+  }
+
   const id = req.body._id;
   const GioKhoiHanh = req.body.GioKhoiHanh;
   const GioDen = req.body.GioDen;
@@ -642,6 +649,10 @@ module.exports.postUpdateFlightSchedule = async (req, res) => {
       TSLG += hangVe.SLG;
     });
   }
+
+  var depart = req.body.departureCity;
+  var arrive = req.body.arrivalCity;
+  var journey = depart + "-" + arrive;
 
   if (GioKhoiHanh < GioDen) {
     ThoiGianBay = GioDen - GioKhoiHanh;
@@ -655,6 +666,9 @@ module.exports.postUpdateFlightSchedule = async (req, res) => {
     GiaVe: req.body.GiaVe,
     GioKhoiHanh: GioKhoiHanh,
     GioDen: GioDen,
+    ChuyenBay: journey,
+    SanBayDi: req.body.SanBayDi,
+    SanBayDen: req.body.SanBayDen,
     TSLG,
     ThoiGianBay: ThoiGianBay,
     DSHangVe: JSON.parse(req.body.DSHangVe),
