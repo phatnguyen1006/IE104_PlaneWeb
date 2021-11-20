@@ -631,6 +631,13 @@ module.exports.getUpdateFlightSchedule = async (req, res) => {
 //Input: new data of flight schedule
 //Output: result of updating flight
 module.exports.postUpdateFlightSchedule = async (req, res) => {
+  const DuocXoa = req.body.check;
+
+  if (DuocXoa == 0) {
+    res.redirect('/');
+    return;
+  }
+
   const id = req.body._id;
   const GioKhoiHanh = req.body.GioKhoiHanh;
   const GioDen = req.body.GioDen;
