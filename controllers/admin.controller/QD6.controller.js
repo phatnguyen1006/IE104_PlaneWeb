@@ -656,6 +656,8 @@ module.exports.postUpdateFlightSchedule = async (req, res) => {
     ThoiGianBay = 24 - GioKhoiHanh + GioDen;
   }
 
+  console.log("aa", id);
+
   const data = {
     GiaVe: req.body.GiaVe,
     GioKhoiHanh: GioKhoiHanh,
