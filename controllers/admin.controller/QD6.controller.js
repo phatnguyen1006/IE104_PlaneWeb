@@ -646,7 +646,7 @@ module.exports.postUpdateFlightSchedule = async (req, res) => {
 
   if (req.body.DSHangVe) {
     JSON.parse(req.body.DSHangVe).forEach((hangVe) => {
-      TSLG += hangVe.SLG;
+      parseInt(TSLG) +=  parseInt(hangVe.SLG);
     });
   }
 
