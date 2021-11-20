@@ -66,7 +66,8 @@ block content
                                                             
                                                             tr
                                                             th(scope='col') Hạng vé
-                                                            td.Class-form(scope='col') #{booked.TenHangVe}
+                                                            td(scope='col') #{booked.TenHangVe}
+                                                            td.Class-form(style="display:none;") #{booked.HangVe}
                                                             
                                                             - var formatMoney = function(price){  
                                                             -   return dollarUSLocale.format(price);

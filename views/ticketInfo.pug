@@ -140,7 +140,7 @@ block content
                                                                 if HangVeReturn 
                                                                     each hang in HangVeReturn
                                                                         input.RadioClassGoback.mr-2(name="classReturn" value=hang.maHangVe type="radio" required) 
-                                                                        label.ten-hang-ve #{hang.tenHangVe}
+                                                                        label.ten-hang-ve-return #{hang.tenHangVe}
                                                                         br
                                                     .modal-footer.d-flex.justify-content-center
                                                         button.btn.btn-secondary(type="button" data-dismiss="modal") Đóng
@@ -162,14 +162,23 @@ block content
                                 .col-12.d-flex.justify-content-center
                                     .info-payment
                                         if flight
-                                        div(style="display:none;")
-                                            each fl in flight.DSHangVe
-                                                b.GTrong #{fl.SGTrong}
-                                            each tiLe in HangVe 
-                                                b.ma-hang-ve #{tiLe.maHangVe}
+                                            div(style="display:none;")
+                                                each fl in flight.DSHangVe
+                                                    b.GTrong #{fl.SGTrong}
+                                                each tiLe in HangVe 
+                                                    b.ma-hang-ve #{tiLe.maHangVe}
+                                                    br
+                                                    b.ti-le-tien #{tiLe.tiLeTien}
                                                 br
-                                                b.ti-le-tien #{tiLe.tiLeTien}
-                                            br
+                                        if flightReturn
+                                            div(style="display:none;")
+                                                each fl in flightReturn.DSHangVe
+                                                    b.GTrongReturn #{fl.SGTrong}
+                                                each tiLe in HangVeReturn
+                                                    b.ma-hang-ve-return #{tiLe.maHangVe}
+                                                    br
+                                                    b.ti-le-tien-return #{tiLe.tiLeTien}
+                                                br
                                         div
                                             if flight
                                                 button.btn.btn-outline-primary.profile-button.p-2(type='submit', style="width: 200px; font-size: 25px") Thanh toán
@@ -227,6 +236,8 @@ block content
         //-- Chọn hạng vé và set giá tiền
         var code = document.querySelectorAll('.ma-hang-ve');
         var rank = document.querySelectorAll('.ti-le-tien');
+        var codeReturn = document.querySelectorAll('.ma-hang-ve-return');
+        var rankReturn = document.querySelectorAll('.ti-le-tien-return');
 
         const Radio = document.querySelectorAll(".RadioClass");
         const RadioGoback = document.querySelectorAll(".RadioClassGoback");
@@ -234,6 +245,7 @@ block content
         const Pay = document.querySelector(".info-payment");
 
         var Nameclass = document.querySelectorAll('.ten-hang-ve');
+        var NameclassReturn = document.querySelectorAll('.ten-hang-ve-return');
         var Seat = document.querySelectorAll('.GTrong');
 
         for(var i =0; i < Seat.length;i++)
@@ -267,10 +279,8 @@ block content
                         }
                     }
                     if(document.getElementById("price-goback") && parseInt(document.getElementById("price-goback")?.value) > 0) {
-                        console.log("ahaha");
                         document.getElementById("sum-price-ticket").value = parseInt(document.getElementById("price").value) + parseInt(document.getElementById("price-goback").value) + " VND"
                     } else {
-                        console.log("ahaha111");
                         document.getElementById("sum-price-ticket").value = parseInt(document.getElementById("price").value) + " VND";
                     }
 
@@ -286,22 +296,27 @@ block content
         RadioGoback.forEach(function (flight,index) {
             flight.addEventListener("click", function handle() {
                 document.getElementById('info-class-op-goback').type = "text";
-                document.getElementById('info-class-op-goback').value = Nameclass[index].innerHTML;
-                    for(var i = 0 ; i < code.length; i++ ){
-                        if(flight.value == code[i].innerHTML){  
+                document.getElementById('info-class-op-goback').value = NameclassReturn[index].innerHTML;
+                    for(var i = 0 ; i < codeReturn.length; i++ ){
+                        if(flight.value == codeReturn[i].innerHTML){  
                             //console.log(rank[i].innerHTML);
                             if(ticket == "1"){ 
-                                document.getElementById("info-price-goback").value= setPr(rank[i].innerHTML,value_price.innerHTML) + " VND" ;
-                                document.getElementById("price-goback").value= setPr(rank[i].innerHTML,value_price.innerHTML) ;
+                                document.getElementById("info-price-goback").value= setPr(rankReturn[i].innerHTML,value_price.innerHTML) + " VND" ;
+                                document.getElementById("price-goback").value= setPr(rankReturn[i].innerHTML,value_price.innerHTML) ;
                             }
                             else
                             {
-                                document.getElementById("info-price-goback").value= setPr(rank[i].innerHTML,value_price.innerHTML) + " VND";           
-                                document.getElementById("price-goback").value= setPr(rank[i].innerHTML,value_price.innerHTML) ;
+                                document.getElementById("info-price-goback").value= setPr(rankReturn[i].innerHTML,value_price.innerHTML) + " VND";           
+                                document.getElementById("price-goback").value= setPr(rankReturn[i].innerHTML,value_price.innerHTML) ;
                             }
                         }
                     }
-                    document.getElementById("sum-price-ticket").value = parseInt(document.getElementById("price").value) +  parseInt(document.getElementById("price-goback").value) + " VND"
+                    if (document.getElementById("price").value && document.getElementById("price").value >= 0) {
+                    document.getElementById("sum-price-ticket").value = parseInt(document.getElementById("price").value) +  parseInt(document.getElementById("price-goback").value) + " VND";
+                    }
+                    else {
+                        document.getElementById("sum-price-ticket").value = parseInt(document.getElementById("price-goback").value) + " VND";
+                    }
                     if (Pay.classList.contains('info-payment')) {
                         Pay.classList.add('hide-appear');
                     }
