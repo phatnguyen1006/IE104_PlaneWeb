@@ -526,6 +526,15 @@ module.exports.getUpdateFlightSchedule = async (req, res) => {
   const flight = await flightSchedules.getOneScheduleFlightByMaCB(flightCode);
   console.log(flight.ChuyenBay.split("-"));
 
+  for (let hangVe of flight.DSHangVe) {
+    if (hangVe.SGDaMua != 0) {
+      flight.DuocXoa = 0;
+      break;
+    }
+
+    flight.DuocXoa = 1;
+  }
+
   if (req.session.notify && req.session.flightSchedule && req.session.check) {
     var notify = req.session.notify;
     var newFlight = req.session.flightSchedule;
