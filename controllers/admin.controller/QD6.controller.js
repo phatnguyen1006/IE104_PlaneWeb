@@ -457,7 +457,7 @@ module.exports.getFlightManagement = async (req, res) => {
       flight.DuocXoa = 1;
     }
   }
-  
+
   let allPages = await flightSchedules.getNumberOfSchedulesFlights();
 
   var isNextPage = true;
@@ -634,7 +634,7 @@ module.exports.postUpdateFlightSchedule = async (req, res) => {
   const DuocXoa = req.body.check;
 
   if (DuocXoa == 0) {
-    res.redirect('/');
+    res.redirect("/");
     return;
   }
 
@@ -646,7 +646,7 @@ module.exports.postUpdateFlightSchedule = async (req, res) => {
 
   if (req.body.DSHangVe) {
     JSON.parse(req.body.DSHangVe).forEach((hangVe) => {
-      parseInt(TSLG) +=  parseInt(hangVe.SLG);
+      TSLG += parseInt(hangVe.SLG);
     });
   }
 

@@ -108,6 +108,8 @@ block content
                                         label.lables Hạng vé
                                         input.form-control(name type="text" id="info-class-op-goback" readonly)
                                     .col-lg-6.mb-1
+                                    .col-lg-12.mb-1
+                                        button.btn.btn-info.p-2(type='button', data-toggle='modal', data-target='#myModal1') Chọn hạng vé
                                     - var formatMoney = function(price){  
                                     -   return dollarUSLocale.format(price);
                                     - }
@@ -121,7 +123,6 @@ block content
                                         //- input.PurDate(type="text"  id="info-Date-Buy_Ticket-goback" name="ticketDategoback" value='')
                                 .row.mt-2
                                     .col-6        
-                                        button.btn.btn-info.p-2(type='button', data-toggle='modal', data-target='#myModal1') Chọn hạng vé
                                         #myModal1.modal.fade
                                             .modal-dialog
                                                 .modal-content
