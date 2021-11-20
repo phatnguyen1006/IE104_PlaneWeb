@@ -650,6 +650,10 @@ module.exports.postUpdateFlightSchedule = async (req, res) => {
     });
   }
 
+  var depart = req.body.departureCity;
+  var arrive = req.body.arrivalCity;
+  var journey = depart + "-" + arrive;
+
   if (GioKhoiHanh < GioDen) {
     ThoiGianBay = GioDen - GioKhoiHanh;
   } else if (GioKhoiHanh > GioDen) {
@@ -662,6 +666,9 @@ module.exports.postUpdateFlightSchedule = async (req, res) => {
     GiaVe: req.body.GiaVe,
     GioKhoiHanh: GioKhoiHanh,
     GioDen: GioDen,
+    ChuyenBay: journey,
+    SanBayDi: req.body.SanBayDi,
+    SanBayDen: req.body.SanBayDen,
     TSLG,
     ThoiGianBay: ThoiGianBay,
     DSHangVe: JSON.parse(req.body.DSHangVe),
