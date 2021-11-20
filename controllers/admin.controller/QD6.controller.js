@@ -423,7 +423,7 @@ module.exports.getFlightManagement = async (req, res) => {
   // console.log(flights[0].TSLG);
   var arrSanBayTG = [];
 
-  for (var flight of flights) {
+  for (let flight of flights) {
     var middleAirport = "";
     // console.log(flight.SanBayTG);
     // if (flight.SanBayTG.length == 2) {
@@ -448,8 +448,8 @@ module.exports.getFlightManagement = async (req, res) => {
 
     arrSanBayTG.push(middleAirport);
 
-    for (hangVe of flight.DSHangVe) {
-      if (hangVe.SGDaMua != 0 && hangVe.SGDaMua != "undefined") {
+    for (let hangVe of flight.DSHangVe) {
+      if (hangVe.SGDaMua != 0) {
         flight.DuocXoa = 0;
         break;
       }
@@ -457,7 +457,7 @@ module.exports.getFlightManagement = async (req, res) => {
       flight.DuocXoa = 1;
     }
   }
-
+  
   let allPages = await flightSchedules.getNumberOfSchedulesFlights();
 
   var isNextPage = true;
@@ -525,6 +525,15 @@ module.exports.getUpdateFlightSchedule = async (req, res) => {
   const flightCode = req.query.MaCB;
   const flight = await flightSchedules.getOneScheduleFlightByMaCB(flightCode);
   console.log(flight.ChuyenBay.split("-"));
+
+  for (let hangVe of flight.DSHangVe) {
+    if (hangVe.SGDaMua != 0) {
+      flight.DuocXoa = 0;
+      break;
+    }
+
+    flight.DuocXoa = 1;
+  }
 
   if (req.session.notify && req.session.flightSchedule && req.session.check) {
     var notify = req.session.notify;
@@ -651,7 +660,7 @@ module.exports.postUpdateFlightSchedule = async (req, res) => {
     DSHangVe: JSON.parse(req.body.DSHangVe),
     SanBayTG: JSON.parse(req.body.SanBayTG),
   };
-
+  console.log(data);
   const updateResult = await flightSchedules.updateScheduleFlight(id, data);
 
   if (updateResult) {
