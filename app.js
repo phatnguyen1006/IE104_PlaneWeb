@@ -8,6 +8,7 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 var csurf = require('csurf');
+const mongoSanitize = require('express-mongo-sanitize');
 const upload = require('./middlewares/uploads.middleware');
 
 require('dotenv').config(); // to use .env file 
@@ -58,6 +59,11 @@ app.use(session({
 app.use(userMiddleware);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(
+    mongoSanitize({
+      replaceWith: '_',
+    }),
+);
 
 app.use('/login', loginRoute);
 app.use('/logout', logoutRoute);
