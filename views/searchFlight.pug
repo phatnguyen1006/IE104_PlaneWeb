@@ -329,9 +329,11 @@ block content
                     }
                 });
 
-                checkNullBtn.forEach(function (btn, index) {
+                if (FlightCodeReturn[0].value && FlightCodeGo[0].value) {
+                    checkNullBtn.forEach(function (btn, index) {
                     btn.disabled = false;
                 });
+                }
             });
 
         });
@@ -348,9 +350,11 @@ block content
                     }
                 });
 
-                checkNullBtn.forEach(function (btn, index) {
+                if (FlightCodeReturn[0].value && FlightCodeGo[0].value) {
+                    checkNullBtn.forEach(function (btn, index) {
                     btn.disabled = false;
                 });
+                }
             });
         });
         
