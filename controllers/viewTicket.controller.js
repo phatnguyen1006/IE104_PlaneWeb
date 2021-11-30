@@ -21,7 +21,7 @@ module.exports.findTicket = async (req, res) => {
 
   var bookedTicket = await findBookedTicket.findTicketsBooked(id);
   var boughtTicket = await findBoughtTicket.findTicketsBought(id);
-
+  
   const timeDB = await getTime.getOne();
   const cancelTime = timeDB.cancelTimeBookTicket;
   //console.log(cancelTime);
@@ -29,9 +29,15 @@ module.exports.findTicket = async (req, res) => {
   //add GiaVeMua and TrangThai to bookedTicket array of objects
   var today = new Date();
   for (let i = 0; i < bookedTicket.length; i++) {
+    //console.log(bookedTicket[i].MaCB);
     const flight = await findFlight.getOneScheduleFlightByMaCB(
       bookedTicket[i].MaCB
     );
+    
+    if (!flight) {
+      continue;
+    }
+
     //add TrangThai
     if (flight.NgayGio - today >= cancelTime * 86400000) {
       bookedTicket[i].TrangThai = 1;
