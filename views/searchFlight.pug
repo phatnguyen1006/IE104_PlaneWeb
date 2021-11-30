@@ -285,9 +285,9 @@ block content
                     input.FlightCodeGo(type="hidden" name="flightCode")
                     input.FlightCodeReturn(type="hidden" name="flightCodeReturn")
                     .mb-1.w-25.d-flex.justify-content-center
-                        button.btn-dat.btn.btn-success(type="submit" name="ticketType" value="0") Đặt vé
+                        button.check-null.btn-dat.btn.btn-success(disabled type="submit" name="ticketType" value="0") Đặt vé
                     .mb-1.w-25.d-flex.justify-content-center
-                        button.btn-mua.btn.btn-warning(type="submit" name="ticketType" value="1") Mua vé
+                        button.check-null.btn-mua.btn.btn-warning(disabled type="submit" name="ticketType" value="1") Mua vé
 
                                         
                 
@@ -314,6 +314,9 @@ block content
         }); 
         //set inner cho ghế trống và ghế đặt và thời gian bay
 
+        // CheckNull Var
+        const checkNullBtn = document.querySelectorAll(".check-null");
+
         const selectFlight = document.querySelectorAll(".select-fl-btn");
         const FlightCodeGo = document.querySelectorAll(".FlightCodeGo");
         const flightCodeGoValue = document.querySelectorAll("#valueOfcode");
@@ -325,7 +328,12 @@ block content
                         selectFlight[indexNot].checked = false;
                     }
                 });
+
+                checkNullBtn.forEach(function (btn, index) {
+                    btn.disabled = false;
+                });
             });
+
         });
         
         const selectReturn = document.querySelectorAll(".select-flreturn-btn");
@@ -338,6 +346,10 @@ block content
                     if (indexNot != index) {
                         selectReturn[indexNot].checked = false;
                     }
+                });
+
+                checkNullBtn.forEach(function (btn, index) {
+                    btn.disabled = false;
                 });
             });
         });
