@@ -10,6 +10,7 @@ const session = require('express-session');
 var csurf = require('csurf');
 const mongoSanitize = require('express-mongo-sanitize');
 const upload = require('./middlewares/uploads.middleware');
+const rateLimit = require("express-rate-limit");
 
 require('dotenv').config(); // to use .env file 
 const port = process.env.PORT || 4000;
@@ -40,6 +41,12 @@ const userMiddleware = require('./middlewares/user.middleware');
 // Data from database
 const { getAirports } = require('./services/QD6.service');
 
+const limiter = rateLimit({
+    windowMs: 5 * 60 * 1000, // 15 minutes
+    max: 100 // limit each IP to 100 requests per windowMs
+});
+
+
 
 app.set('view engine', 'pug'); //install pug as view
 app.set('views', './views'); // view 
@@ -64,6 +71,7 @@ app.use(
       replaceWith: '_',
     }),
 );
+app.use(limiter);
 
 app.use('/login', loginRoute);
 app.use('/logout', logoutRoute);
