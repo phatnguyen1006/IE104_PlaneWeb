@@ -98,14 +98,6 @@ by Group1.
     <img src="https://github.com/khoilecontact.png?size=400" width="50px" />
 </a>
 
-<a href="https://www.facebook.com/profile.php?id=100015743228561">
-    <img src="https://avatars.githubusercontent.com/huyvouit" width="50px"/>
-</a>
-
 <a href="https://www.facebook.com/profile.php?id=100015655094206">
     <img src="https://avatars.githubusercontent.com/u/67401001?v=4" width="50px" height="50px"/>
-</a>
-
-<a href="https://www.facebook.com/profile.php?id=100010591908074">
-    <img src="https://avatars.githubusercontent.com/u/80504187?s=400&u=28c5b2ded2fb2a567a2ccb49d7fba444af0e3660&v=4" width="50px" height="50px"/>
 </a>
