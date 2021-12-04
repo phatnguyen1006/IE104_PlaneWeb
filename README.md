@@ -67,5 +67,5 @@
 app.js //server.
 db.json //database.
 
-by KhoiLe.
+by Group1.
 ```
