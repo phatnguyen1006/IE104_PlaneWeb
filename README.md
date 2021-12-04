@@ -69,3 +69,19 @@ db.json //database.
 
 by Group1.
 ```
+
+
+## Dependencies:
++    <a>bcryptjs</a>
++    <a>body-parser</a>
++    <a>cookie-parser</a>
++    <a>csurf</a>
++    <a>dotenv</a>
++    <a href="http://expressjs.com">express</a>
++    <a>express-session</a>
++    <a href="https://mongoosejs.com">mongoose</a>
++    <a>multer</a>
++    <a>path</a>
++    <a href="https://pugjs.org/api/getting-started.html">pug</a>
++    <a>serve-favicon</a>
+
